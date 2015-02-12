@@ -1,0 +1,90 @@
+{
+    "pages" : [
+        {
+            "objects" : [
+                {
+                    "pNodeType" : 1,
+                    "pos" : { "x" : 0.0, "y" : 0.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 1,
+                    "x" : { "v" : 0.0, "a" : 0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 },
+                    "cSize" : { "w": 200.0, "h": 180.0}
+                },
+                {
+                    "pNodeType" : 1,
+                    "pos" : { "x" : 320.0, "y" : 120.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 1,
+                    "x" : { "v" : 0.0, "a" : 0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 },
+                    "cSize" : { "w": 200.0, "h": 180.0}
+                },
+                {
+                    "pNodeType" : 1,
+                    "pos" : { "x" : 720.0, "y" : 0.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 1,
+                    "x" : { "v" : 0.0, "a" : 0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 },
+                    "cSize" : { "w": 400.0, "h": 180.0}
+                },
+                {
+                    "pNodeType" : 2,
+                    "aPoint" : {"x" : 0.0, "y" : 0.0 },
+                    "pos" : { "x" : 600.0, "y" : 260.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 2,
+                    "x" : { "v" : -30.0, "a" : -0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 }
+                },
+                {
+                    "pNodeType" : 2,
+                    "aPoint" : {"x" : 0.0, "y" : 0.0 },
+                    "pos" : { "x" : 680.0, "y" : 260.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 2,
+                    "x" : { "v" : -30.0, "a" : -0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 }
+                },
+                {
+                    "pNodeType" : 2,
+                    "aPoint" : {"x" : 0.0, "y" : 0.0 },
+                    "pos" : { "x" : 760.0, "y" : 260.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 2,
+                    "x" : { "v" : -30.0, "a" : -0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 }
+                },
+                {
+                    "pNodeType" : 2,
+                    "aPoint" : {"x" : 0.0, "y" : 0.0 },
+                    "pos" : { "x" : 840.0, "y" : 260.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 2,
+                    "x" : { "v" : -30.0, "a" : -0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 }
+                },
+                {
+                    "pNodeType" : 2,
+                    "aPoint" : {"x" : 0.0, "y" : 0.0 },
+                    "pos" : { "x" : 920.0, "y" : 260.0 },
+                    "b_isG_effect" : false,
+                    "b_isC_effect" : true,
+                    "collideType" : 2,
+                    "x" : { "v" : -30.0, "a" : -0.0 },
+                    "y" : { "v" : 0.0, "a" : 0.0 }
+                }
+
+            ]
+        }
+    ]
+
+}
