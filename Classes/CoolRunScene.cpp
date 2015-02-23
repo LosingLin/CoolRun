@@ -31,8 +31,12 @@
 #include "BossDoubleHeads.h"
 #include "Score.h"
 #include "Stretch.h"
+#include "PopViewLayer.h"
+#include "MenuScene.h"
 
 #define kWarningTag 100
+#define kPauseViewTag 101
+#define kOverViewTag  102
 
 CoolRun::CoolRun()
 : Layer()
@@ -208,9 +212,9 @@ bool CoolRun::init()
     this->addChild(m_jumpBtn, 100);
     m_jumpBtn->setOpacity(100);
     
-    m_pacBtn = MYButton::createWithFrameName("Skill_n.png", "Skill_h.png", "Skill_d.png");
+    m_pacBtn = MYButton::createWithFrameName("btn_pause.png");
     m_pacBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::PacBtnCallback, this));
-    m_pacBtn->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 100));
+    m_pacBtn->setPosition(Vec2(origin.x + visibleSize.width - 50, origin.y + visibleSize.height - 50));
     m_pacBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_pacBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
     this->addChild(m_pacBtn, 100);
@@ -390,14 +394,9 @@ void CoolRun::PacBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     if (_type == MYButton::TouchEventType::BEGAN)
     {
         log("CoolRun::PacBtnCallback began");
-        if (b_isPaused)
-        {
-            this->resume();
-        }
-        else
-        {
-            this->pause();
-        }
+        
+        this->pause();
+        this->addPauseMenu();
     }
 }
 
@@ -874,9 +873,9 @@ void CoolRun::totalStretchUpdate(float delta)
 {
     m_totalStretch += m_velocity * delta;
     
-    if (m_totalStretchForInt != (int)m_totalStretch/20)
+    if (m_totalStretchForInt != (int)m_totalStretch/30)
     {
-        m_totalStretchForInt = (int)m_totalStretch/20;
+        m_totalStretchForInt = (int)m_totalStretch/30;
         
         string s;
         stringstream ss(s);
@@ -1239,6 +1238,102 @@ void CoolRun::addSpider(Spider* spider)
     }
 }
 
+#pragma mark - pop view
+
+void CoolRun::addPauseMenu()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    auto layer = PopViewLayer::create();
+    layer->setTag(kPauseViewTag);
+    this->addChild(layer, ZORDER_POPVIEW);
+    
+    auto resumeBtn = MYButton::createWithFrameName("btn_resume.png", "btn_hl_resume.png");
+    resumeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::ResumeBtnCallback, this));
+    resumeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
+    resumeBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    resumeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    layer->addChild(resumeBtn);
+    
+    auto giveUpBtn = MYButton::createWithFrameName("btn_giveup.png", "btn_hl_giveup.png");
+    giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
+    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 140));
+    giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    layer->addChild(giveUpBtn);
+}
+void CoolRun::addOverMenu()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    auto layer = PopViewLayer::create();
+    layer->setTag(kOverViewTag);
+    this->addChild(layer, ZORDER_POPVIEW);
+    
+    auto helpmeBtn = MYButton::createWithFrameName("btn_helpme.png", "btn_hl_helpme.png");
+    helpmeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::HelpMeBtnCallback, this));
+    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
+    helpmeBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    helpmeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    layer->addChild(helpmeBtn);
+    
+    auto giveUpBtn = MYButton::createWithFrameName("btn_giveup.png", "btn_hl_giveup.png");
+    giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
+    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
+    giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    layer->addChild(giveUpBtn);
+}
+void CoolRun::removePauseMenu()
+{
+    auto node = this->getChildByTag(kPauseViewTag);
+    if (node)
+    {
+        node->removeFromParentAndCleanup(true);
+    }
+}
+void CoolRun::removeOverMenu()
+{
+    auto node = this->getChildByTag(kOverViewTag);
+    if (node)
+    {
+        node->removeFromParentAndCleanup(true);
+    }
+}
+
+void CoolRun::ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+        this->removePauseMenu();
+        this->resume();
+        
+    }
+}
+void CoolRun::GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+        this->removePauseMenu();
+        this->removeOverMenu();
+        this->resume();
+        
+        auto scene = MenuLayer::createScene();
+        Director::getInstance()->replaceScene(scene);
+    }
+}
+void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+        this->removeOverMenu();
+        this->addRunner();
+        this->resume();
+    }
+}
+
 
 #pragma mark - GameController
 
@@ -1260,7 +1355,7 @@ void CoolRun::dead(Runner* runner)
     runner->removeFromParentAndCleanup(true);
     if (m_runners->count() <= 0)
     {
-        this->addRunner();
+        this->addOverMenu();
         this->pause();
     }
     

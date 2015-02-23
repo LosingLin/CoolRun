@@ -23,6 +23,8 @@
 
 #define ZORDER_HEADMENU     10
 
+#define ZORDER_POPVIEW     100
+
 USING_NS_CC;
 class Runner;
 class GravityPhysics;
@@ -117,6 +119,16 @@ public:
     
     //Spider
     void addSpider(Spider* spider);
+    
+    //popLayer
+    void addPauseMenu();
+    void addOverMenu();
+    void removePauseMenu();
+    void removeOverMenu();
+    
+    void ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
+    void GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
+    void HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
     
     //GameController
     void pause();

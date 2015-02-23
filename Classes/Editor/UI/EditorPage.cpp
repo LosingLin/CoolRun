@@ -103,8 +103,8 @@ void EditorPage::save(string* buffer)
     }
     buffer->append("],");
     buffer->append("\"collections\": [");
-    log("RealCollecion num is %d", m_realCollections->count());
-    log("Collection num is %d", m_collections->count());
+    log("RealCollecion num is %ld", m_realCollections->count());
+    log("Collection num is %ld", m_collections->count());
     for (int i = 0; i < m_realCollections->count(); ++ i)
     {
         auto obj = dynamic_cast<EditorPhysicNodeContainer*>(m_collections->getObjectAtIndex(i));
@@ -237,6 +237,12 @@ void EditorPage::removeEditorPhysicNodeContainer(EditorPhysicNodeContainer *epnc
 {
     m_objects->removeObject(epnc);
     m_events->removeObject(epnc);
-    m_collections->removeObject(epnc);
+    ssize_t index = m_collections->getIndexOfObject(epnc);
+    if (CC_INVALID_INDEX != index)
+    {
+        m_collections->removeObject(epnc);
+        m_realCollections->removeObjectAtIndex(index);
+    }
+    
     epnc->removeFromParentAndCleanup(true);
 }

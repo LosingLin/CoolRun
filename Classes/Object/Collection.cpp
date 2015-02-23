@@ -114,7 +114,8 @@ PhysicNode* Collection::createEditorPhysicNode()
     }
     auto pNode = PhysicNodeFactory::getInstance()->create(doc);
     pNode->removeAllChildrenWithCleanup(true);
-    auto csize = pNode->getContentSize();
+    //auto csize = pNode->getContentSize();
+    auto csize = Size(100, 100);
     pNode->setContentSize(Size(5*this->getIncX() + csize.width, 5*this->getIncY() + csize.height));
     
     CollectionMatrix6X6 _matrix = CollectionMatrixInstance::INSTANCE[this->getCmIndex()];

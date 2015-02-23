@@ -92,6 +92,7 @@
 		FC55CB9A19E3C31C00041B96 /* Collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC55CB9819E3C31C00041B96 /* Collection.cpp */; };
 		FC5B48F01A81DBD600950971 /* EditorOpenFileMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC5B48EE1A81DBD600950971 /* EditorOpenFileMenu.cpp */; };
 		FC5D10471A4561FE004DF1FF /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC5D10451A4561FE004DF1FF /* Item.cpp */; };
+		FC613EA41A8DCBDF0076E7D6 /* PopViewLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC613EA21A8DCBDF0076E7D6 /* PopViewLayer.cpp */; };
 		FC61E9261A8B4FB00031A199 /* Score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61E9241A8B4FB00031A199 /* Score.cpp */; };
 		FC61E92B1A8B613B0031A199 /* Stretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61E9291A8B613B0031A199 /* Stretch.cpp */; };
 		FC6418881999EAA90038B352 /* PhysicHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6418861999EAA90038B352 /* PhysicHelp.cpp */; };
@@ -399,6 +400,8 @@
 		FC5B48EF1A81DBD600950971 /* EditorOpenFileMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorOpenFileMenu.h; sourceTree = "<group>"; };
 		FC5D10451A4561FE004DF1FF /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
 		FC5D10461A4561FE004DF1FF /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		FC613EA21A8DCBDF0076E7D6 /* PopViewLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopViewLayer.cpp; sourceTree = "<group>"; };
+		FC613EA31A8DCBDF0076E7D6 /* PopViewLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopViewLayer.h; sourceTree = "<group>"; };
 		FC61E9241A8B4FB00031A199 /* Score.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Score.cpp; sourceTree = "<group>"; };
 		FC61E9251A8B4FB00031A199 /* Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score.h; sourceTree = "<group>"; };
 		FC61E9291A8B613B0031A199 /* Stretch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stretch.cpp; sourceTree = "<group>"; };
@@ -862,6 +865,8 @@
 				FC61E9251A8B4FB00031A199 /* Score.h */,
 				FC61E9291A8B613B0031A199 /* Stretch.cpp */,
 				FC61E92A1A8B613B0031A199 /* Stretch.h */,
+				FC613EA21A8DCBDF0076E7D6 /* PopViewLayer.cpp */,
+				FC613EA31A8DCBDF0076E7D6 /* PopViewLayer.h */,
 			);
 			name = UI;
 			path = ../Classes/UI;
@@ -1298,6 +1303,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				FC9A8A011A7A3A390081ACBC /* EditorMenu.cpp in Sources */,
 				FC0DC3411A6CD5A0008091AC /* BossBullet.cpp in Sources */,
+				FC613EA41A8DCBDF0076E7D6 /* PopViewLayer.cpp in Sources */,
 				FC6F74CA1A4A99FA00486135 /* ItemTimesCoin.cpp in Sources */,
 				FC22910119BEA42400E83928 /* PhysicNodeDirection.cpp in Sources */,
 				FCC1749D1A257C8F00B2C2FA /* Spider.cpp in Sources */,
