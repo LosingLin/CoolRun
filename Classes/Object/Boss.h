@@ -16,6 +16,7 @@
 USING_NS_CC;
 using namespace cocostudio;
 
+class HpBar;
 class Boss : public Animal
 {
 public:
@@ -38,10 +39,13 @@ public:
     virtual void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex){};
     
 protected:
+    HpBar* m_hpBar;
     Armature* m_armature;
     bool b_isReady;
     bool b_isAtking;
     int m_atkIndex;
+    float m_totalHp;
+    float m_curHp;
 };
 
 #endif /* defined(__CoolRun__Boss__) */

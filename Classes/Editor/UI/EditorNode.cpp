@@ -144,11 +144,16 @@ bool EditorNode::onTouchBegan(Touch *touch, Event *unusedEvent)
 }
 void EditorNode::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    b_isTouchMoved = true;
+    auto moveTouchLoc = touch->getLocation();
+    float x = moveTouchLoc.x - m_beganTouchLoc.x;
+    float y = moveTouchLoc.y - m_beganTouchLoc.y;
+    if (abs(x) >= 20 || abs(y) >= 20)
+    {
+        b_isTouchMoved = true;
+    }
     
     if (touchMoved)
     {
-        auto moveTouchLoc = touch->getLocation();
         int x = moveTouchLoc.x - m_lastTouchLoc.x;
         int y = moveTouchLoc.y - m_lastTouchLoc.y;
         touchMoved(x, y);

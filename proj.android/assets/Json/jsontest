@@ -1,0 +1,28 @@
+
+//温和的蜘蛛 行走
+            {
+                "pNodeType": 5,
+                "state": 2,
+                "aPoint": { 
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "pos": {
+                    "x": 900.0,
+                    "y": 200.0
+                },
+                "b_isG_effect": true,
+                "b_isC_effect": true,
+                "collideType": 2,
+                "x": {
+                    "v": -100.0,
+                    "a": -0.0
+                },
+                "y": {
+                    "v": 0.0,
+                    "a": 0.0
+                }
+            }
+
+
+

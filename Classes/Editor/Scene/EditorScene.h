@@ -10,7 +10,7 @@
 #define __CoolRun__EditorScene__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "EditorListener.h"
 
 USING_NS_CC;

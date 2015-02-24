@@ -12,6 +12,7 @@
 #include "SpiderKind.h"
 #include "SpiderPoison.h"
 #include "SpiderSpines.h"
+#include "HpBar.h"
 
 BossDoubleHeads::BossDoubleHeads()
 : Boss()
@@ -45,6 +46,14 @@ bool BossDoubleHeads::init()
     
     this->debugShow();
     
+    m_totalHp = 5.0f;
+    m_curHp = 5.0f;
+    
+    m_hpBar = HpBar::create(5);
+    m_hpBar->setAnchorPoint(Vec2(0.5, 0.5));
+    m_hpBar->setPosition(Vec2(csize.width/2, csize.height+30));
+    this->addChild(m_hpBar);
+    
     return true;
 }
 
@@ -52,11 +61,17 @@ bool BossDoubleHeads::init()
 
 void BossDoubleHeads::hurted()
 {
-    this->setColor(Color3B::RED);
+    m_curHp --;
+    m_hpBar->setCurrentHp(m_curHp);
+    if (m_curHp <=0 && !this->isDestoryed())
+    {
+        this->dead();
+    }
 }
 void BossDoubleHeads::dead()
 {
-    
+    m_gameController->loadNextMission();
+    this->setDestoryed(true);
 }
 
 #pragma mark -  atk

@@ -136,6 +136,7 @@ public:
     void dead(Runner* runner);
     void addScore(int score);
     void addStretch(int stretch);
+    void loadNextMission();
     virtual void addCoin(int num);
     virtual void destory(PhysicNode* _node);
     

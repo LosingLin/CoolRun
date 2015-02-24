@@ -1,0 +1,18 @@
+{
+    "pNodeType": 2,
+    "pos": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "b_isG_effect": false,
+    "b_isC_effect": true,
+    "collideType": 2,
+    "x": {
+        "v": 0.0,
+        "a": 0.0
+    },
+    "y": {
+        "v": 0.0,
+        "a": 0.0
+    }
+}

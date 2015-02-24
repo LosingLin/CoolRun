@@ -1258,7 +1258,7 @@ void CoolRun::addPauseMenu()
     
     auto giveUpBtn = MYButton::createWithFrameName("btn_giveup.png", "btn_hl_giveup.png");
     giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
-    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 140));
+    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
     giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
     giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(giveUpBtn);
@@ -1274,7 +1274,7 @@ void CoolRun::addOverMenu()
     
     auto helpmeBtn = MYButton::createWithFrameName("btn_helpme.png", "btn_hl_helpme.png");
     helpmeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::HelpMeBtnCallback, this));
-    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
+    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 60));
     helpmeBtn->setAnchorPoint(Vec2(0.5, 0.5));
     helpmeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(helpmeBtn);
@@ -1382,6 +1382,13 @@ void CoolRun::addStretch(int stretch)
     stringstream ss(s);
     ss << m_stretch;
     m_stretchView->setString(ss.str());
+}
+void CoolRun::loadNextMission()
+{
+    auto mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
+    mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
+    this->setMission(mission);
+    m_gameState = GameState::RUNNING;
 }
 void CoolRun::addCoin(int num)
 {

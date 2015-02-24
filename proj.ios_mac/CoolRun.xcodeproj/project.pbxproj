@@ -113,6 +113,7 @@
 		FC82AC1C1A7CAB73001E49CC /* EditorDetailMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC82AC1A1A7CAB73001E49CC /* EditorDetailMenu.cpp */; };
 		FC87277519F65AC80066837A /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC87277319F65AC80066837A /* Background.cpp */; };
 		FC8821A21A405EFA00C5EB38 /* AlertBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8821A01A405EFA00C5EB38 /* AlertBullet.cpp */; };
+		FC887EDA1A9C4F6B0014D529 /* HpBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC887ED81A9C4F6B0014D529 /* HpBar.cpp */; };
 		FC8C3D7F1A67E00C00F332E2 /* Boss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8C3D7D1A67E00C00F332E2 /* Boss.cpp */; };
 		FC8C3D871A67E38900F332E2 /* BossDoubleHeads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8C3D851A67E38900F332E2 /* BossDoubleHeads.cpp */; };
 		FC8D85A91A4BFDCC001C452C /* ItemDad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8D85A71A4BFDCC001C452C /* ItemDad.cpp */; };
@@ -440,6 +441,8 @@
 		FC87277419F65AC80066837A /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		FC8821A01A405EFA00C5EB38 /* AlertBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertBullet.cpp; sourceTree = "<group>"; };
 		FC8821A11A405EFA00C5EB38 /* AlertBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBullet.h; sourceTree = "<group>"; };
+		FC887ED81A9C4F6B0014D529 /* HpBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HpBar.cpp; sourceTree = "<group>"; };
+		FC887ED91A9C4F6B0014D529 /* HpBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HpBar.h; sourceTree = "<group>"; };
 		FC8C3D7D1A67E00C00F332E2 /* Boss.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Boss.cpp; sourceTree = "<group>"; };
 		FC8C3D7E1A67E00C00F332E2 /* Boss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Boss.h; sourceTree = "<group>"; };
 		FC8C3D851A67E38900F332E2 /* BossDoubleHeads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossDoubleHeads.cpp; sourceTree = "<group>"; };
@@ -867,6 +870,8 @@
 				FC61E92A1A8B613B0031A199 /* Stretch.h */,
 				FC613EA21A8DCBDF0076E7D6 /* PopViewLayer.cpp */,
 				FC613EA31A8DCBDF0076E7D6 /* PopViewLayer.h */,
+				FC887ED81A9C4F6B0014D529 /* HpBar.cpp */,
+				FC887ED91A9C4F6B0014D529 /* HpBar.h */,
 			);
 			name = UI;
 			path = ../Classes/UI;
@@ -1317,6 +1322,7 @@
 				FC935E38199E1FDC0047ADBF /* PhysicNodeFactory.cpp in Sources */,
 				FC8821A21A405EFA00C5EB38 /* AlertBullet.cpp in Sources */,
 				FCBBC6921A78B3B900DF2C16 /* MYTextInput.cpp in Sources */,
+				FC887EDA1A9C4F6B0014D529 /* HpBar.cpp in Sources */,
 				FC95278819B95688001266C7 /* VillageScene.cpp in Sources */,
 				FC72341C199B56ED0059B543 /* JsonHelp.cpp in Sources */,
 				FCF6E8A81A540614002AAFA0 /* ItemLandBuild.cpp in Sources */,

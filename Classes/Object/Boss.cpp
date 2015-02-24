@@ -10,6 +10,7 @@
 
 Boss::Boss()
 : Animal()
+, m_hpBar(nullptr)
 , m_armature(nullptr)
 , b_isReady(false)
 , b_isAtking(false)

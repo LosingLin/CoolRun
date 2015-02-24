@@ -1,0 +1,22 @@
+{
+    "pNodeType": 1,
+    "pos": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "b_isG_effect": false,
+    "b_isC_effect": true,
+    "collideType": 1,
+    "x": {
+        "v": 0.0,
+        "a": 0.0
+    },
+    "y": {
+        "v": 0.0,
+        "a": 0.0
+    },
+    "cSize": {
+        "w": 300.0,
+        "h": 180.0
+    }
+}

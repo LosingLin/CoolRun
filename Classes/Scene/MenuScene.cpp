@@ -17,7 +17,6 @@
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "Home.h"
-
 using namespace cocostudio;
 
 
@@ -157,7 +156,10 @@ void MenuLayer::settingCallback(Ref* _ref, MYButton::TouchEventType _type)
 //    this->addChild(_sp, 20);
 //    
 //    _sp->runAction(RotateBy::create(0.2, 30));
-    
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+
+    }
 }
 
 void MenuLayer::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
