@@ -113,7 +113,7 @@ bool CoolRun::init()
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg002.png", CC_CALLBACK_1(CoolRun::finishAddImage, this));
     
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg001.png", std::bind(&CoolRun::finishAddImage, this, std::placeholders::_1));
-    
+    log("test........00");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("parkour.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
@@ -121,7 +121,7 @@ bool CoolRun::init()
     
 //    Director::getInstance()->getTextureCache()->addImage("bg001.png");
 //    Director::getInstance()->getTextureCache()->addImage("bg002.png");
-    
+    log("test........01");
     m_gPhysics = GravityPhysics::create();
     m_gPhysics->setGravity(-200.0f);
     CC_SAFE_RETAIN(m_gPhysics);
@@ -135,6 +135,8 @@ bool CoolRun::init()
     CREATEANDRETAINARRAY(m_gravityCollideObjs);
     CREATEANDRETAINARRAY(m_bulletObjs);
     CREATEANDRETAINARRAY(m_events);
+    
+    log("test........02");
     
     float scale = 1264.0/1024.0;
     
@@ -168,15 +170,17 @@ bool CoolRun::init()
     m_stretchView->setLocalZOrder(ZORDER_HEADMENU);
     this->addChild(m_stretchView);
     
+    log("test........03");
+    
     //stretch lab
-    m_stretchLab = Label::createWithTTF("00", "Marker Felt.ttf", 36);
+    m_stretchLab = Label::createWithSystemFont("00", "", 36);
     m_stretchLab->setHorizontalAlignment(TextHAlignment::LEFT);
     m_stretchLab->setVerticalAlignment(TextVAlignment::CENTER);
     m_stretchLab->setAnchorPoint(Vec2(0, 0.5));
     m_stretchLab->setPosition(Vec2(origin.x + 260, origin.y + visibleSize.height - 20));
     this->addChild(m_stretchLab, 100);
     
-    m_pageSLab = Label::createWithTTF("00", "Marker Felt.ttf", 36);
+    m_pageSLab = Label::createWithSystemFont("00", "", 36);
     m_pageSLab->setHorizontalAlignment(TextHAlignment::LEFT);
     m_pageSLab->setVerticalAlignment(TextVAlignment::CENTER);
     m_pageSLab->setAnchorPoint(Vec2(0, 0.5));
@@ -186,6 +190,8 @@ bool CoolRun::init()
     //m_mission = Mission::create("test", Mission::MissionRepeatModel::LAST);
 //    m_mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
 //    CC_SAFE_RETAIN(m_mission);
+    
+    log("test........04");
     
     m_home = Home::create();
     this->addChild(m_home);
@@ -220,7 +226,7 @@ bool CoolRun::init()
     this->addChild(m_pacBtn, 100);
     //m_pacBtn->setOpacity(100);
     
-
+    log("test........12");
     return true;
 }
 
@@ -314,7 +320,7 @@ void CoolRun::showBossWarning()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    auto label = Label::createWithTTF("WARNING", "Marker Felt.ttf", 102);
+    auto label = Label::createWithSystemFont("WARNING", "", 102);
     label->setTag(kWarningTag);
     label->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     label->setLocalZOrder(ZORDER_WARNING);
@@ -436,8 +442,8 @@ void CoolRun::onEnter()
     
     //this->scheduleUpdate();
     //this->schedule(CC_CALLBACK_1(CoolRun::update, this), 0.01f);
-    //this->schedule(schedule_selector(CoolRun::gameMain), 0.0f);
-    Director::getInstance()->getScheduler()->schedule(schedule_selector(CoolRun::gameMain), this, 0.0f, kRepeatForever, 0.0f, false);
+//    this->schedule(schedule_selector(CoolRun::gameMain), 0.01f);
+    Director::getInstance()->getScheduler()->schedule(schedule_selector(CoolRun::gameMain), this, 0.0f, kRepeatForever, 0.01f, false);
 //    this->scheduleUpdateWithPriority(Scheduler::PRIORITY_SYSTEM);
     
 //    auto listener = EventListenerTouchOneByOne::create();
@@ -725,7 +731,7 @@ void CoolRun::bulletCollideTrack()
 
 void CoolRun::gameMain(float delta)
 {
-//    log("CoolRun.......update : %f", delta);
+    //log("CoolRun.......update : %f", delta);
     
     if (GameState::HOME == m_gameState)
     {

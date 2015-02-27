@@ -55,9 +55,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
     
     
-    FileUtils::getInstance()->addSearchPath("./Image");
-    FileUtils::getInstance()->addSearchPath("./Json");
-    FileUtils::getInstance()->addSearchPath("./CocosStudio");
+    FileUtils::getInstance()->addSearchPath("Image");
+    FileUtils::getInstance()->addSearchPath("Json");
+    FileUtils::getInstance()->addSearchPath("CocosStudio");
     //FileUtils::getInstance()->addSearchPath("./D_Editor");
     
     std::vector<std::string> paths =  FileUtils::getInstance()->getSearchPaths();

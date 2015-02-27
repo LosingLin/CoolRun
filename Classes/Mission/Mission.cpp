@@ -208,7 +208,7 @@ Mission* Mission::create(const std::string& jsonStr)
     missionData += ",";
     missionData += _mission->getRandomMissionData(MISSIONDATA_Boss_PATH , MISSIONDATA_Boss_FORMAT, b);
     missionData += FileUtils::getInstance()->getStringFromFile("tail");
-    log("MISSIONDATA : %s\n", missionData.c_str());
+    //log("MISSIONDATA : %s\n", missionData.c_str());
     
     _mission->setJsonStr(missionData);
     

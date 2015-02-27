@@ -399,6 +399,8 @@ void EditorScene::openFile(const std::string& filePath)
         }
     }
     
+    log("Load Data : %s", data.c_str());
+    
     if (isExist)
     {
         rapidjson::Document doc;

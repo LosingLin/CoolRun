@@ -53,7 +53,7 @@ const Rect PhysicHelp::countPhysicNodeRect(PhysicNode *node, const Rect& rect)
 void PhysicHelp::showTips(const char* tips, Node *parent, const Vec2& pos)
 {
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-    auto _label = Label::createWithTTF(tips, "Marker Felt.ttf", 32);
+    auto _label = Label::createWithSystemFont(tips, "", 32);
     _label->setPosition(pos);
     parent->addChild(_label, 10);
     

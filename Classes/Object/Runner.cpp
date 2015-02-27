@@ -84,7 +84,7 @@ bool Runner::init()
     
     //Item
     this->initItemData();
-    item_spareNumLab = Label::createWithTTF("", "Marker Felt.ttf", 32);
+    item_spareNumLab = Label::createWithSystemFont("", "", 32);
     item_spareNumLab->setPosition(Vec2(10, 132));
     this->addChild(item_spareNumLab);
     

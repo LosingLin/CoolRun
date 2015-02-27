@@ -109,7 +109,7 @@ void Stone::setContentSize(const Size& _size)
     //this->buildStoneWithShare("wood02.png", 196);
     //this->setCollideRect(Rect(30, 0, _size.width - 60, _size.height/2 - 40));
     
-    PhysicNode::setContentSize(Size(_size.width-30, _size.height));
+    //PhysicNode::setContentSize(Size(_size.width-30, _size.height));
     
     this->debugShow();
     

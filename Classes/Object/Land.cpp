@@ -57,7 +57,7 @@ void Land::showTips(int index)
     
     if (!label)
     {
-        auto _label = Label::createWithTTF(ss.str(), "Marker Felt.ttf", 32);
+        auto _label = Label::createWithSystemFont(ss.str(), "", 32);
         _label->setPosition(Vec2(0, 0));
         this->addChild(_label, 10);
         _label->setTag(999);
