@@ -20,7 +20,7 @@
             <key>spider_bone/spider_belly02_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{394,132},{129,110}}</string>
+                <string>{{394,176},{129,110}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>spider_bone/spider_leg01_01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{296,258},{55,59}}</string>
+                <string>{{78,316},{55,59}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>spider_bone/spider_leg01_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{220,225},{46,74}}</string>
+                <string>{{2,316},{46,74}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>spider_bone/spider_neck.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{296,225},{60,31}}</string>
+                <string>{{148,297},{60,31}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -199,6 +199,32 @@
                 <key>sourceSize</key>
                 <string>{232,32}</string>
             </dict>
+            <key>spider_bone/spider_wings_big.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{220,225},{141,101}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{141,101}}</string>
+                <key>sourceSize</key>
+                <string>{141,101}</string>
+            </dict>
+            <key>spider_bone/spider_wings_small.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{394,132},{111,42}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{111,42}}</string>
+                <key>sourceSize</key>
+                <string>{111,42}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -209,7 +235,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a3755cf7f39447a18c66749a7e085580:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:9cf3d9964dc09e0fdf4530130348ef22:1/1$</string>
             <key>textureFileName</key>
             <string>spider_bone.png</string>
         </dict>

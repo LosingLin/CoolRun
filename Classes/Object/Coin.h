@@ -32,7 +32,10 @@ public:
     virtual void update(float delta);
     void acionDoneCallback();
     void times();
-
+    
+    void bePicked();
+    void bePickedDone();
+    
 //    virtual bool collided(PhysicNode* _runner) override;
     virtual void trackCollideWithRunner(Runner* _runner) override;
 private:

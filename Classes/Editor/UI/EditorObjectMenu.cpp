@@ -62,5 +62,6 @@ void EditorObjectMenu::menuCallback(PhysicNodeType type)
     auto obj = EditorPhysicNodeContainer::createBasePhysicNode(type);
     auto epnc = EditorPhysicNodeContainer::create(obj);
     epnc->setPhysicNodeType(type);
+    epnc->getTouchListener()->setSwallowTouches(true);
     this->getEditorListener()->addObject(epnc);
 }

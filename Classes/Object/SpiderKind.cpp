@@ -25,7 +25,14 @@ bool SpiderKind::init()
         return false;
     }
     
-    auto csize = this->getContentSize();
+    m_armature = Armature::create("SpiderKind");
+    m_armature->setScale(0.8f);
+    this->addChild(m_armature);
+    
+    auto csize = m_armature->getContentSize() * 0.8f;
+    this->setContentSize(csize);
+    
+    m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
     this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
     
@@ -39,16 +46,16 @@ void SpiderKind::setState(SpiderState state)
     Spider::setState(state);
     switch (m_state) {
         case kSpiderState_Attack:
-            m_armature->getAnimation()->play("attack02");
+            m_armature->getAnimation()->play("attack");
             break;
         case kSpiderState_Stand:
-            m_armature->getAnimation()->play("stand02");
+            m_armature->getAnimation()->play("stand");
             break;
         case kSpiderState_Hurted:
-            m_armature->getAnimation()->play("hurt02");
+            m_armature->getAnimation()->play("hurt");
             break;
         case kSpiderState_Walk:
-            m_armature->getAnimation()->play("walk02");
+            m_armature->getAnimation()->play("walk");
             break;
         default:
             break;
@@ -68,7 +75,7 @@ void SpiderKind::movementEvent(Armature *armature, MovementEventType movementTyp
 {
     if (MovementEventType::COMPLETE == movementType)
     {
-        if("hurt02" == movementID)
+        if("hurt" == movementID)
         {
             this->setDestoryed(true);
         }

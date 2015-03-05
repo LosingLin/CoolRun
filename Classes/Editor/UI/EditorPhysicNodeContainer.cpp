@@ -24,7 +24,7 @@ EditorPhysicNodeContainer::EditorPhysicNodeContainer()
 }
 EditorPhysicNodeContainer::~EditorPhysicNodeContainer()
 {
-    
+    CC_SAFE_RELEASE_NULL(m_detailMenu);
 }
 
 bool EditorPhysicNodeContainer::init()
@@ -136,14 +136,30 @@ void EditorPhysicNodeContainer::savePhysicNodeInfo(string* buffer)
     buffer->append(str);
 }
 
+void EditorPhysicNodeContainer::setDetailMenu(EditorDetailMenu* dMenu)
+{
+    CC_SAFE_RELEASE_NULL(m_detailMenu);
+    m_detailMenu = dMenu;
+    CC_SAFE_RETAIN(m_detailMenu);
+}
+
 #pragma mark - help
 void EditorPhysicNodeContainer::_showDetailMenu()
 {
-    auto menu = EditorDetailMenu::create();
-    menu->setPhysicNodeContaner(this);
-    this->setDetailMenu(menu);
-    this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, EditorMenu::create());
-    this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, menu);
+    if (m_detailMenu)
+    {
+        this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, EditorMenu::create());
+        this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, m_detailMenu);
+    }
+    else
+    {
+        auto menu = EditorDetailMenu::create();
+        menu->setPhysicNodeContaner(this);
+        this->setDetailMenu(menu);
+        this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, EditorMenu::create());
+        this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, menu);
+    }
+    
     
 //    auto dMenu = dynamic_cast<EditorDetailMenu*>(this->getEditorListener()->getMenu(EditorListener::MenuState::FIRST));
 //    this->setDetailMenu(dMenu);
@@ -173,6 +189,11 @@ void EditorPhysicNodeContainer::editorNodeTouchMoved(int x, int y)
     pos.y += y;
     this->setPosition(pos);
     
+//    auto dMenu = dynamic_cast<EditorDetailMenu*>(this->getEditorListener()->getMenu(EditorListener::MenuState::FIRST));
+//    if (dMenu != m_detailMenu)
+//    {
+//        this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, m_detailMenu);
+//    }
     if (m_detailMenu)
     {
         m_detailMenu->updateMenu();

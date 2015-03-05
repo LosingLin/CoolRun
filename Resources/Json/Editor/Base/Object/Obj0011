@@ -2,15 +2,20 @@
     "pNodeType": 11,
     "pos": {
         "x": 0.0,
-        "y": 0.0
+        "y": 0.0   
     },
+    "align_x": 0.0,
+    "align_y": 0.0,
+    "b_isS_pos" : true,
     "b_isG_effect": false,
     "b_isC_effect": true,
-    "collideType": 2,
-    "fly_v": 0.0,
+    "b_isA_hurt": false,
+    "b_isR_hurt" : true,
+    "b_isA_able" : false,
+    "collideType": 3,
     "x": {
-        "v": 0.0,
-        "a": 0.0
+        "v": -0.0,
+        "a": -0.0
     },
     "y": {
         "v": 0.0,

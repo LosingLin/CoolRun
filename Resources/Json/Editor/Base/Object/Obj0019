@@ -1,10 +1,5 @@
 {
-    "pNodeType": 9,
-    "state": 1,
-    "aPoint": { 
-        "x": 0.0,
-        "y": 0.0
-    },
+    "pNodeType": 19,
     "pos": {
         "x": 0.0,
         "y": 0.0
@@ -12,13 +7,13 @@
     "b_isG_effect": false,
     "b_isC_effect": true,
     "collideType": 2,
+    "fly_v": 0.0,
     "x": {
-        "v": -0.0,
-        "a": -0.0
+        "v": 0.0,
+        "a": 0.0
     },
     "y": {
         "v": 0.0,
         "a": 0.0
-    },
-    "multiRects" : []
+    }
 }

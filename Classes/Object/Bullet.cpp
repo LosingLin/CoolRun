@@ -12,6 +12,8 @@ Bullet::Bullet()
 : MultipleCollideNode()
 , b_isRunnerHurt(false)
 , b_isAnimalHurt(false)
+, b_isAtkable(false)
+, m_particleSys(nullptr)
 {
 }
 Bullet::~Bullet()
@@ -50,6 +52,13 @@ void Bullet::loadJson(rapidjson::Value& _value)
             this->setAnimalHurt(flag);
         }
     }
+    //b_isAtkable
+    if (_value.HasMember("b_isA_able")) {
+        if (_value["b_isA_able"].IsBool()) {
+            auto flag = _value["b_isA_able"].GetBool();
+            this->setAtkable(flag);
+        }
+    }
 }
 void Bullet::saveData(string* buffer)
 {
@@ -71,6 +80,17 @@ void Bullet::saveData(string* buffer)
     
     ss << "\"b_isA_hurt\":";
     if (this->isAnimalHurt())
+    {
+        ss << "true";
+    }
+    else
+    {
+        ss << "false";
+    }
+    ss << ",";
+    
+    ss << "\"b_isA_able\":";
+    if (this->isAtkable())
     {
         ss << "true";
     }

@@ -69,6 +69,7 @@ private:
     //Bullet
     EditorSelector* m_isAnimalHurt;
     EditorSelector* m_isRunnerHurt;
+    EditorSelector* m_isAtkable;
     //Item
     EditorTextInput* m_flyV;
     

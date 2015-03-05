@@ -38,7 +38,7 @@ public:
     void setPhysicNodeType(PhysicNodeType type) { m_pType = type; }
     PhysicNodeType getPhysicType() { return m_pType; }
     
-    void setDetailMenu(EditorDetailMenu* dMenu) { m_detailMenu = dMenu; };
+    void setDetailMenu(EditorDetailMenu* dMenu);
     EditorDetailMenu* getDetailMenu() { return m_detailMenu; }
     
     static PhysicNode* createBasePhysicNode(PhysicNodeType type);

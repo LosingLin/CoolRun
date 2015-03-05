@@ -25,18 +25,7 @@ bool Spider::init()
     {
         return false;
     }
-    
     this->setCollideType(CollideType::kCollideTypeSimple);
-    
-    m_armature = Armature::create("Spider");
-    m_armature->setScale(0.8f);
-    this->addChild(m_armature);
-    
-    auto csize = m_armature->getContentSize() * 0.8f;
-    this->setContentSize(csize);
-    
-    m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
-    
     
     return true;
 }

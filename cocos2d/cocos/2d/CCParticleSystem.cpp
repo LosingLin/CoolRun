@@ -1,4 +1,4 @@
-/****************************************************************************
+                                                                                                    /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -379,6 +379,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     bool notify = FileUtils::getInstance()->isPopupNotify();
                     FileUtils::getInstance()->setPopupNotify(false);
                     tex = Director::getInstance()->getTextureCache()->addImage(textureName);
+                    //tex = Director::getInstance()->getTextureCache()->getTextureForKey(textureName);
                     // reset the value of UIImage notify
                     FileUtils::getInstance()->setPopupNotify(notify);
                 }

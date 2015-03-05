@@ -27,7 +27,7 @@ public:
     
     void alertDone();
     
-private:
+protected:
     Sprite* m_bullet;
     Sprite* m_line;
     Sprite* m_alert;

@@ -53,6 +53,7 @@ void Coin::onEnter()
 }
 void Coin::onExit()
 {
+    this->unschedule(schedule_selector(Coin::update));
     CollideNode::onExit();
 }
 
@@ -130,6 +131,27 @@ void Coin::times()
                               csize.width * ssize, csize.height * ssize));
 }
 
+void Coin::bePicked()
+{
+    this->unschedule(schedule_selector(Coin::update));
+    
+    m_sp->stopAllActions();
+    m_sp->removeFromParentAndCleanup(true);
+    
+    auto csize = this->getContentSize();
+    auto psq = ParticleSystemQuad::create("coin.plist");
+    psq->setPosition(Vec2(csize.width/2, csize.height/2));
+    this->addChild(psq);
+    
+    auto delay = DelayTime::create(0.4);
+    auto call = CallFunc::create(CC_CALLBACK_0(Coin::bePickedDone, this));
+    this->runAction(Sequence::create(delay, call, NULL));
+}
+void Coin::bePickedDone()
+{
+    this->setDestoryed(true);
+}
+
 
 Coin* Coin::create(rapidjson::Value& _value)
 {
@@ -156,7 +178,9 @@ void Coin::trackCollideWithRunner(Runner* _runner)
     
     if (isCollide)
     {
-        this->setDestoryed(true);
+        
+        this->setCollideEffect(false);
+        this->bePicked();
         return;
     }
     

@@ -15,8 +15,10 @@
 #include "SpiderKind.h"
 #include "SpiderPoison.h"
 #include "SpiderSpines.h"
+#include "SpiderFly.h"
 #include "PoisonBullet.h"
-#include "AlertBullet.h"
+#include "AlertBulletPoison.h"
+#include "AlertBulletNet.h"
 #include "Item.h"
 #include "ItemSpare.h"
 #include "ItemMagnet.h"
@@ -25,6 +27,7 @@
 #include "ItemDad.h"
 #include "ItemLandBuild.h"
 #include "ItemFly.h"
+#include "Saw.h"
 
 PhysicNodeFactory* PhysicNodeFactory::m_instance = NULL;
 
@@ -69,6 +72,10 @@ PhysicNode* PhysicNodeFactory::create(rapidjson::Value& _value)
         {
             _pNode = Coin::create();
         } break;
+        case kPhysicNodeSaw:
+        {
+            _pNode = Saw::create();
+        } break;
         case kPhysicNodeEnemy:
         {
             _pNode = Enemy::create();
@@ -90,14 +97,23 @@ PhysicNode* PhysicNodeFactory::create(rapidjson::Value& _value)
             _pNode = SpiderSpines::create();
             
         } break;
+        case kPhysicNodeSpiderFly:
+        {
+            _pNode = SpiderFly::create();
+            
+        } break;
         case kPhysicNodeBulletPoison:
         {
             _pNode = PoisonBullet::create();
             
         } break;
-        case kPhysicNodeBulletAlert:
+        case kPhysicNodeBulletAlertPoison:
         {
-            _pNode = AlertBullet::create();
+            _pNode = AlertBulletPoison::create();
+        } break;
+        case kPhysicNodeBulletAlertNet:
+        {
+            _pNode = AlertBulletNet::create();
         } break;
         case kPhysicNodeItem:
         {

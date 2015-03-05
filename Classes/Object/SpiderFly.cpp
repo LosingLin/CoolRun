@@ -1,30 +1,31 @@
 //
-//  SpiderSpines.cpp
+//  SpiderFly.cpp
 //  CoolRun
 //
-//  Created by ManYou on 14/11/26.
+//  Created by ManYou on 15/3/4.
 //
 //
 
-#include "SpiderSpines.h"
+#include "SpiderFly.h"
 #include "Runner.h"
 #include "Bullet.h"
 
-SpiderSpines::SpiderSpines()
+
+SpiderFly::SpiderFly()
 : Spider()
 {
 }
-SpiderSpines::~SpiderSpines()
+SpiderFly::~SpiderFly()
 {
 }
-bool SpiderSpines::init()
+bool SpiderFly::init()
 {
     if (!Spider::init())
     {
         return false;
     }
     
-    m_armature = Armature::create("SpiderSpine");
+    m_armature = Armature::create("SpiderFly");
     m_armature->setScale(0.8f);
     this->addChild(m_armature);
     
@@ -33,19 +34,21 @@ bool SpiderSpines::init()
     
     m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
-    this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
+    this->setCollideRect(Rect(50, 20, csize.width * 0.8f, csize.height * 0.6));
     
     this->debugShow();
+    
+    this->setGravityEffect(false);
     
     return true;
 }
 
-void SpiderSpines::setState(SpiderState state)
+void SpiderFly::setState(SpiderState state)
 {
     Spider::setState(state);
     switch (m_state) {
         case kSpiderState_Attack:
-            m_armature->getAnimation()->play("attack");
+            m_armature->getAnimation()->play("stand");
             break;
         case kSpiderState_Stand:
             m_armature->getAnimation()->play("stand");
@@ -54,48 +57,49 @@ void SpiderSpines::setState(SpiderState state)
             m_armature->getAnimation()->play("hurt");
             break;
         case kSpiderState_Walk:
-            m_armature->getAnimation()->play("walk");
+            m_armature->getAnimation()->play("stand");
             break;
         default:
             break;
     }
-    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(SpiderSpines::movementEvent, this));
-    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(SpiderSpines::frameEvent, this));
+    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(SpiderFly::movementEvent, this));
+    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(SpiderFly::frameEvent, this));
 }
 
-void SpiderSpines::dead()
+void SpiderFly::dead()
 {
     this->setState(kSpiderState_Hurted);
     this->setCollideEffect(false);
+    this->setGravityEffect(true);
 }
 
 #pragma mark - bone callback
-void SpiderSpines::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
+void SpiderFly::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
     if (MovementEventType::COMPLETE == movementType)
     {
         if("hurt" == movementID)
         {
-            this->setDestoryed(true);
+            this->setGravityEffect(true);
         }
         
     }
 }
-void SpiderSpines::frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)
+void SpiderFly::frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)
 {
 }
 
 #pragma mark - collide
 
-void SpiderSpines::trackCollideWithRunner(Runner* _runner)
+void SpiderFly::trackCollideWithRunner(Runner* _runner)
 {
-    Spider::trackCollideWithRunner(_runner);
     
+    Spider::trackCollideWithRunner(_runner);
     if (!this->isCollideEffect() || this->isDestoryed())
     {
         return;
     }
-    
+    //处理与玩家的碰撞
     auto rect1 = PhysicHelp::countPhysicNodeRect(this);
     if (_runner->isAtk())
     {
@@ -111,15 +115,24 @@ void SpiderSpines::trackCollideWithRunner(Runner* _runner)
     }
     
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
-    bool isKilled = CollideTrackHelp::trackCollide(rect1, rect2);
-    if (isKilled)
+    
+    CollideDirection dir = CollideTrackHelp::trackCollideDirection(rect1, rect2);
+    
+    if (kCollideDirectionUp == dir)
+    {
+        _runner->rebound();
+        this->setYV(100);
+        this->dead();
+    }
+    else if (kCollideDirectionMiss != dir)
     {
         m_gameController->dead(_runner);
-//        this->setCollideEffect(false);
+        
+        //        this->setCollideEffect(false);
     }
 }
 
-void SpiderSpines::trackCollideWithBullet(Bullet* bullet)
+void SpiderFly::trackCollideWithBullet(Bullet* bullet)
 {
     auto rect1 = PhysicHelp::countPhysicNodeRect(bullet);
     auto rect2 = PhysicHelp::countPhysicNodeRect(this);
@@ -131,4 +144,3 @@ void SpiderSpines::trackCollideWithBullet(Bullet* bullet)
         bullet->setDestoryed(true);
     }
 }
-

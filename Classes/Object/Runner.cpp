@@ -287,9 +287,22 @@ void Runner::CollideTrackListener_CollideAll(CollideDirection direction)
 
 void Runner::trackCollideWithBullet(Bullet* bullet)
 {
+    if (!bullet->isCollideEffect() || bullet->isDestoryed())
+    {
+        return;
+    }
     auto rect1 = PhysicHelp::countPhysicNodeRect(bullet);
     auto rect2 = PhysicHelp::countPhysicNodeRect(this);
-    
+    if (this->isAtk() && bullet->isAtkable())
+    {
+        auto rect3 = PhysicHelp::countPhysicNodeRect(this, this->getAtkRect());
+        bool isAtked = CollideTrackHelp::trackCollide(rect1, rect3);
+        if (isAtked)
+        {
+            bullet->setDestoryed(true);
+            return;
+        }
+    }
     bool isCollided = CollideTrackHelp::trackCollide(rect1, rect2);
     if (isCollided)
     {
@@ -297,6 +310,7 @@ void Runner::trackCollideWithBullet(Bullet* bullet)
         {
             m_gameController->dead(this);
         }
+        bullet->setCollideEffect(false);
         bullet->setDestoryed(true);
     }
 }

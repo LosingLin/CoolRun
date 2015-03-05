@@ -43,6 +43,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Mission/MissionObjects.cpp \
                    ../../Classes/Mission/MissionPage.cpp \
                    ../../Classes/Object/AlertBullet.cpp \
+                   ../../Classes/Object/AlertBulletPoison.cpp \
+                   ../../Classes/Object/AlertBulletNet.cpp \
                    ../../Classes/Object/Animal.cpp \
                    ../../Classes/Object/Boss.cpp \
                    ../../Classes/Object/BossBullet.cpp \
@@ -70,7 +72,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Object/SpiderKind.cpp \
                    ../../Classes/Object/SpiderPoison.cpp \
                    ../../Classes/Object/SpiderSpines.cpp \
+                   ../../Classes/Object/SpiderFly.cpp \
                    ../../Classes/Object/Stone.cpp \
+                   ../../Classes/Object/Saw.cpp \
                    ../../Classes/Object/Villager.cpp \
                    ../../Classes/Physics/CollideRect.cpp \
                    ../../Classes/Physics/CollideTrack.cpp \

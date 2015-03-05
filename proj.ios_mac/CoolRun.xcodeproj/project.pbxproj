@@ -133,6 +133,8 @@
 		FC9DE5D81A510AEF007365F2 /* Land.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9DE5D61A510AEF007365F2 /* Land.cpp */; };
 		FC9EEFEB1A31DED900A24652 /* Bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9EEFE91A31DED900A24652 /* Bullet.cpp */; };
 		FC9EEFF21A31E05E00A24652 /* PoisonBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9EEFF01A31E05E00A24652 /* PoisonBullet.cpp */; };
+		FCA427A81AA46486008A8E84 /* AlertBulletNet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA427A61AA46486008A8E84 /* AlertBulletNet.cpp */; };
+		FCA427AD1AA464BE008A8E84 /* AlertBulletPoison.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA427AB1AA464BE008A8E84 /* AlertBulletPoison.cpp */; };
 		FCA5B7EF19DE8CB0001BDCBA /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA5B7ED19DE8CB0001BDCBA /* Event.cpp */; };
 		FCA5B7F219DE8D26001BDCBA /* MissionEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA5B7F019DE8D26001BDCBA /* MissionEvent.cpp */; };
 		FCA5B7F519DE9B70001BDCBA /* MissionObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA5B7F319DE9B70001BDCBA /* MissionObjects.cpp */; };
@@ -144,11 +146,14 @@
 		FCBBC7751A78DA2E00DF2C16 /* EditorNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC7731A78DA2E00DF2C16 /* EditorNode.cpp */; };
 		FCBBC7791A79227E00DF2C16 /* EditorScrollMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC7771A79227E00DF2C16 /* EditorScrollMenu.cpp */; };
 		FCBBC77C1A7925E200DF2C16 /* EditorMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC77A1A7925E200DF2C16 /* EditorMainMenu.cpp */; };
+		FCBC83611AA6DD030073E1F5 /* SpiderFly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBC835F1AA6DD030073E1F5 /* SpiderFly.cpp */; };
+		FCBC83651AA720040073E1F5 /* Particle in Resources */ = {isa = PBXBuildFile; fileRef = FCBC83641AA720040073E1F5 /* Particle */; };
 		FCC174981A25765900B2C2FA /* Animal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC174961A25765900B2C2FA /* Animal.cpp */; };
 		FCC1749D1A257C8F00B2C2FA /* Spider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC1749B1A257C8F00B2C2FA /* Spider.cpp */; };
 		FCC174A01A25833500B2C2FA /* SpiderKind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC1749E1A25833500B2C2FA /* SpiderKind.cpp */; };
 		FCC174A31A25835900B2C2FA /* SpiderPoison.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC174A11A25835900B2C2FA /* SpiderPoison.cpp */; };
 		FCC174A71A25842F00B2C2FA /* SpiderSpines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC174A51A25842F00B2C2FA /* SpiderSpines.cpp */; };
+		FCE1CC101AA0841500B32DB9 /* Saw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE1CC0E1AA0841500B32DB9 /* Saw.cpp */; };
 		FCF6E8A81A540614002AAFA0 /* ItemLandBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF6E8A61A540614002AAFA0 /* ItemLandBuild.cpp */; };
 		FCFB24DA19938853009F6B0A /* CoolRunScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCFB24D819938853009F6B0A /* CoolRunScene.cpp */; };
 		FCFB24DD19938C27009F6B0A /* Image in Resources */ = {isa = PBXBuildFile; fileRef = FCFB24DC19938C27009F6B0A /* Image */; };
@@ -483,6 +488,10 @@
 		FC9EEFEA1A31DED900A24652 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
 		FC9EEFF01A31E05E00A24652 /* PoisonBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoisonBullet.cpp; sourceTree = "<group>"; };
 		FC9EEFF11A31E05E00A24652 /* PoisonBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoisonBullet.h; sourceTree = "<group>"; };
+		FCA427A61AA46486008A8E84 /* AlertBulletNet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertBulletNet.cpp; sourceTree = "<group>"; };
+		FCA427A71AA46486008A8E84 /* AlertBulletNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBulletNet.h; sourceTree = "<group>"; };
+		FCA427AB1AA464BE008A8E84 /* AlertBulletPoison.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertBulletPoison.cpp; sourceTree = "<group>"; };
+		FCA427AC1AA464BE008A8E84 /* AlertBulletPoison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBulletPoison.h; sourceTree = "<group>"; };
 		FCA5B7ED19DE8CB0001BDCBA /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
 		FCA5B7EE19DE8CB0001BDCBA /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		FCA5B7F019DE8D26001BDCBA /* MissionEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MissionEvent.cpp; sourceTree = "<group>"; };
@@ -505,6 +514,9 @@
 		FCBBC7781A79227E00DF2C16 /* EditorScrollMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorScrollMenu.h; sourceTree = "<group>"; };
 		FCBBC77A1A7925E200DF2C16 /* EditorMainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMainMenu.cpp; sourceTree = "<group>"; };
 		FCBBC77B1A7925E200DF2C16 /* EditorMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorMainMenu.h; sourceTree = "<group>"; };
+		FCBC835F1AA6DD030073E1F5 /* SpiderFly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpiderFly.cpp; sourceTree = "<group>"; };
+		FCBC83601AA6DD030073E1F5 /* SpiderFly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpiderFly.h; sourceTree = "<group>"; };
+		FCBC83641AA720040073E1F5 /* Particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particle; sourceTree = "<group>"; };
 		FCC174961A25765900B2C2FA /* Animal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animal.cpp; sourceTree = "<group>"; };
 		FCC174971A25765900B2C2FA /* Animal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animal.h; sourceTree = "<group>"; };
 		FCC1749B1A257C8F00B2C2FA /* Spider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spider.cpp; sourceTree = "<group>"; };
@@ -515,6 +527,8 @@
 		FCC174A21A25835900B2C2FA /* SpiderPoison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpiderPoison.h; sourceTree = "<group>"; };
 		FCC174A51A25842F00B2C2FA /* SpiderSpines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpiderSpines.cpp; sourceTree = "<group>"; };
 		FCC174A61A25842F00B2C2FA /* SpiderSpines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpiderSpines.h; sourceTree = "<group>"; };
+		FCE1CC0E1AA0841500B32DB9 /* Saw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Saw.cpp; sourceTree = "<group>"; };
+		FCE1CC0F1AA0841500B32DB9 /* Saw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Saw.h; sourceTree = "<group>"; };
 		FCF6E8A61A540614002AAFA0 /* ItemLandBuild.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemLandBuild.cpp; sourceTree = "<group>"; };
 		FCF6E8A71A540614002AAFA0 /* ItemLandBuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLandBuild.h; sourceTree = "<group>"; };
 		FCFB24D819938853009F6B0A /* CoolRunScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoolRunScene.cpp; path = ../Classes/CoolRunScene.cpp; sourceTree = "<group>"; };
@@ -722,6 +736,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FCBC83641AA720040073E1F5 /* Particle */,
 				FC2AAEA419E156DC00CFED30 /* CocosStudio */,
 				FC723416199B50CC0059B543 /* Json */,
 				FC723414199B11230059B543 /* Marker Felt.ttf */,
@@ -777,6 +792,7 @@
 		FC481AFB1994E3C5007E0A12 /* Object */ = {
 			isa = PBXGroup;
 			children = (
+				FCE1CC0B1AA083DC00B32DB9 /* Saw */,
 				FC9DE5D31A510ADA007365F2 /* Land */,
 				FC5D10421A4561C9004DF1FF /* Item */,
 				FC9EEFEF1A31DFF100A24652 /* Animal */,
@@ -967,6 +983,10 @@
 				FC9EEFF11A31E05E00A24652 /* PoisonBullet.h */,
 				FC8821A01A405EFA00C5EB38 /* AlertBullet.cpp */,
 				FC8821A11A405EFA00C5EB38 /* AlertBullet.h */,
+				FCA427AB1AA464BE008A8E84 /* AlertBulletPoison.cpp */,
+				FCA427AC1AA464BE008A8E84 /* AlertBulletPoison.h */,
+				FCA427A61AA46486008A8E84 /* AlertBulletNet.cpp */,
+				FCA427A71AA46486008A8E84 /* AlertBulletNet.h */,
 				FC0DC33F1A6CD5A0008091AC /* BossBullet.cpp */,
 				FC0DC3401A6CD5A0008091AC /* BossBullet.h */,
 			);
@@ -1087,8 +1107,19 @@
 				FCC174A21A25835900B2C2FA /* SpiderPoison.h */,
 				FCC174A51A25842F00B2C2FA /* SpiderSpines.cpp */,
 				FCC174A61A25842F00B2C2FA /* SpiderSpines.h */,
+				FCBC835F1AA6DD030073E1F5 /* SpiderFly.cpp */,
+				FCBC83601AA6DD030073E1F5 /* SpiderFly.h */,
 			);
 			name = Spider;
+			sourceTree = "<group>";
+		};
+		FCE1CC0B1AA083DC00B32DB9 /* Saw */ = {
+			isa = PBXGroup;
+			children = (
+				FCE1CC0E1AA0841500B32DB9 /* Saw.cpp */,
+				FCE1CC0F1AA0841500B32DB9 /* Saw.h */,
+			);
+			name = Saw;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1267,6 +1298,7 @@
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				FC723417199B50CC0059B543 /* Json in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				FCBC83651AA720040073E1F5 /* Particle in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
@@ -1301,6 +1333,7 @@
 			files = (
 				FC5D10471A4561FE004DF1FF /* Item.cpp in Sources */,
 				FC71811019FE2C230063B495 /* CollideRect.cpp in Sources */,
+				FCA427A81AA46486008A8E84 /* AlertBulletNet.cpp in Sources */,
 				FC55CB9419E3BB9F00041B96 /* CollectionCoin.cpp in Sources */,
 				FC55CB8719E394BB00041B96 /* MissionDataInterface.cpp in Sources */,
 				FC481AF71994CF87007E0A12 /* GravityPhysics.cpp in Sources */,
@@ -1331,6 +1364,7 @@
 				FC8F1A381A55791500A05BE0 /* ItemFly.cpp in Sources */,
 				FCFB24DA19938853009F6B0A /* CoolRunScene.cpp in Sources */,
 				FCA5B7F519DE9B70001BDCBA /* MissionObjects.cpp in Sources */,
+				FCA427AD1AA464BE008A8E84 /* AlertBulletPoison.cpp in Sources */,
 				FC82AC1C1A7CAB73001E49CC /* EditorDetailMenu.cpp in Sources */,
 				FC22910919BEA83500E83928 /* CollideNode.cpp in Sources */,
 				FC9DE5D81A510AEF007365F2 /* Land.cpp in Sources */,
@@ -1371,6 +1405,7 @@
 				FC55CB9A19E3C31C00041B96 /* Collection.cpp in Sources */,
 				FC87277519F65AC80066837A /* Background.cpp in Sources */,
 				FC9EEFF21A31E05E00A24652 /* PoisonBullet.cpp in Sources */,
+				FCE1CC101AA0841500B32DB9 /* Saw.cpp in Sources */,
 				FCA5B7EF19DE8CB0001BDCBA /* Event.cpp in Sources */,
 				FC8D85A91A4BFDCC001C452C /* ItemDad.cpp in Sources */,
 				FCBBC7751A78DA2E00DF2C16 /* EditorNode.cpp in Sources */,
@@ -1384,6 +1419,7 @@
 				FC927C6119B7296A0002C44A /* MenuScene.cpp in Sources */,
 				FC20BE751998DA60007AC672 /* CollideTrack.cpp in Sources */,
 				FCC174A71A25842F00B2C2FA /* SpiderSpines.cpp in Sources */,
+				FCBC83611AA6DD030073E1F5 /* SpiderFly.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

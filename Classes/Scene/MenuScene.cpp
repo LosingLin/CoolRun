@@ -83,7 +83,10 @@ bool MenuLayer::init()
     
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Runner0.png", "Runner0.plist", "Runner.ExportJson");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("spider_bone.plist");
-    ArmatureDataManager::getInstance()->addArmatureFileInfo("Spider.ExportJson");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderPoison.ExportJson");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderKind.ExportJson");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderSpine.ExportJson");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderFly.ExportJson");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Boss010.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss01.ExportJson");
     
@@ -106,7 +109,6 @@ bool MenuLayer::init()
     
     auto home = Home::create();
     this->addChild(home);
-    
     
     return true;
 }

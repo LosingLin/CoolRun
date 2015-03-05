@@ -27,7 +27,14 @@ bool SpiderPoison::init()
         return false;
     }
     
-    auto csize = this->getContentSize();
+    m_armature = Armature::create("SpiderPoison");
+    m_armature->setScale(0.8f);
+    this->addChild(m_armature);
+    
+    auto csize = m_armature->getContentSize() * 0.8f;
+    this->setContentSize(csize);
+    
+    m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
     this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
     

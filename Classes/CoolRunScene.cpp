@@ -113,15 +113,13 @@ bool CoolRun::init()
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg002.png", CC_CALLBACK_1(CoolRun::finishAddImage, this));
     
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg001.png", std::bind(&CoolRun::finishAddImage, this, std::placeholders::_1));
-    log("test........00");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("parkour.plist");
+
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
     
 //    Director::getInstance()->getTextureCache()->addImage("bg001.png");
 //    Director::getInstance()->getTextureCache()->addImage("bg002.png");
-    log("test........01");
     m_gPhysics = GravityPhysics::create();
     m_gPhysics->setGravity(-200.0f);
     CC_SAFE_RETAIN(m_gPhysics);
@@ -136,7 +134,6 @@ bool CoolRun::init()
     CREATEANDRETAINARRAY(m_bulletObjs);
     CREATEANDRETAINARRAY(m_events);
     
-    log("test........02");
     
     float scale = 1264.0/1024.0;
     
@@ -170,7 +167,6 @@ bool CoolRun::init()
     m_stretchView->setLocalZOrder(ZORDER_HEADMENU);
     this->addChild(m_stretchView);
     
-    log("test........03");
     
     //stretch lab
     m_stretchLab = Label::createWithSystemFont("00", "", 36);
@@ -191,7 +187,6 @@ bool CoolRun::init()
 //    m_mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
 //    CC_SAFE_RETAIN(m_mission);
     
-    log("test........04");
     
     m_home = Home::create();
     this->addChild(m_home);
@@ -226,7 +221,6 @@ bool CoolRun::init()
     this->addChild(m_pacBtn, 100);
     //m_pacBtn->setOpacity(100);
     
-    log("test........12");
     return true;
 }
 
@@ -265,7 +259,7 @@ void CoolRun::setMission(Mission* mission)
 void CoolRun::addRunner()
 {
     auto runner = Runner::create();
-    runner->setPosition(Vec2(300, 240));
+    runner->setPosition(Vec2(260, 300));
     runner->setGameController(this);
     this->addChild(runner);
     
@@ -286,7 +280,7 @@ void CoolRun::addSpiderAndHelp()
     m_gravityCollideObjs->addObject(m_help);
     
     m_enemy = SpiderPoison::create();
-    m_enemy->setPosition(Vec2(720, 200));
+    m_enemy->setPosition(Vec2(720, 300));
     m_enemy->setState(kSpiderState_Walk);
     m_enemy->setGravityEffect(true);
     m_enemy->setScaleX(-1);
@@ -665,9 +659,9 @@ void CoolRun::simpleCollideTrack()
             continue;
         }
         
-        for (int i = 0; i < m_runners->count(); ++ i)
+        for (int j = 0; j < m_runners->count(); ++ j)
         {
-            Runner* runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
+            Runner* runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(j));
             
             if (!node1->isCollideEffect() || node1->isDestoryed())
             {
@@ -696,9 +690,9 @@ void CoolRun::bulletCollideTrack()
         {
             CollideNode* node1 = NULL;
             
-            for (int i = 0; i < m_simpleCollideObjs->count(); ++ i)
+            for (int j = 0; j < m_simpleCollideObjs->count(); ++ j)
             {
-                node1 = dynamic_cast<CollideNode*>(m_simpleCollideObjs->getObjectAtIndex(i));
+                node1 = dynamic_cast<CollideNode*>(m_simpleCollideObjs->getObjectAtIndex(j));
                 
                 if (!node1->isCollideEffect() || node1->isDestoryed())
                 {
@@ -712,9 +706,9 @@ void CoolRun::bulletCollideTrack()
         
         if (bullet->isRunnerHurt())
         {
-            for (int i = 0; i < m_runners->count(); ++ i)
+            for (int j = 0; j < m_runners->count(); ++ j)
             {
-                Runner* runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
+                Runner* runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(j));
                 if (!bullet->isCollideEffect() || bullet->isDestoryed())
                 {
                     continue;

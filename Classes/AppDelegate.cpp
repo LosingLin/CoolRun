@@ -58,6 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     FileUtils::getInstance()->addSearchPath("Image");
     FileUtils::getInstance()->addSearchPath("Json");
     FileUtils::getInstance()->addSearchPath("CocosStudio");
+    FileUtils::getInstance()->addSearchPath("Particle");
     //FileUtils::getInstance()->addSearchPath("./D_Editor");
     
     std::vector<std::string> paths =  FileUtils::getInstance()->getSearchPaths();

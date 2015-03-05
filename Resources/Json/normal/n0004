@@ -87,36 +87,7 @@
                 "multiRects" : [
                 ]
             }],
-        "events": [{
-            "page_s": 0.0,
-            "objects": [{
-                "pNodeType": 5,
-                "state": 2,
-                "aPoint": { 
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "pos": {
-                    "x": 1940.0,
-                    "y": 180.0
-                },
-                "b_isG_effect": true,
-                "b_isC_effect": true,
-                "collideType": 2,
-                "x": {
-                    "v": -120.0,
-                    "a": -0.0
-                },
-                "y": {
-                    "v": 0.0,
-                    "a": 0.0
-                },
-                "multiRects" : [
-                    { "x":20.0, "y":40.0, "w":100.0, "h":100.0 },
-                    { "x":130.0, "y":50.0, "w":100.0, "h":128.0 }
-                ]
-            }]
-        }],
+        "events": [],
         "collections": [{
             "pNodeType": 2,
             "cm_index": 1,

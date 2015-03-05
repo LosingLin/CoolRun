@@ -28,10 +28,13 @@ public:
     void setAnimalHurt(bool flag) { b_isAnimalHurt = flag; }
     bool isRunnerHurt() { return b_isRunnerHurt; }
     bool isAnimalHurt() { return b_isAnimalHurt; }
+    void setAtkable(bool flag) { b_isAtkable = flag; }
+    bool isAtkable() { return b_isAtkable; }
 protected:
     bool b_isRunnerHurt;
     bool b_isAnimalHurt;
-    
+    bool b_isAtkable;
+    ParticleSystemQuad* m_particleSys;
 private:
 };
 

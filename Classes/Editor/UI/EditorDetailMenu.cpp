@@ -43,6 +43,7 @@ EditorDetailMenu::EditorDetailMenu()
 , m_spideState(nullptr)
 , m_isAnimalHurt(nullptr)
 , m_isRunnerHurt(nullptr)
+, m_isAtkable(nullptr)
 , m_flyV(nullptr)
 {
     
@@ -249,7 +250,7 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
             m_spideState = nullptr;
         }
     }
-    if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlert)
+    if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlertPoison || pType == kPhysicNodeBulletAlertNet)
     {
         m_isAnimalHurt = EditorSelector::create(__Array::create(
                                                               __String::create("Y"),
@@ -272,6 +273,17 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
         m_isRunnerHurt->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isRunnerHurt);
         m_isRunnerHurt->setPosition(Vec2(50, m_y));
         this->addChild(m_isRunnerHurt);
+        NORMALDIS(m_y);
+        m_isAtkable = EditorSelector::create(__Array::create(
+                                                             __String::create("Y"),
+                                                             __String::create("N"),
+                                                             nullptr),
+                                             "atk_able",
+                                             Size(260, 60));
+        m_isAtkable->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
+        m_isAtkable->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isAtkable);
+        m_isAtkable->setPosition(Vec2(50, m_y));
+        this->addChild(m_isAtkable);
         BIGDIS(m_y);
     }
     else
@@ -447,7 +459,7 @@ void EditorDetailMenu::updateMenu()
                     break;
             }
         }
-        if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlert)
+        if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlertPoison || pType == kPhysicNodeBulletAlertNet)
         {
             auto cPNode = dynamic_cast<Bullet*>(pNode);
             if (cPNode->isAnimalHurt())
@@ -465,6 +477,14 @@ void EditorDetailMenu::updateMenu()
             else
             {
                 m_isRunnerHurt->setSelected("N");
+            }
+            if (cPNode->isAtkable())
+            {
+                m_isAtkable->setSelected("Y");
+            }
+            else
+            {
+                m_isAtkable->setSelected("N");
             }
         }
         if (pType == kPhysicNodeItemDad || pType == kPhysicNodeItemFly || pType == kPhysicNodeItemLandBuild ||
@@ -701,6 +721,18 @@ void EditorDetailMenu::selectedDone(const string& key, EditorSelector* selector)
         else
         {
             cPNode->setRunnerHurt(false);
+        }
+    }
+    else if (selector == m_isAtkable)
+    {
+        auto cPNode = dynamic_cast<Bullet*>(pNode);
+        if ("Y" == key)
+        {
+            cPNode->setAtkable(true);
+        }
+        else
+        {
+            cPNode->setAtkable(false);
         }
     }
 }

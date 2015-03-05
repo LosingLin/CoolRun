@@ -29,9 +29,15 @@ bool PoisonBullet::init()
     this->setAnimalHurt(true);
     this->setCollideEffect(true);
     
-    m_bullet = Sprite::createWithSpriteFrameName("spider_bone/spider_belly_bullet.png");
-    
+    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison.png");
+    auto csize = m_bullet->getContentSize();
+    this->setContentSize(csize);
+//    m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_bullet);
+    
+    m_particleSys = ParticleSystemQuad::create("poison.plist");
+    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
+    this->addChild(m_particleSys, -1);
     
     this->debugShow();
     
@@ -46,22 +52,13 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
         case kCRDirectionUp:
         {
             auto csize = m_bullet->getContentSize();
-            this->setContentSize(csize);
-            m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
-
-            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+            this->setContentSize(Size(csize.height, csize.width));
+            m_bullet->setPosition(Vec2(csize.height/2, csize.width/2));
+            m_bullet->setRotation(90);
+            this->setCollideRect(Rect(0, 0, csize.height, csize.width));
         }
             break;
         case kCRDirectionDown:
-        {
-            auto csize = m_bullet->getContentSize();
-            this->setContentSize(csize);
-            m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
-            m_bullet->setRotation(180);
-            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
-        }
-            break;
-        case kCRDirectionLeft:
         {
             auto csize = m_bullet->getContentSize();
             this->setContentSize(Size(csize.height, csize.width));
@@ -70,13 +67,21 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
             this->setCollideRect(Rect(0, 0, csize.height, csize.width));
         }
             break;
+        case kCRDirectionLeft:
+        {
+            auto csize = m_bullet->getContentSize();
+            this->setContentSize(Size(csize.width, csize.height));
+            m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
+            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+        }
+            break;
         case kCRDirectionRight:
         {
             auto csize = m_bullet->getContentSize();
-            this->setContentSize(Size(csize.height, csize.width));
-            m_bullet->setPosition(Vec2(csize.height/2, csize.width/2));
-            m_bullet->setRotation(90);
-            this->setCollideRect(Rect(0, 0, csize.height, csize.width));
+            this->setContentSize(Size(csize.width, csize.height));
+            m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
+            m_bullet->setRotation(180);
+            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
         }
             break;
             
