@@ -62,6 +62,7 @@ CoolRun::CoolRun()
 , m_events(nullptr)
 , m_nextPage(nullptr)
 , m_curPage(nullptr)
+, m_awayBG(nullptr)
 , m_farBG(nullptr)
 , m_midBG(nullptr)
 , m_home(nullptr)
@@ -117,6 +118,7 @@ bool CoolRun::init()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
     
 //    Director::getInstance()->getTextureCache()->addImage("bg001.png");
 //    Director::getInstance()->getTextureCache()->addImage("bg002.png");
@@ -142,20 +144,34 @@ bool CoolRun::init()
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
     
-    m_farBG = Background::create("bg03_01.png", "bg03_02.png");
-    m_farBG->setVelocity(m_velocity*0.5f);
-    m_farBG->setPosition(Vec2(0, 0));
-    this->addChild(m_farBG);
+    m_awayBG = Background::create("bg05_01.png", "bg05_02.png");
+    m_awayBG->setVelocity(m_velocity*0.2f);
+    m_awayBG->setPosition(Vec2(0, 0));
+    this->addChild(m_awayBG);
     
     auto cover = Sprite::createWithSpriteFrameName("bg_cover.png");
     cover->setScale(scale);
     cover->setAnchorPoint(Vec2::ZERO);
+    cover->setOpacity(180);
+    this->addChild(cover);
+    
+    m_farBG = Background::create("bg03_01.png", "bg03_02.png");
+    m_farBG->setVelocity(m_velocity*0.4f);
+    m_farBG->setPosition(Vec2(0, 0));
+    this->addChild(m_farBG);
+    
+    cover = Sprite::createWithSpriteFrameName("bg_cover.png");
+    cover->setScale(scale);
+    cover->setAnchorPoint(Vec2::ZERO);
+    cover->setOpacity(180);
     this->addChild(cover);
     
     m_midBG = Background::create("bg04_01.png", "bg04_02.png");
-    m_midBG->setVelocity(m_velocity*1.0f);
+    m_midBG->setVelocity(m_velocity*0.8f);
     m_midBG->setPosition(Vec2(0, 0));
     this->addChild(m_midBG);
+    
+    
 
     m_scoreView = Score::create();
     m_scoreView->setPosition(Vec2(origin.x + 2, origin.y + visibleSize.height - 56));
@@ -196,26 +212,24 @@ bool CoolRun::init()
     //this->loadNextPage(true); //第一屏
     //this->loadNextPage(); //预加载第二屏
     
-    m_atkBtn = MYButton::createWithFrameName("Skill_n.png", "Skill_h.png", "Skill_d.png");
+    m_atkBtn = MYButton::createWithContentSize(Size(visibleSize.width/2, visibleSize.height-80));
     m_atkBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::SkillBtnCallback, this));
-    m_atkBtn->setPosition(Vec2(origin.x + 100, origin.y + 100));
-    m_atkBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    m_atkBtn->setPosition(Vec2(origin.x, origin.y));
+    m_atkBtn->setAnchorPoint(Vec2(0, 0));
     m_atkBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
     this->addChild(m_atkBtn, 100);
-    m_atkBtn->setOpacity(100);
     
     
-    m_jumpBtn = MYButton::createWithFrameName("Jump_n.png", "Jump_h.png", "Jump_d.png");
+    m_jumpBtn = MYButton::createWithContentSize(Size(visibleSize.width/2, visibleSize.height-80));
     m_jumpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::JumpBtnCallback, this));
-    m_jumpBtn->setPosition(Vec2(origin.x + visibleSize.width - 100, origin.y + 100));
-    m_jumpBtn->setAnchorPoint(Vec2(0.5, 0.5));
+    m_jumpBtn->setPosition(Vec2(origin.x + visibleSize.width, origin.y));
+    m_jumpBtn->setAnchorPoint(Vec2(1, 0));
     m_jumpBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
     this->addChild(m_jumpBtn, 100);
-    m_jumpBtn->setOpacity(100);
     
     m_pacBtn = MYButton::createWithFrameName("btn_pause.png");
     m_pacBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::PacBtnCallback, this));
-    m_pacBtn->setPosition(Vec2(origin.x + visibleSize.width - 50, origin.y + visibleSize.height - 50));
+    m_pacBtn->setPosition(Vec2(origin.x + visibleSize.width - 44, origin.y + visibleSize.height - 44));
     m_pacBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_pacBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
     this->addChild(m_pacBtn, 100);
@@ -373,8 +387,9 @@ void CoolRun::setVelocity(int v)
     this->_setVelocity(m_simpleCollideObjs, vc);
     this->_setVelocity(m_dirCollideObjs, vc);
     this->_setVelocity(m_bulletObjs, vc);
-    m_farBG->setVelocity(m_velocity*0.5f);
-    m_midBG->setVelocity(m_velocity*1.0f);
+    m_awayBG->setVelocity(m_velocity*0.2f);
+    m_farBG->setVelocity(m_velocity*0.4f);
+    m_midBG->setVelocity(m_velocity*0.8f);
 }
 void CoolRun::_setVelocity(__Array* _nodes, int vc)
 {

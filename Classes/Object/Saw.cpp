@@ -31,11 +31,14 @@ bool Saw::init()
     this->setContentSize(csize);
     sp->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(sp);
-    sp->runAction(RepeatForever::create(RotateBy::create(0.2, -60)));
+    sp->runAction(RepeatForever::create(RotateBy::create(0.4, -60)));
     this->setCollideEffect(true);
     this->setGravityEffect(false);
     this->setCollideType(kCollideTypeSimple);
     this->setCollideRect(Rect(30, 30, csize.width-60, csize.height-60));
+    
+    this->addRect(Rect(46, 50, 40, 80)); //头部
+    this->addRect(Rect(90, 50, 130, 100)); //尾部
     
     this->debugShow();
     

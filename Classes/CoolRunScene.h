@@ -14,12 +14,12 @@
 #include "MYButton.h"
 
 #define ZORDER_STONE        0
-#define ZORDER_RUNNER       1
-#define ZORDER_COIN         2
-#define ZORDER_ANIMAL       2
-#define ZORDER_ITEM         3
-#define ZORDER_BULLET       3
-#define ZORDER_WARNING      4
+#define ZORDER_COIN         1
+#define ZORDER_RUNNER       2
+#define ZORDER_ANIMAL       3
+#define ZORDER_BULLET       4
+#define ZORDER_ITEM         5
+#define ZORDER_WARNING      6
 
 #define ZORDER_HEADMENU     10
 
@@ -172,6 +172,7 @@ private:
     int m_resCacheCount;
     int m_velocity;
     
+    Background *m_awayBG;
     Background *m_farBG;
     Background *m_midBG;
     

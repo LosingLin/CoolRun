@@ -104,7 +104,7 @@ void Stone::setContentSize(const Size& _size)
     //this->setCollideRect(Rect(40, 0, _size.width - 80, _size.height-64));
     
     this->buildStoneWithShare("wood01_left.png", 32, "wood01_mid.png", 32, "wood01_right.png", 82);
-    this->setCollideRect(Rect(30, 0, _size.width - 60, _size.height/2 - 40));
+    this->setCollideRect(Rect(30, 0, _size.width - 60, 44));
     
     //this->buildStoneWithShare("wood02.png", 196);
     //this->setCollideRect(Rect(30, 0, _size.width - 60, _size.height/2 - 40));

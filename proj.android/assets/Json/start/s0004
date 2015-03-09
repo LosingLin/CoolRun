@@ -42,28 +42,6 @@
             "h": 180.0
         }
     }, {
-        "pNodeType": 9,
-        "pos": {
-            "x": 0.0,
-            "y": 300.0
-        },
-        "align_x": 1.0,
-        "align_y": 0.0,
-        "b_isS_pos" : true,
-        "b_isG_effect": false,
-        "b_isC_effect": true,
-        "b_isA_hurt": false,
-        "b_isR_hurt" : true,
-        "collideType": 3,
-        "x": {
-            "v": -240.0,
-            "a": -0.0
-        },
-        "y": {
-            "v": 0.0,
-            "a": 0.0
-        }
-    }, {
         "pNodeType": 14,
         "pos": {
             "x": 880.0,

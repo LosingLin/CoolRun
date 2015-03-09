@@ -28,17 +28,19 @@ bool AlertBulletPoison::init()
     this->setRunnerHurt(true);
     this->setAnimalHurt(false);
     
-    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison.png");
-    //    auto csize = m_bullet->getContentSize();
-    auto csize = Size(170, 90);
+    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison01.png");
+    auto csize = m_bullet->getContentSize();
     this->setContentSize(csize);
     m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
     //m_bullet->setRotation(-90);
     this->addChild(m_bullet);
     
-    m_particleSys = ParticleSystemQuad::create("poison.plist");
-    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
-    this->addChild(m_particleSys, -1);
+    auto action = ActionHelp::createFrameAction("bullet_poison%02d.png", 1, 5, 0.1);
+    m_bullet->runAction(RepeatForever::create(action));
+    
+//    m_particleSys = ParticleSystemQuad::create("poison.plist");
+//    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
+//    this->addChild(m_particleSys, -1);
 //    auto psize = m_particleSys->getContentSize();
 //    log("PARTICLE : ----------------->%f, %f", psize.width, psize.height);
     
@@ -48,7 +50,7 @@ bool AlertBulletPoison::init()
 //    log("SP : ----------------->%f, %f", psize.width, psize.height);
 //    this->addChild(sp);
     
-    this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+    this->setCollideRect(Rect(0, 0, csize.width-10, csize.height));
     
     this->debugShow();
     

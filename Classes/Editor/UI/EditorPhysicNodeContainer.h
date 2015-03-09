@@ -30,6 +30,8 @@ public:
     bool init(PhysicNode* pNode);
     static EditorPhysicNodeContainer* create(PhysicNode* pNode);
     
+    virtual void setContentSize(const Size& _size) override;
+    
     void setPhysicNode(PhysicNode* pNode);
     PhysicNode* getPhysicNode() { return m_pNode; }
     
@@ -55,6 +57,7 @@ private:
     bool b_isMenu;
     PhysicNode* m_pNode;
     PhysicNodeType m_pType;
+    Scale9Sprite* m_frame;
     
     EditorDetailMenu* m_detailMenu;
 };

@@ -85,18 +85,18 @@ void Collection::loadJson(rapidjson::Value& _value)
         this->setIncY(y_inc);
     }
     
-    CollectionMatrix6X6 _matrix = CollectionMatrixInstance::INSTANCE[index];
+    CollectionMatrix _matrix = CollectionMatrixInstance::INSTANCE[index];
     
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < kCollectionMatrixNum; ++i)
     {
-        for (int j = 0; j < 6; ++j)
+        for (int j = 0; j < kCollectionMatrixNum; ++j)
         {
             if (_matrix.matrix[i][j] == 1)
             {
                 auto _node = PhysicNodeFactory::getInstance()->create(_value);
                 auto _pos = _node->getPosition();
                 _pos.x += j*x_inc;
-                _pos.y += (5-i)*y_inc;
+                _pos.y += (kCollectionMatrixNum-1-i)*y_inc;
                 _node->setPosition(_pos);
                 m_collection->addObject(_node);
             }
@@ -115,20 +115,20 @@ PhysicNode* Collection::createEditorPhysicNode()
     auto pNode = PhysicNodeFactory::getInstance()->create(doc);
     pNode->removeAllChildrenWithCleanup(true);
     //auto csize = pNode->getContentSize();
-    auto csize = Size(100, 100);
+    auto csize = Size(50, 50);
     pNode->setContentSize(Size(5*this->getIncX() + csize.width, 5*this->getIncY() + csize.height));
     
-    CollectionMatrix6X6 _matrix = CollectionMatrixInstance::INSTANCE[this->getCmIndex()];
-    for (int i = 0; i < 6; ++i)
+    CollectionMatrix _matrix = CollectionMatrixInstance::INSTANCE[this->getCmIndex()];
+    for (int i = 0; i < kCollectionMatrixNum; ++i)
     {
-        for (int j = 0; j < 6; ++j)
+        for (int j = 0; j < kCollectionMatrixNum; ++j)
         {
             if (_matrix.matrix[i][j] == 1)
             {
                 auto _node = PhysicNodeFactory::getInstance()->create(doc);
                 auto _pos = Vec2::ZERO;
                 _pos.x += j*this->getIncX();
-                _pos.y += (5-i)*this->getIncY();
+                _pos.y += (kCollectionMatrixNum-1-i)*this->getIncY();
                 _node->setPosition(_pos);
                 _node->setForEditor(true);
                 pNode->addChild(_node);

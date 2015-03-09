@@ -29,15 +29,19 @@ bool PoisonBullet::init()
     this->setAnimalHurt(true);
     this->setCollideEffect(true);
     
-    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison.png");
+    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison01.png");
     auto csize = m_bullet->getContentSize();
     this->setContentSize(csize);
 //    m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_bullet);
     
-    m_particleSys = ParticleSystemQuad::create("poison.plist");
-    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
-    this->addChild(m_particleSys, -1);
+    auto action = ActionHelp::createFrameAction("bullet_poison%02d.png", 1, 5, 0.1);
+    m_bullet->runAction(RepeatForever::create(action));
+    
+    
+//    m_particleSys = ParticleSystemQuad::create("poison.plist");
+//    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
+//    this->addChild(m_particleSys, -1);
     
     this->debugShow();
     

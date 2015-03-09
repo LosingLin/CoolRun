@@ -69,3 +69,11 @@ const Rect MultipleCollideNode::getMultiRect(int id)
     
     return Rect(0, 0, 0, 0);
 }
+
+void MultipleCollideNode::addRect(const Rect& rect)
+{
+    auto _cRect = CollideRect::create(rect, m_rectIndex++);
+    m_multiRects->addObject(_cRect);
+    
+    SHOW_RECT(rect);
+}

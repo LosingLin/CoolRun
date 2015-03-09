@@ -33,6 +33,8 @@ public:
     
     __Array* getMultiRects() { return m_multiRects; }
     const Rect getMultiRect(int index);
+    
+    void addRect(const Rect& rect);
 private:
     int m_rectIndex;
     __Array* m_multiRects;

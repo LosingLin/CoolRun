@@ -320,6 +320,10 @@ void EditorScene::hideMenu(MenuState state)
 
 void EditorScene::addObject(EditorPhysicNodeContainer* obj)
 {
+    auto offset = m_scrollView->getContentOffset();
+//    auto viewSize = m_scrollView->getViewSize();
+    auto pos = Vec2(-offset.x, -offset.y);
+    obj->setPosition(pos);
     obj->setEditorListener(this);
     m_curPage->addObject(obj);
 }

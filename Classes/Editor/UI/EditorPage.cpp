@@ -49,14 +49,14 @@ bool EditorPage::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(255, 0, 0, 150), csize.width/3, csize.height);
+    auto layer = LayerColor::create(Color4B(255, 255, 0, 150), csize.width/2, csize.height);
     this->addChild(layer);
-    layer = LayerColor::create(Color4B(0, 255, 0, 150), csize.width/3, csize.height);
-    layer->setPosition(csize.width/3, 0);
+    layer = LayerColor::create(Color4B(0, 255, 255, 150), csize.width/2, csize.height);
+    layer->setPosition(csize.width/2, 0);
     this->addChild(layer);
-    layer = LayerColor::create(Color4B(0, 0, 255, 150), csize.width/3, csize.height);
-    layer->setPosition(csize.width/3 * 2, 0);
-    this->addChild(layer);
+//    layer = LayerColor::create(Color4B(0, 0, 255, 150), csize.width/3, csize.height);
+//    layer->setPosition(csize.width/3 * 2, 0);
+//    this->addChild(layer);
     
     auto enode1 = EditorNode::create();
     this->addChild(enode1);

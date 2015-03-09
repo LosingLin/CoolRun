@@ -78,7 +78,7 @@ void Coin::update(float delta)
     
     b_isAnimating = true;
     
-    int mark = rand()%22;
+    int mark = rand()%30;
     if (mark < 10)
     {
         auto action01 = ActionHelp::createFrameAction("coin_%02d.png", 0, 4, 0.1, false);

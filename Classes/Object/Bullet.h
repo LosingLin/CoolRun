@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "MultipleCollideNode.h"
+#include "ActionHelp.h"
 
 class Bullet : public MultipleCollideNode
 {

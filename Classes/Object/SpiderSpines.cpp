@@ -33,7 +33,7 @@ bool SpiderSpines::init()
     
     m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
-    this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
+    this->setCollideRect(Rect(40, 44, csize.width * 0.8f, csize.height - 60));
     
     this->debugShow();
     

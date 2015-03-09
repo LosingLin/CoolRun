@@ -1,24 +1,18 @@
 {
     "pNodeType": 3,
-    "state": 1,
-    "aPoint": { 
-        "x": 0.0,
-        "y": 0.0
-    },
     "pos": {
         "x": 0.0,
         "y": 0.0
     },
-    "b_isG_effect": true,
+    "b_isG_effect": false,
     "b_isC_effect": true,
     "collideType": 2,
     "x": {
-        "v": -0.0,
-        "a": -0.0
+        "v": 0.0,
+        "a": 0.0
     },
     "y": {
         "v": 0.0,
         "a": 0.0
-    },
-    "multiRects" : []
+    }
 }

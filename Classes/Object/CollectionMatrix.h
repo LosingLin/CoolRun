@@ -9,14 +9,16 @@
 #ifndef CoolRun_CollectionMatrix_h
 #define CoolRun_CollectionMatrix_h
 
-struct CollectionMatrix6X6
+#define kCollectionMatrixNum 6
+
+struct CollectionMatrix
 {
-    int matrix[6][6];
-}*CollectionMatrix6X6_PTR;
+    int matrix[kCollectionMatrixNum][kCollectionMatrixNum];
+}*CollectionMatrix_PTR;
 
 namespace CollectionMatrixInstance
 {
-    CollectionMatrix6X6 ZERO = {{
+    CollectionMatrix ZERO = {{
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
@@ -24,7 +26,7 @@ namespace CollectionMatrixInstance
         {0,0,0,0,0,0},
         {0,0,0,0,0,0}
     }};
-    CollectionMatrix6X6 ONE = {{
+    CollectionMatrix ONE = {{
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
@@ -32,7 +34,7 @@ namespace CollectionMatrixInstance
         {0,0,0,0,0,0},
         {1,1,1,1,1,1}
     }};
-    CollectionMatrix6X6 TWO = {{
+    CollectionMatrix TWO = {{
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
         {0,0,0,0,0,0},
@@ -40,7 +42,7 @@ namespace CollectionMatrixInstance
         {0,1,1,1,1,0},
         {1,1,1,1,1,1}
     }};
-    CollectionMatrix6X6 THREEN = {{
+    CollectionMatrix THREEN = {{
         {0,1,1,1,1,0},
         {1,1,0,0,1,1},
         {1,0,0,0,0,1},
@@ -48,7 +50,7 @@ namespace CollectionMatrixInstance
         {1,1,0,0,1,1},
         {0,1,1,1,1,0}
     }};
-    CollectionMatrix6X6 FOUR = {{
+    CollectionMatrix FOUR = {{
         {0,1,1,1,1,0},
         {1,0,0,0,0,1},
         {1,0,0,0,0,1},
@@ -56,24 +58,24 @@ namespace CollectionMatrixInstance
         {1,0,0,0,0,1},
         {0,1,1,1,1,0}
     }};
-    CollectionMatrix6X6 FIVE = {{
+    CollectionMatrix FIVE = {{
         {0,0,0,0,0,0},
-        {0,0,0,0,1,1},
         {0,0,0,1,1,0},
         {0,0,1,1,0,0},
         {0,1,1,0,0,0},
-        {1,1,0,0,0,0}
-    }};
-    CollectionMatrix6X6 SIX = {{
-        {0,0,0,0,0,0},
         {1,1,0,0,0,0},
+        {0,0,0,0,0,0}
+    }};
+    CollectionMatrix SIX = {{
+        {0,0,0,0,0,0},
         {0,1,1,0,0,0},
         {0,0,1,1,0,0},
         {0,0,0,1,1,0},
-        {0,0,0,0,1,1}
+        {0,0,0,0,1,1},
+        {0,0,0,0,0,0}
     }};
     
-    CollectionMatrix6X6 INSTANCE[] = {
+    CollectionMatrix INSTANCE[] = {
         ZERO, ONE, TWO, THREEN, FOUR, FIVE, SIX
     };
     

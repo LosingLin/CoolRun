@@ -19,6 +19,7 @@ EditorPhysicNodeContainer::EditorPhysicNodeContainer()
 , b_isMenu(false)
 , m_detailMenu(nullptr)
 , m_pType(kPhysicNodeUnknown)
+, m_frame(nullptr)
 {
     
 }
@@ -33,6 +34,12 @@ bool EditorPhysicNodeContainer::init()
     {
         return false;
     }
+    auto csize = this->getContentSize();
+    
+    m_frame = Scale9Sprite::createWithSpriteFrameName("editorFrame_node.png");
+    m_frame->setPreferredSize(csize);
+    m_frame->setAnchorPoint(Vec2::ZERO);
+    this->addChild(m_frame);
     
     return true;
 }
@@ -55,6 +62,8 @@ bool EditorPhysicNodeContainer::init(const Size& csize, PhysicNode* pNode)
     
     this->setPhysicNode(pNode);
     
+    m_frame->setVisible(false);
+    
     return true;
 }
 
@@ -71,6 +80,15 @@ bool EditorPhysicNodeContainer::init(PhysicNode* pNode)
     this->setPhysicNode(pNode);
     
     return true;
+}
+
+void EditorPhysicNodeContainer::setContentSize(const Size& _size)
+{
+    EditorNode::setContentSize(_size);
+    if (!b_isMenu)
+    {
+        m_frame->setPreferredSize(_size);
+    }
 }
 
 void EditorPhysicNodeContainer::setPhysicNode(PhysicNode* pNode)

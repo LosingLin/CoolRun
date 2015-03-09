@@ -394,16 +394,19 @@
   jni/../../Classes/Object/SpiderKind.h \
   jni/../../Classes/Object/SpiderPoison.h \
   jni/../../Classes/Object/SpiderSpines.h \
+  jni/../../Classes/Object/SpiderFly.h \
   jni/../../Classes/Object/PoisonBullet.h \
   jni/../../Classes/Object/Bullet.h \
-  jni/../../Classes/Object/AlertBullet.h jni/../../Classes/Object/Item.h \
-  jni/../../Classes/Object/ItemSpare.h \
+  jni/../../Classes/Object/AlertBulletPoison.h \
+  jni/../../Classes/Object/AlertBullet.h \
+  jni/../../Classes/Object/AlertBulletNet.h \
+  jni/../../Classes/Object/Item.h jni/../../Classes/Object/ItemSpare.h \
   jni/../../Classes/Object/ItemMagnet.h \
   jni/../../Classes/Object/ItemTimesCoin.h \
   jni/../../Classes/Object/ItemTimesJump.h \
   jni/../../Classes/Object/ItemDad.h \
   jni/../../Classes/Object/ItemLandBuild.h \
-  jni/../../Classes/Object/ItemFly.h
+  jni/../../Classes/Object/ItemFly.h jni/../../Classes/Object/Saw.h
 
 jni/../../Classes/Factory/PhysicNodeFactory.h:
 
@@ -1205,11 +1208,17 @@ jni/../../Classes/Object/SpiderPoison.h:
 
 jni/../../Classes/Object/SpiderSpines.h:
 
+jni/../../Classes/Object/SpiderFly.h:
+
 jni/../../Classes/Object/PoisonBullet.h:
 
 jni/../../Classes/Object/Bullet.h:
 
+jni/../../Classes/Object/AlertBulletPoison.h:
+
 jni/../../Classes/Object/AlertBullet.h:
+
+jni/../../Classes/Object/AlertBulletNet.h:
 
 jni/../../Classes/Object/Item.h:
 
@@ -1226,3 +1235,5 @@ jni/../../Classes/Object/ItemDad.h:
 jni/../../Classes/Object/ItemLandBuild.h:
 
 jni/../../Classes/Object/ItemFly.h:
+
+jni/../../Classes/Object/Saw.h:

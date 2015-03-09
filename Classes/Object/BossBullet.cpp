@@ -27,18 +27,20 @@ bool BossBullet::init()
     this->setAnimalHurt(false);
     this->setCollideEffect(true);
     
-    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison.png");
-    auto csize = Size(120, 62);
+    m_bullet = Sprite::createWithSpriteFrameName("bullet_poison01.png");
+    auto csize = m_bullet->getContentSize();
     this->setContentSize(csize);
     m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
-    m_bullet->setScale(0.7);
     this->addChild(m_bullet);
     
-    m_particleSys = ParticleSystemQuad::create("poison.plist");
-    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
-    this->addChild(m_particleSys, -1);
+    auto action = ActionHelp::createFrameAction("bullet_poison%02d.png", 1, 5, 0.1);
+    m_bullet->runAction(RepeatForever::create(action));
     
-    this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+//    m_particleSys = ParticleSystemQuad::create("poison.plist");
+//    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
+//    this->addChild(m_particleSys, -1);
+    
+    this->setCollideRect(Rect(0, 0, csize.width-20, csize.height));
     
     this->debugShow();
     

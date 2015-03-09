@@ -36,6 +36,10 @@ bool SpiderFly::init()
     
     this->setCollideRect(Rect(50, 20, csize.width * 0.8f, csize.height * 0.6));
     
+    this->addRect(Rect(54, 70, 50, 40)); //头部
+    this->addRect(Rect(100, 60, 120, 70)); //尾部
+    this->addRect(Rect(90, 10, 100, 60)); //腿部
+    
     this->debugShow();
     
     this->setGravityEffect(false);
@@ -101,12 +105,19 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
     }
     //处理与玩家的碰撞
     auto rect1 = PhysicHelp::countPhysicNodeRect(this);
+    
+    auto headRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(0));
+    auto tailRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(1));
+    auto legRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(2));
+    
     if (_runner->isAtk())
     {
         auto rect2 = PhysicHelp::countPhysicNodeRect(_runner, _runner->getAtkRect());
         
-        bool isAtked = CollideTrackHelp::trackCollide(rect1, rect2);
-        if (isAtked)
+        bool isAtked01 = CollideTrackHelp::trackCollide(headRect, rect2);
+        bool isAtked02 = CollideTrackHelp::trackCollide(tailRect, rect2);
+        bool isAtked03 = CollideTrackHelp::trackCollide(legRect, rect2);
+        if (isAtked01 || isAtked02 || isAtked03)
         {
             this->dead();
             return;
@@ -116,7 +127,14 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
     
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
     
-    CollideDirection dir = CollideTrackHelp::trackCollideDirection(rect1, rect2);
+    if (CollideTrackHelp::trackCollide(headRect, rect2) || CollideTrackHelp::trackCollide(legRect, rect2))
+    {
+        m_gameController->dead(_runner);
+        
+        return;
+    }
+    
+    CollideDirection dir = CollideTrackHelp::trackCollideDirection(tailRect, rect2);
     
     if (kCollideDirectionUp == dir)
     {

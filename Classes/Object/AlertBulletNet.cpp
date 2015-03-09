@@ -28,23 +28,25 @@ bool AlertBulletNet::init()
     this->setRunnerHurt(true);
     this->setAnimalHurt(false);
     
-    m_bullet = Sprite::createWithSpriteFrameName("bullet_net.png");
-    //    auto csize = m_bullet->getContentSize();
-    auto csize = Size(130, 90);
+    m_bullet = Sprite::createWithSpriteFrameName("bullet_net01.png");
+    auto csize = m_bullet->getContentSize();
     this->setContentSize(csize);
     m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
     //m_bullet->setRotation(-90);
     this->addChild(m_bullet);
     
-    m_particleSys = ParticleSystemQuad::create("net.plist");
-    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
-    this->addChild(m_particleSys, -1);
+    auto action = ActionHelp::createFrameAction("bullet_net%02d.png", 1, 4, 0.1);
+    m_bullet->runAction(RepeatForever::create(action));
     
-    this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+//    m_particleSys = ParticleSystemQuad::create("net.plist");
+//    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
+//    this->addChild(m_particleSys, -1);
+    
+    this->setCollideRect(Rect(10, 10, csize.width-20, csize.height-20));
     
     this->debugShow();
     
-    m_line = Sprite::createWithSpriteFrameName("alertline_02.png");
+    m_line = Sprite::createWithSpriteFrameName("alertline_03.png");
     m_line->setAnchorPoint(Vec2(1, 0.5));
     m_line->setPosition(Vec2(0, csize.height/2));
     this->addChild(m_line);

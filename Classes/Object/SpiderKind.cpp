@@ -34,7 +34,10 @@ bool SpiderKind::init()
     
     m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
-    this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
+    this->setCollideRect(Rect(40, 44, csize.width * 0.8f, csize.height - 80));
+    
+    this->addRect(Rect(46, 50, 40, 80)); //头部
+    this->addRect(Rect(90, 50, 130, 100)); //尾部
     
     this->debugShow();
     
@@ -98,6 +101,9 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
     }
     //处理与玩家的碰撞
     auto rect1 = PhysicHelp::countPhysicNodeRect(this);
+    auto headRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(0));
+    auto tailRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(1));
+    
     if (_runner->isAtk())
     {
         auto rect2 = PhysicHelp::countPhysicNodeRect(_runner, _runner->getAtkRect());
@@ -113,7 +119,13 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
     
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
     
-    CollideDirection dir = CollideTrackHelp::trackCollideDirection(rect1, rect2);
+    if (CollideTrackHelp::trackCollide(headRect, rect2))
+    {
+        m_gameController->dead(_runner);
+        return;
+    }
+    
+    CollideDirection dir = CollideTrackHelp::trackCollideDirection(tailRect, rect2);
     
     if (kCollideDirectionUp == dir)
     {

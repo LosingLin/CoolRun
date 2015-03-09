@@ -36,7 +36,10 @@ bool SpiderPoison::init()
     
     m_armature->setPosition(Vec2(csize.width / 2, csize.height / 2));
     
-    this->setCollideRect(Rect(40, 20, csize.width * 0.8f, csize.height * 0.8));
+    this->setCollideRect(Rect(40, 44, csize.width * 0.8f, csize.height - 50));
+    
+    this->addRect(Rect(46, 50, 70, 80)); //头部
+    this->addRect(Rect(120, 50, 100, 120)); //尾部
     
     this->debugShow();
     
@@ -88,7 +91,7 @@ void SpiderPoison::attack()
         {
             bullet->setXV(-v);
             bullet->setYV(600);
-            bullet->setPosition(Vec2(pos.x + 100, pos.y + 60));
+            bullet->setPosition(Vec2(pos.x + 120, pos.y + 60));
             m_gameController->addBullet(bullet);
         }
             break;
@@ -100,14 +103,14 @@ void SpiderPoison::attack()
         case kCRDirectionLeft:
         {
             bullet->setXV(-v-600);
-            bullet->setPosition(Vec2(pos.x + 100, pos.y + 60));
+            bullet->setPosition(Vec2(pos.x + 120, pos.y + 60));
             m_gameController->addBullet(bullet);
         }
             break;
         case kCRDirectionRight:
         {
             bullet->setXV(v+600);
-            bullet->setPosition(Vec2(pos.x + 100, pos.y + 60));
+            bullet->setPosition(Vec2(pos.x + 120, pos.y + 60));
             m_gameController->addBullet(bullet);
         }
             break;
@@ -125,8 +128,8 @@ void SpiderPoison::attackDone()
 void SpiderPoison::setAtkDirection(CRDirection direction)
 {
     m_atkDirection = direction;
-    Bone* bellyNormal = m_armature->getBone("belly_normal");
-    Bone* bellyHurted = m_armature->getBone("belly_hurted");
+//    Bone* bellyNormal = m_armature->getBone("belly_normal");
+//    Bone* bellyHurted = m_armature->getBone("belly_hurted");
 //    switch (m_atkDirection)
 //    {
 //        case kCRDirectionRight:
@@ -175,12 +178,17 @@ void SpiderPoison::trackCollideWithRunner(Runner* _runner)
     if (!b_isAtking)
     {
         auto rect1 = PhysicHelp::countPhysicNodeRect(this);
+        auto headRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(0));
+        auto tailRect = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(1));
+        
         if (_runner->isAtk())
         {
             auto rect2 = PhysicHelp::countPhysicNodeRect(_runner, _runner->getAtkRect());
             
-            bool isAtked = CollideTrackHelp::trackCollide(rect1, rect2);
-            if (isAtked)
+            bool isAtked = CollideTrackHelp::trackCollide(tailRect, rect2);
+            bool isAtked02 = CollideTrackHelp::trackCollide(headRect, rect2);
+            
+            if (isAtked || isAtked02)
             {
                 this->dead();
                 return;
@@ -190,7 +198,13 @@ void SpiderPoison::trackCollideWithRunner(Runner* _runner)
         
         auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
         
-        CollideDirection dir = CollideTrackHelp::trackCollideDirection(rect1, rect2);
+        if (CollideTrackHelp::trackCollide(headRect, rect2))
+        {
+            m_gameController->dead(_runner);
+            return;
+        }
+        
+        CollideDirection dir = CollideTrackHelp::trackCollideDirection(tailRect, rect2);
         
         if (kCollideDirectionUp == dir)
         {
