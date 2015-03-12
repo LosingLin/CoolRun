@@ -7,6 +7,7 @@
 //
 
 #include "MenuScene.h"
+#include "MYScene.h"
 #include "CoolRunScene.h"
 #include "VillageScene.h"
 #include "EditorScene.h"
@@ -30,7 +31,7 @@ MenuLayer::~MenuLayer()
 
 Scene* MenuLayer::createScene()
 {
-    auto _scene = Scene::create();
+    auto _scene = MYScene::create();
     auto _layer = MenuLayer::create();
     _scene->addChild(_layer);
     return _scene;

@@ -7,6 +7,7 @@
 //
 
 #include "CoolRunScene.h"
+#include "MYScene.h"
 #include "GravityPhysics.h"
 #include "CollideTrack.h"
 #include "PhysicNode.h"
@@ -90,9 +91,11 @@ CoolRun::~CoolRun()
 
 Scene* CoolRun::createScene(Mission* mission)
 {
-    auto _scene = Scene::create();
+    auto _scene = MYScene::create();
     auto _layer = CoolRun::create(mission);
     _scene->addChild(_layer);
+    _scene->scenePause = CC_CALLBACK_0(CoolRun::addPauseMenu, _layer);
+    _scene->sceneResume = CC_CALLBACK_0(CoolRun::removePauseMenu, _layer);
     return _scene;
 }
 
@@ -410,7 +413,6 @@ void CoolRun::PacBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     {
         log("CoolRun::PacBtnCallback began");
         
-        this->pause();
         this->addPauseMenu();
     }
 }
@@ -1277,6 +1279,9 @@ void CoolRun::addPauseMenu()
     giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
     giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(giveUpBtn);
+    
+    this->pause();
+    
 }
 void CoolRun::addOverMenu()
 {
@@ -1300,22 +1305,34 @@ void CoolRun::addOverMenu()
     giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
     giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(giveUpBtn);
+    
+    this->pause();
+    
 }
 void CoolRun::removePauseMenu()
 {
+
     auto node = this->getChildByTag(kPauseViewTag);
     if (node)
     {
         node->removeFromParentAndCleanup(true);
     }
+    
+    this->resume();
+    
 }
 void CoolRun::removeOverMenu()
 {
+
     auto node = this->getChildByTag(kOverViewTag);
     if (node)
     {
         node->removeFromParentAndCleanup(true);
     }
+    
+    
+    this->resume();
+    
 }
 
 void CoolRun::ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
@@ -1323,8 +1340,6 @@ void CoolRun::ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     if (_type == MYButton::TouchEventType::ENDED)
     {
         this->removePauseMenu();
-        this->resume();
-        
     }
 }
 void CoolRun::GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
@@ -1333,7 +1348,6 @@ void CoolRun::GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     {
         this->removePauseMenu();
         this->removeOverMenu();
-        this->resume();
         
         auto scene = MenuLayer::createScene();
         Director::getInstance()->replaceScene(scene);
@@ -1345,7 +1359,6 @@ void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     {
         this->removeOverMenu();
         this->addRunner();
-        this->resume();
     }
 }
 
@@ -1371,7 +1384,6 @@ void CoolRun::dead(Runner* runner)
     if (m_runners->count() <= 0)
     {
         this->addOverMenu();
-        this->pause();
     }
     
     for (int i = 0; i < m_runners->count(); ++ i)

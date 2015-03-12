@@ -92,6 +92,8 @@ static AppDelegate s_sharedApplication;
      */
      //We don't need to call this method any more. It will interupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->pause(); */
+    
+    cocos2d::Application::getInstance()->applicationDidEnterBackground();
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -100,6 +102,8 @@ static AppDelegate s_sharedApplication;
      */
      //We don't need to call this method any more. It will interupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->resume(); */
+    
+    cocos2d::Application::getInstance()->applicationWillEnterForeground();
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -107,14 +111,15 @@ static AppDelegate s_sharedApplication;
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
-    cocos2d::Application::getInstance()->applicationDidEnterBackground();
+    
+    //cocos2d::Application::getInstance()->applicationDidEnterBackground();
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
-    cocos2d::Application::getInstance()->applicationWillEnterForeground();
+    //cocos2d::Application::getInstance()->applicationWillEnterForeground();
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

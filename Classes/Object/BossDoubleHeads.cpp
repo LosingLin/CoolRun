@@ -63,15 +63,18 @@ void BossDoubleHeads::hurted()
 {
     m_curHp --;
     m_hpBar->setCurrentHp(m_curHp);
-    if (m_curHp <=0 && !this->isDestoryed())
-    {
-        this->dead();
-    }
+    
+    m_armature->getAnimation()->play("hurt");
+    
+    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(BossDoubleHeads::movementEvent, this));
+    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(BossDoubleHeads::frameEvent, this));
 }
 void BossDoubleHeads::dead()
 {
-    m_gameController->loadNextMission();
-    this->setDestoryed(true);
+    m_armature->getAnimation()->play("dead");
+    
+    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(BossDoubleHeads::movementEvent, this));
+    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(BossDoubleHeads::frameEvent, this));
 }
 
 #pragma mark -  atk
@@ -234,8 +237,27 @@ void BossDoubleHeads::attkSequenceEnd()
 
 void BossDoubleHeads::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
-    
+    if(MovementEventType::COMPLETE == movementType)
+    {
+        if ("dead" == movementID)
+        {
+            m_gameController->loadNextMission();
+            this->setDestoryed(true);
+        }
+        else if ("hurt" == movementID)
+        {
+            if (m_curHp <=0 && !this->isDestoryed())
+            {
+                this->dead();
+            }
+            else
+            {
+                this->atk(-1);
+            }
+        }
+    }
 }
+
 void BossDoubleHeads::frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)
 {
     if ("atk_01_shot" == frameEventName)

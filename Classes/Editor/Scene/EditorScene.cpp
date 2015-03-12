@@ -24,6 +24,7 @@
 
 #include "Mission.h"
 #include "CoolRunScene.h"
+#include "MYScene.h"
 
 
 #define kEditorTempFile  "Temp"
@@ -129,7 +130,7 @@ bool EditorScene::init()
 
 Scene* EditorScene::createScene()
 {
-    auto scene = Scene::create();
+    auto scene = MYScene::create();
     auto layer = EditorScene::create();
     scene->addChild(layer);
     return scene;

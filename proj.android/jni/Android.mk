@@ -97,6 +97,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/UI/PopViewLayer.cpp \
                    ../../Classes/UI/Score.cpp \
                    ../../Classes/UI/Stretch.cpp \
+                   ../../Classes/UI/MYScene.cpp \
                    ../../Classes/Utils/ActionHelp.cpp \
                    ../../Classes/Utils/JsonHelp.cpp 
 

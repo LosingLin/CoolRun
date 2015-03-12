@@ -9,6 +9,7 @@
 #include "VillageScene.h"
 #include "Runner.h"
 #include "Villager.h"
+#include "MYScene.h"
 
 
 VillageLayer::VillageLayer()
@@ -60,7 +61,7 @@ bool VillageLayer::init()
 
 Scene* VillageLayer::createScene()
 {
-    auto _scene = Scene::create();
+    auto _scene = MYScene::create();
     auto _layer = VillageLayer::create();
     _scene->addChild(_layer);
     return _scene;

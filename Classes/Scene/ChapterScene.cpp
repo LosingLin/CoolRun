@@ -7,6 +7,7 @@
 //
 
 #include "ChapterScene.h"
+#include "MYScene.h"
 
 
 ChapterLayer::ChapterLayer()
@@ -29,7 +30,7 @@ bool ChapterLayer::init()
 
 Scene* ChapterLayer::createScene()
 {
-    auto _scene = Scene::create();
+    auto _scene = MYScene::create();
     auto _layer = ChapterLayer::create();
     _scene->addChild(_layer);
     return _scene;

@@ -7,6 +7,7 @@
 //
 
 #include "SettingScene.h"
+#include "MYScene.h"
 
 
 SettingLayer::SettingLayer()
@@ -29,7 +30,7 @@ bool SettingLayer::init()
 
 Scene* SettingLayer::createScene()
 {
-    auto _scene = Scene::create();
+    auto _scene = MYScene::create();
     auto _layer = SettingLayer::create();
     _scene->addChild(_layer);
     return _scene;

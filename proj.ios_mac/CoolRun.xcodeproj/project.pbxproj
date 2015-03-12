@@ -139,6 +139,7 @@
 		FCA5B7F219DE8D26001BDCBA /* MissionEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA5B7F019DE8D26001BDCBA /* MissionEvent.cpp */; };
 		FCA5B7F519DE9B70001BDCBA /* MissionObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA5B7F319DE9B70001BDCBA /* MissionObjects.cpp */; };
 		FCAD02DF1A7F8957008CFCB4 /* EditorSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAD02DD1A7F8957008CFCB4 /* EditorSelector.cpp */; };
+		FCB21E091AAE9C3A00C3A3B6 /* MYScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB21E071AAE9C3A00C3A3B6 /* MYScene.cpp */; };
 		FCBBC6921A78B3B900DF2C16 /* MYTextInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC6901A78B3B900DF2C16 /* MYTextInput.cpp */; };
 		FCBBC76A1A78BC3D00DF2C16 /* EditorScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC7681A78BC3D00DF2C16 /* EditorScene.cpp */; };
 		FCBBC76D1A78CFFA00DF2C16 /* EditorPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC76B1A78CFFA00DF2C16 /* EditorPage.cpp */; };
@@ -500,6 +501,8 @@
 		FCA5B7F419DE9B70001BDCBA /* MissionObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissionObjects.h; sourceTree = "<group>"; };
 		FCAD02DD1A7F8957008CFCB4 /* EditorSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorSelector.cpp; sourceTree = "<group>"; };
 		FCAD02DE1A7F8957008CFCB4 /* EditorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorSelector.h; sourceTree = "<group>"; };
+		FCB21E071AAE9C3A00C3A3B6 /* MYScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MYScene.cpp; sourceTree = "<group>"; };
+		FCB21E081AAE9C3A00C3A3B6 /* MYScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYScene.h; sourceTree = "<group>"; };
 		FCBBC6901A78B3B900DF2C16 /* MYTextInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MYTextInput.cpp; sourceTree = "<group>"; };
 		FCBBC6911A78B3B900DF2C16 /* MYTextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYTextInput.h; sourceTree = "<group>"; };
 		FCBBC7681A78BC3D00DF2C16 /* EditorScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorScene.cpp; sourceTree = "<group>"; };
@@ -876,6 +879,8 @@
 				FC7CAE0119AB22630013A63C /* MYButton.h */,
 				FCBBC6901A78B3B900DF2C16 /* MYTextInput.cpp */,
 				FCBBC6911A78B3B900DF2C16 /* MYTextInput.h */,
+				FCB21E071AAE9C3A00C3A3B6 /* MYScene.cpp */,
+				FCB21E081AAE9C3A00C3A3B6 /* MYScene.h */,
 				FC2290F319BE7E1900E83928 /* Dialog.cpp */,
 				FC2290F419BE7E1900E83928 /* Dialog.h */,
 				FC87277319F65AC80066837A /* Background.cpp */,
@@ -1418,6 +1423,7 @@
 				FCAD02DF1A7F8957008CFCB4 /* EditorSelector.cpp in Sources */,
 				FC927C6119B7296A0002C44A /* MenuScene.cpp in Sources */,
 				FC20BE751998DA60007AC672 /* CollideTrack.cpp in Sources */,
+				FCB21E091AAE9C3A00C3A3B6 /* MYScene.cpp in Sources */,
 				FCC174A71A25842F00B2C2FA /* SpiderSpines.cpp in Sources */,
 				FCBC83611AA6DD030073E1F5 /* SpiderFly.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
