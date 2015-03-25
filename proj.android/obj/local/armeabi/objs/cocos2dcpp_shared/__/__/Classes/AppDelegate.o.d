@@ -375,7 +375,8 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCFrame.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h \
-  jni/../../Classes/CoolRunScene.h jni/../../Classes/GameController.h \
+  jni/../../Classes/UI/MYScene.h jni/../../Classes/CoolRunScene.h \
+  jni/../../Classes/GameController.h \
   jni/../../Classes/Physics/PhysicNode.h jni/../../Classes/Base/Base.h \
   jni/../../Classes/Base/GlobalDefined.h \
   jni/../../Classes/Base/DrawableNode.h \
@@ -1139,6 +1140,8 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/C
 jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h:
 
 jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h:
+
+jni/../../Classes/UI/MYScene.h:
 
 jni/../../Classes/CoolRunScene.h:
 

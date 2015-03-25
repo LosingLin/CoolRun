@@ -17,6 +17,8 @@ USING_NS_CC;
 using namespace cocostudio;
 
 class HpBar;
+class Spider;
+class Bullet;
 class Boss : public Animal
 {
 public:
@@ -32,8 +34,16 @@ public:
     bool isAtking() { return b_isAtking; }
     void setAtking(bool flag) { b_isAtking = flag; }
     
+    virtual void initRes() {};
+    virtual void destoryRes() {};
+    virtual void play(int index) {};
     virtual void hurted() {};
     virtual void dead() {};
+    
+    virtual Bullet* createShotBullet(int index);
+    virtual void shot(const Vec2& pos, float vel, int bulIndex = 0);
+    virtual Spider* createBornSpider(int index);
+    virtual void bornSpider(const Vec2& pos, float vel, int spdIndex = 0);
     
     virtual void movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID){};
     virtual void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex){};

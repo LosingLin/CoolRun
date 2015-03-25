@@ -429,8 +429,16 @@ void EditorScene::openFile(const std::string& filePath)
 void EditorScene::save(const std::string& filePath)
 {
     string savaFilePath = string();
-    //打开的文件
-    if (this->getFileName())
+    
+    //如果输入了文件名则 覆盖或新建文件
+    if (filePath != "" && filePath != " ")
+    {
+        savaFilePath = FileUtils::getInstance()->getWritablePath();
+        savaFilePath.append("D_Editor/");
+        savaFilePath.append(filePath);
+    }
+    //保存到打开的文件
+    else if(this->getFileName())
     {
         if (access(this->getFileName()->c_str(), W_OK) == 0)
         {
@@ -441,21 +449,14 @@ void EditorScene::save(const std::string& filePath)
             string str = string(this->getFileName()->c_str());
             str.append(" CAN'T BE WRITE!");
             this->showAlter(str);
-        }
-    }
-    //新建或者覆盖文件
-    else
-    {
-        if ("" == filePath || " " == filePath)
-        {
-            this->showAlter("Please input file name");
             return;
         }
-
-        savaFilePath = FileUtils::getInstance()->getWritablePath();
-        savaFilePath.append("D_Editor/");
-        savaFilePath.append(filePath);
-        
+    }
+    //都没有的情况下就提示输入文件名
+    else
+    {
+        this->showAlter("Please input file name");
+        return;
     }
     
     log("SAVE FILE PATH: %s", savaFilePath.c_str());
@@ -477,6 +478,7 @@ void EditorScene::save(const std::string& filePath)
         string str = string(filePath.c_str());
         str.append(" CAN'T BE SAVE!");
         this->showAlter(str);
+        return;
     }
     
 

@@ -15,10 +15,10 @@
 
 #define ZORDER_STONE        0
 #define ZORDER_COIN         1
-#define ZORDER_RUNNER       2
-#define ZORDER_ANIMAL       3
-#define ZORDER_BULLET       4
-#define ZORDER_ITEM         5
+#define ZORDER_ANIMAL       2
+#define ZORDER_BULLET       3
+#define ZORDER_ITEM         4
+#define ZORDER_RUNNER       5
 #define ZORDER_WARNING      6
 
 #define ZORDER_HEADMENU     10

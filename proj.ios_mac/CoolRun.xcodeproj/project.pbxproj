@@ -110,6 +110,8 @@
 		FC7CAE0219AB22630013A63C /* MYButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC7CAE0019AB22630013A63C /* MYButton.cpp */; };
 		FC7FE9DD1A495302001C09EA /* ItemSpare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC7FE9DB1A495302001C09EA /* ItemSpare.cpp */; };
 		FC7FE9E21A495C49001C09EA /* ItemMagnet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC7FE9E01A495C49001C09EA /* ItemMagnet.cpp */; };
+		FC80FA471AB68E68004067A6 /* BossTrebleHeads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC80FA451AB68E68004067A6 /* BossTrebleHeads.cpp */; };
+		FC80FA4C1AB71B1A004067A6 /* BossFourflodHeads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC80FA4A1AB71B1A004067A6 /* BossFourflodHeads.cpp */; };
 		FC82AC1C1A7CAB73001E49CC /* EditorDetailMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC82AC1A1A7CAB73001E49CC /* EditorDetailMenu.cpp */; };
 		FC87277519F65AC80066837A /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC87277319F65AC80066837A /* Background.cpp */; };
 		FC8821A21A405EFA00C5EB38 /* AlertBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8821A01A405EFA00C5EB38 /* AlertBullet.cpp */; };
@@ -124,6 +126,7 @@
 		FC946EAE19B9AAFC00A7F9A1 /* Villager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC946EAC19B9AAFC00A7F9A1 /* Villager.cpp */; };
 		FC95278319B93DA6001266C7 /* SettingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC95278119B93DA6001266C7 /* SettingScene.cpp */; };
 		FC95278819B95688001266C7 /* VillageScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC95278619B95688001266C7 /* VillageScene.cpp */; };
+		FC97AEFA1AB820310078D8DD /* BossBulletNet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC97AEF81AB820310078D8DD /* BossBulletNet.cpp */; };
 		FC9A89F81A7A100A0081ACBC /* EditorText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9A89F61A7A100A0081ACBC /* EditorText.cpp */; };
 		FC9A8A011A7A3A390081ACBC /* EditorMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9A89FF1A7A3A390081ACBC /* EditorMenu.cpp */; };
 		FC9A8A041A7A44A70081ACBC /* EditorItemMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC9A8A021A7A44A70081ACBC /* EditorItemMenu.cpp */; };
@@ -155,6 +158,7 @@
 		FCC174A31A25835900B2C2FA /* SpiderPoison.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC174A11A25835900B2C2FA /* SpiderPoison.cpp */; };
 		FCC174A71A25842F00B2C2FA /* SpiderSpines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC174A51A25842F00B2C2FA /* SpiderSpines.cpp */; };
 		FCE1CC101AA0841500B32DB9 /* Saw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE1CC0E1AA0841500B32DB9 /* Saw.cpp */; };
+		FCE8ABDB1AC1055A00D4F065 /* DeathMoth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE8ABD91AC1055A00D4F065 /* DeathMoth.cpp */; };
 		FCF6E8A81A540614002AAFA0 /* ItemLandBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF6E8A61A540614002AAFA0 /* ItemLandBuild.cpp */; };
 		FCFB24DA19938853009F6B0A /* CoolRunScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCFB24D819938853009F6B0A /* CoolRunScene.cpp */; };
 		FCFB24DD19938C27009F6B0A /* Image in Resources */ = {isa = PBXBuildFile; fileRef = FCFB24DC19938C27009F6B0A /* Image */; };
@@ -441,6 +445,10 @@
 		FC7FE9DC1A495302001C09EA /* ItemSpare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSpare.h; sourceTree = "<group>"; };
 		FC7FE9E01A495C49001C09EA /* ItemMagnet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemMagnet.cpp; sourceTree = "<group>"; };
 		FC7FE9E11A495C49001C09EA /* ItemMagnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemMagnet.h; sourceTree = "<group>"; };
+		FC80FA451AB68E68004067A6 /* BossTrebleHeads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossTrebleHeads.cpp; sourceTree = "<group>"; };
+		FC80FA461AB68E68004067A6 /* BossTrebleHeads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossTrebleHeads.h; sourceTree = "<group>"; };
+		FC80FA4A1AB71B1A004067A6 /* BossFourflodHeads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossFourflodHeads.cpp; sourceTree = "<group>"; };
+		FC80FA4B1AB71B1A004067A6 /* BossFourflodHeads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossFourflodHeads.h; sourceTree = "<group>"; };
 		FC82AC1A1A7CAB73001E49CC /* EditorDetailMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorDetailMenu.cpp; sourceTree = "<group>"; };
 		FC82AC1B1A7CAB73001E49CC /* EditorDetailMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorDetailMenu.h; sourceTree = "<group>"; };
 		FC87277319F65AC80066837A /* Background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
@@ -469,6 +477,8 @@
 		FC95278219B93DA6001266C7 /* SettingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingScene.h; sourceTree = "<group>"; };
 		FC95278619B95688001266C7 /* VillageScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VillageScene.cpp; sourceTree = "<group>"; };
 		FC95278719B95688001266C7 /* VillageScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VillageScene.h; sourceTree = "<group>"; };
+		FC97AEF81AB820310078D8DD /* BossBulletNet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossBulletNet.cpp; sourceTree = "<group>"; };
+		FC97AEF91AB820310078D8DD /* BossBulletNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossBulletNet.h; sourceTree = "<group>"; };
 		FC9A89F61A7A100A0081ACBC /* EditorText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorText.cpp; sourceTree = "<group>"; };
 		FC9A89F71A7A100A0081ACBC /* EditorText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorText.h; sourceTree = "<group>"; };
 		FC9A89FA1A7A17CB0081ACBC /* EditorUIBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorUIBase.h; sourceTree = "<group>"; };
@@ -532,6 +542,8 @@
 		FCC174A61A25842F00B2C2FA /* SpiderSpines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpiderSpines.h; sourceTree = "<group>"; };
 		FCE1CC0E1AA0841500B32DB9 /* Saw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Saw.cpp; sourceTree = "<group>"; };
 		FCE1CC0F1AA0841500B32DB9 /* Saw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Saw.h; sourceTree = "<group>"; };
+		FCE8ABD91AC1055A00D4F065 /* DeathMoth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeathMoth.cpp; sourceTree = "<group>"; };
+		FCE8ABDA1AC1055A00D4F065 /* DeathMoth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeathMoth.h; sourceTree = "<group>"; };
 		FCF6E8A61A540614002AAFA0 /* ItemLandBuild.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemLandBuild.cpp; sourceTree = "<group>"; };
 		FCF6E8A71A540614002AAFA0 /* ItemLandBuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLandBuild.h; sourceTree = "<group>"; };
 		FCFB24D819938853009F6B0A /* CoolRunScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CoolRunScene.cpp; path = ../Classes/CoolRunScene.cpp; sourceTree = "<group>"; };
@@ -856,6 +868,12 @@
 				FC8C3D7E1A67E00C00F332E2 /* Boss.h */,
 				FC8C3D851A67E38900F332E2 /* BossDoubleHeads.cpp */,
 				FC8C3D861A67E38900F332E2 /* BossDoubleHeads.h */,
+				FC80FA451AB68E68004067A6 /* BossTrebleHeads.cpp */,
+				FC80FA461AB68E68004067A6 /* BossTrebleHeads.h */,
+				FC80FA4A1AB71B1A004067A6 /* BossFourflodHeads.cpp */,
+				FC80FA4B1AB71B1A004067A6 /* BossFourflodHeads.h */,
+				FCE8ABD91AC1055A00D4F065 /* DeathMoth.cpp */,
+				FCE8ABDA1AC1055A00D4F065 /* DeathMoth.h */,
 			);
 			name = Boss;
 			sourceTree = "<group>";
@@ -994,6 +1012,8 @@
 				FCA427A71AA46486008A8E84 /* AlertBulletNet.h */,
 				FC0DC33F1A6CD5A0008091AC /* BossBullet.cpp */,
 				FC0DC3401A6CD5A0008091AC /* BossBullet.h */,
+				FC97AEF81AB820310078D8DD /* BossBulletNet.cpp */,
+				FC97AEF91AB820310078D8DD /* BossBulletNet.h */,
 			);
 			name = Bullet;
 			sourceTree = "<group>";
@@ -1339,6 +1359,7 @@
 				FC5D10471A4561FE004DF1FF /* Item.cpp in Sources */,
 				FC71811019FE2C230063B495 /* CollideRect.cpp in Sources */,
 				FCA427A81AA46486008A8E84 /* AlertBulletNet.cpp in Sources */,
+				FC80FA4C1AB71B1A004067A6 /* BossFourflodHeads.cpp in Sources */,
 				FC55CB9419E3BB9F00041B96 /* CollectionCoin.cpp in Sources */,
 				FC55CB8719E394BB00041B96 /* MissionDataInterface.cpp in Sources */,
 				FC481AF71994CF87007E0A12 /* GravityPhysics.cpp in Sources */,
@@ -1363,6 +1384,7 @@
 				FC887EDA1A9C4F6B0014D529 /* HpBar.cpp in Sources */,
 				FC95278819B95688001266C7 /* VillageScene.cpp in Sources */,
 				FC72341C199B56ED0059B543 /* JsonHelp.cpp in Sources */,
+				FC97AEFA1AB820310078D8DD /* BossBulletNet.cpp in Sources */,
 				FCF6E8A81A540614002AAFA0 /* ItemLandBuild.cpp in Sources */,
 				FC61E9261A8B4FB00031A199 /* Score.cpp in Sources */,
 				FC11F01A19C3E71D007F7700 /* ActionHelp.cpp in Sources */,
@@ -1373,6 +1395,7 @@
 				FC82AC1C1A7CAB73001E49CC /* EditorDetailMenu.cpp in Sources */,
 				FC22910919BEA83500E83928 /* CollideNode.cpp in Sources */,
 				FC9DE5D81A510AEF007365F2 /* Land.cpp in Sources */,
+				FCE8ABDB1AC1055A00D4F065 /* DeathMoth.cpp in Sources */,
 				FC8C3D871A67E38900F332E2 /* BossDoubleHeads.cpp in Sources */,
 				FCBBC76D1A78CFFA00DF2C16 /* EditorPage.cpp in Sources */,
 				FC8C3D7F1A67E00C00F332E2 /* Boss.cpp in Sources */,
@@ -1390,6 +1413,7 @@
 				FC9A8A0B1A7A72CD0081ACBC /* EditorPhysicNodeContainer.cpp in Sources */,
 				FC68C14E1999F0960060D5E2 /* CollideTrackListener.cpp in Sources */,
 				FC8FF8D519A452EE00B26A99 /* Mission.cpp in Sources */,
+				FC80FA471AB68E68004067A6 /* BossTrebleHeads.cpp in Sources */,
 				FC481B011994E415007E0A12 /* Stone.cpp in Sources */,
 				FC55CB8C19E397FA00041B96 /* MissionCollection.cpp in Sources */,
 				FC2290FB19BE9E8800E83928 /* GameController.cpp in Sources */,

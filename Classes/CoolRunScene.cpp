@@ -30,6 +30,9 @@
 #include "Bullet.h"
 #include "Spider.h"
 #include "BossDoubleHeads.h"
+#include "BossTrebleHeads.h"
+#include "BossFourflodHeads.h"
+#include "DeathMoth.h"
 #include "Score.h"
 #include "Stretch.h"
 #include "PopViewLayer.h"
@@ -315,10 +318,47 @@ void CoolRun::addSpiderAndHelp()
 
 void CoolRun::addBoss()
 {
-    auto boss = BossDoubleHeads::create();
-    boss->setPosition(Vec2(1400, 500));
+    //auto boss = BossDoubleHeads::create();
+    //auto boss = BossTrebleHeads::create();
+    //auto boss = BossFourflodHeads::create();
+    Boss* boss = nullptr;
+    auto r = rand() % 4;
+    r = 3;
+    switch (r)
+    {
+        case 0:
+        {
+            boss = BossDoubleHeads::create();
+            boss->setPosition(Vec2(1400, 500));
+        }
+            break;
+        case 1:
+        {
+            boss = BossTrebleHeads::create();
+            boss->setPosition(Vec2(1400, 500));
+        }
+            break;
+        case 2:
+        {
+            boss = BossFourflodHeads::create();
+            boss->setPosition(Vec2(1400, 500));
+        }
+            break;
+        case 3:
+        {
+            boss = DeathMoth::create();
+            boss->setPosition(Vec2(1400, 100));
+        }
+            break;
+        default:
+            break;
+    }
+    
     m_gPhysics->addPhysicNode(boss);
-    m_gravityCollideObjs->addObject(boss);
+    if (boss->isGravityEffect())
+    {
+        m_gravityCollideObjs->addObject(boss);
+    }
     m_simpleCollideObjs->addObject(boss);
     boss->setGameController(this);
     boss->setLocalZOrder(ZORDER_ANIMAL);

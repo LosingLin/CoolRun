@@ -316,7 +316,8 @@
   jni/../../cocos2d/cocos/./deprecated/CCDouble.h \
   jni/../../cocos2d/cocos/./deprecated/CCBool.h \
   jni/../../cocos2d/cocos/./deprecated/CCNotificationCenter.h \
-  jni/../../cocos2d/cocos/./deprecated/CCDeprecated.h
+  jni/../../cocos2d/cocos/./deprecated/CCDeprecated.h \
+  jni/../../Classes/UI/MYScene.h
 
 jni/../../Classes/Scene/ChapterScene.h:
 
@@ -951,3 +952,5 @@ jni/../../cocos2d/cocos/./deprecated/CCBool.h:
 jni/../../cocos2d/cocos/./deprecated/CCNotificationCenter.h:
 
 jni/../../cocos2d/cocos/./deprecated/CCDeprecated.h:
+
+jni/../../Classes/UI/MYScene.h:

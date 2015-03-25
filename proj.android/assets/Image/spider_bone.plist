@@ -7,20 +7,20 @@
             <key>spider_bone/spider_belly02_hurted.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{443,2},{128,64}}</string>
+                <string>{{2,175},{129,68}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{128,64}}</string>
+                <string>{{0,0},{129,68}}</string>
                 <key>sourceSize</key>
-                <string>{128,64}</string>
+                <string>{129,68}</string>
             </dict>
             <key>spider_bone/spider_belly02_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{394,176},{129,110}}</string>
+                <string>{{394,207},{129,110}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,20 +33,20 @@
             <key>spider_bone/spider_belly03_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{232,2},{209,128}}</string>
+                <string>{{232,2},{215,131}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{1,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{209,128}}</string>
+                <string>{{2,0},{215,131}}</string>
                 <key>sourceSize</key>
-                <string>{209,128}</string>
+                <string>{217,131}</string>
             </dict>
             <key>spider_bone/spider_belly_bullet.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{223,132},{91,169}}</string>
+                <string>{{223,135},{91,169}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,11 +72,11 @@
             <key>spider_bone/spider_belly_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,175},{139,144}}</string>
+                <string>{{2,338},{139,144}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{139,144}}</string>
                 <key>sourceSize</key>
@@ -85,11 +85,11 @@
             <key>spider_bone/spider_head.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{148,240},{69,55}}</string>
+                <string>{{449,92},{69,55}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{69,55}}</string>
                 <key>sourceSize</key>
@@ -98,7 +98,7 @@
             <key>spider_bone/spider_leg01_01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{78,316},{55,59}}</string>
+                <string>{{449,35},{55,59}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>spider_bone/spider_leg01_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,316},{46,74}}</string>
+                <string>{{143,199},{46,74}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -150,11 +150,11 @@
             <key>spider_bone/spider_leg02_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{148,199},{39,70}}</string>
+                <string>{{2,247},{39,70}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{39,70}}</string>
                 <key>sourceSize</key>
@@ -176,7 +176,7 @@
             <key>spider_bone/spider_neck.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{148,297},{60,31}}</string>
+                <string>{{449,2},{60,31}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -202,11 +202,11 @@
             <key>spider_bone/spider_wings_big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{220,225},{141,101}}</string>
+                <string>{{143,338},{141,101}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{141,101}}</string>
                 <key>sourceSize</key>
@@ -215,7 +215,7 @@
             <key>spider_bone/spider_wings_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{394,132},{111,42}}</string>
+                <string>{{394,163},{111,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -235,7 +235,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9cf3d9964dc09e0fdf4530130348ef22:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:bb79e72b2979b615a2c25d28ddf5d2d4:1/1$</string>
             <key>textureFileName</key>
             <string>spider_bone.png</string>
         </dict>

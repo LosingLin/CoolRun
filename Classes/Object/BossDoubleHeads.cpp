@@ -36,7 +36,6 @@ bool BossDoubleHeads::init()
     m_armature->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_armature);
     
-    m_armature->getAnimation()->play("walk");
     
     this->setGravityEffect(true);
     this->setCollideType(kCollideTypeSimple);
@@ -49,59 +48,85 @@ bool BossDoubleHeads::init()
     m_totalHp = 5.0f;
     m_curHp = 5.0f;
     
-    m_hpBar = HpBar::create(5);
+    m_hpBar = HpBar::create(m_totalHp);
     m_hpBar->setAnchorPoint(Vec2(0.5, 0.5));
     m_hpBar->setPosition(Vec2(csize.width/2, csize.height+30));
     this->addChild(m_hpBar);
     
+    this->play(kBDHPlayIndex_Stand);
+    
     return true;
 }
 
-#pragma mark - hurted
+#pragma mark - Boss
+
+void BossDoubleHeads::initRes()
+{
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss01.ExportJson");
+}
+void BossDoubleHeads::destoryRes()
+{
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
+    ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss01.ExportJson");
+}
 
 void BossDoubleHeads::hurted()
 {
     m_curHp --;
     m_hpBar->setCurrentHp(m_curHp);
     
-    m_armature->getAnimation()->play("hurt");
-    
-    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(BossDoubleHeads::movementEvent, this));
-    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(BossDoubleHeads::frameEvent, this));
+    this->play(kBDHPlayIndex_Hurt);
 }
 void BossDoubleHeads::dead()
 {
-    m_armature->getAnimation()->play("dead");
-    
-    m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(BossDoubleHeads::movementEvent, this));
-    m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(BossDoubleHeads::frameEvent, this));
+    this->play(kBDHPlayIndex_Dead);
 }
 
-#pragma mark -  atk
-
-void BossDoubleHeads::atk(int index)
+void BossDoubleHeads::play(int index)
 {
     switch (index)
     {
-        case 1:
+        case kBDHPlayIndex_Walk:
+        {
+            m_armature->getAnimation()->play("walk");
+            
+        }
+            break;
+        case kBDHPlayIndex_Atk_01:
         {
             m_armature->getAnimation()->play("atk_01");
             
         }
             break;
-        case 2:
+        case kBDHPlayIndex_Atk_02:
         {
             m_armature->getAnimation()->play("atk_02");
         }
             break;
-        case 3:
+        case kBDHPlayIndex_Atk_03:
         {
             m_armature->getAnimation()->play("atk_03");
         }
             break;
-        case 4:
+        case kBDHPlayIndex_OpenMouth:
         {
             m_armature->getAnimation()->play("open_mouth");
+        }
+            break;
+        case kBDHPlayIndex_Stand:
+        {
+            m_armature->getAnimation()->play("stand");
+        }
+            break;
+        case kBDHPlayIndex_Hurt:
+        {
+            m_armature->getAnimation()->play("hurt");
+        }
+            break;
+        case kBDHPlayIndex_Dead:
+        {
+            m_armature->getAnimation()->play("dead");
         }
             break;
         default:
@@ -113,18 +138,15 @@ void BossDoubleHeads::atk(int index)
     
     m_armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_3(BossDoubleHeads::movementEvent, this));
     m_armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_4(BossDoubleHeads::frameEvent, this));
+    
 }
 
-void BossDoubleHeads::shot(const Vec2& pos)
+Bullet* BossDoubleHeads::createShotBullet(int index)
 {
-    auto _bullet = BossBullet::create();
-    _bullet->setPosition(pos);
-    auto v = m_gameController->getVelocity();
-    _bullet->setXV(-v-260);
-    m_gameController->addBullet(_bullet);
+    auto _bul = BossBullet::create();
+    return _bul;
 }
-
-void BossDoubleHeads::bornSpider(const Vec2& pos)
+Spider* BossDoubleHeads::createBornSpider(int index)
 {
     Spider* spider = nullptr;
     if (AttackSequence::ATK_03 == m_atkSeq)
@@ -150,15 +172,11 @@ void BossDoubleHeads::bornSpider(const Vec2& pos)
         auto spiderPoison = dynamic_cast<SpiderPoison*>(spider);
         spiderPoison->setAtkDirection(kCRDirectionRight);
     }
-    spider->setCollideEffect(true);
-    spider->setGravityEffect(true);
-    spider->setState(SpiderState::kSpiderState_Walk);
-    spider->setPosition(pos);
-    auto v = m_gameController->getVelocity();
-    spider->setXV(-v-80);
-    m_gameController->addSpider(spider);
-    
+    return spider;
 }
+
+
+#pragma mark - atk
 
 void BossDoubleHeads::attkSequence(int index)
 {
@@ -170,7 +188,7 @@ void BossDoubleHeads::attkSequence(int index)
         {
             m_atkSeq = AttackSequence::ATK_01;
             auto delay = DelayTime::create(1.0f);
-            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 1));
+            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_01));
             auto delay01 = DelayTime::create(0.3f);
             auto call = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::attkSequenceEnd, this));
             this->runAction(Sequence::create(delay, call01, delay01, call, NULL));
@@ -180,9 +198,9 @@ void BossDoubleHeads::attkSequence(int index)
         {
             m_atkSeq = AttackSequence::ATK_02;
             auto delay = DelayTime::create(1.0f);
-            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 1));
+            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_01));
             auto delay01 = DelayTime::create(0.3f);
-            auto call02 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 2));
+            auto call02 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_02));
             auto delay02 = DelayTime::create(0.3f);
             auto call = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::attkSequenceEnd, this));
             this->runAction(Sequence::create(delay, call01, delay01, call02, delay02, call, NULL));
@@ -193,13 +211,13 @@ void BossDoubleHeads::attkSequence(int index)
         {
             m_atkSeq = AttackSequence::ATK_03;
             auto delay = DelayTime::create(1.4f);
-            auto call00 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 4));
+            auto call00 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_OpenMouth));
             auto delay00 = DelayTime::create(0.3f);
-            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 1));
+            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_01));
             auto delay01 = DelayTime::create(0.3f);
-            auto call02 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 2));
+            auto call02 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_02));
             auto delay02 = DelayTime::create(0.3f);
-            auto call03 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 3));
+            auto call03 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_Atk_03));
             auto delay03 = DelayTime::create(0.3f);
             auto call = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::attkSequenceEnd, this));
             this->runAction(Sequence::create(delay, call00, delay00, call01, delay01, call02, delay02, call03, delay03, call, NULL));
@@ -209,7 +227,7 @@ void BossDoubleHeads::attkSequence(int index)
         {
             m_atkSeq = AttackSequence::ATK_04;
             auto delay = DelayTime::create(1.0f);
-            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 4));
+            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_OpenMouth));
             auto delay01 = DelayTime::create(0.3f);
             auto call = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::attkSequenceEnd, this));
             this->runAction(Sequence::create(delay, call01, delay01, call, NULL));
@@ -219,7 +237,7 @@ void BossDoubleHeads::attkSequence(int index)
         {
             m_atkSeq = AttackSequence::ATK_05;
             auto delay = DelayTime::create(1.0f);
-            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::atk, this, 4));
+            auto call01 = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::play, this, kBDHPlayIndex_OpenMouth));
             auto delay01 = DelayTime::create(2.3f);
             auto call = CallFunc::create(CC_CALLBACK_0(BossDoubleHeads::attkSequenceEnd, this));
             this->runAction(Sequence::create(delay, call01, delay01, call, NULL));
@@ -252,7 +270,7 @@ void BossDoubleHeads::movementEvent(Armature *armature, MovementEventType moveme
             }
             else
             {
-                this->atk(-1);
+                this->play(kBDHPlayIndex_Walk);
             }
         }
     }
@@ -266,49 +284,48 @@ void BossDoubleHeads::frameEvent(Bone *bone, const std::string& frameEventName, 
         auto pos = this->getPosition();
         pos.x += 280;
         pos.y += 100;
-        this->shot(pos);
+        this->shot(pos, -260);
     }
     else if("atk_01_end" == frameEventName)
     {
         log("BOSS == atk_01_end");
-        
-        this->atk(-1);
+        this->play(kBDHPlayIndex_Walk);
     }
     else if ("atk_02_shot" == frameEventName)
     {
         auto pos = this->getPosition();
         pos.x += 280;
         pos.y += 180;
-        this->shot(pos);
+        this->shot(pos, -260);
     }
     else if("atk_02_end" == frameEventName)
     {
         
-        this->atk(-1);
+        this->play(kBDHPlayIndex_Walk);
     }
     else if ("atk_03_shot" == frameEventName)
     {
         auto pos = this->getPosition();
         pos.x += 280;
         pos.y += 280;
-        this->shot(pos);
+        this->shot(pos, -260);
     }
     else if("atk_03_end" == frameEventName)
     {
         
-        this->atk(-1);
+        this->play(kBDHPlayIndex_Walk);
     }
     else if ("open_mouth" == frameEventName)
     {
         auto pos = this->getPosition();
         pos.x += -20;
         pos.y += 80;
-        this->bornSpider(pos);
+        this->bornSpider(pos, -80);
     }
     else if("open_mouth_end" == frameEventName)
     {
         
-        this->atk(-1);
+        this->play(kBDHPlayIndex_Walk);
     }
 }
 
@@ -339,6 +356,8 @@ void BossDoubleHeads::trackCollideWithRunner(Runner* _runner)
         {
             this->setXV(0.0f);
             this->setReady(true);
+            
+            this->play(kBDHPlayIndex_Walk);
         }
     }
     if (x_dis <= 600)

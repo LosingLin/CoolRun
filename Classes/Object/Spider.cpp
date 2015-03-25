@@ -27,6 +27,9 @@ bool Spider::init()
     }
     this->setCollideType(CollideType::kCollideTypeSimple);
     
+    this->setGravityEffect(true);
+    this->setCollideEffect(true);
+    
     return true;
 }
 

@@ -138,7 +138,7 @@ void EditorPage::_clearArrayPhysicNode(__Array* arr)
 {
     for (int i = 0; i < arr->count(); ++ i)
     {
-        auto node = dynamic_cast<PhysicNode*>(arr->getObjectAtIndex(i));
+        auto node = dynamic_cast<EditorNode*>(arr->getObjectAtIndex(i));
         node->removeFromParentAndCleanup(true);
     }
     arr->removeAllObjects();

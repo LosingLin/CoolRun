@@ -396,7 +396,7 @@
   jni/../../Classes/Object/SpiderSpines.h \
   jni/../../Classes/Object/SpiderFly.h \
   jni/../../Classes/Object/PoisonBullet.h \
-  jni/../../Classes/Object/Bullet.h \
+  jni/../../Classes/Object/Bullet.h jni/../../Classes/Utils/ActionHelp.h \
   jni/../../Classes/Object/AlertBulletPoison.h \
   jni/../../Classes/Object/AlertBullet.h \
   jni/../../Classes/Object/AlertBulletNet.h \
@@ -1213,6 +1213,8 @@ jni/../../Classes/Object/SpiderFly.h:
 jni/../../Classes/Object/PoisonBullet.h:
 
 jni/../../Classes/Object/Bullet.h:
+
+jni/../../Classes/Utils/ActionHelp.h:
 
 jni/../../Classes/Object/AlertBulletPoison.h:
 

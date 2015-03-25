@@ -335,7 +335,7 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/writer.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/stringbuffer.h \
   jni/../../Classes/Factory/PhysicNodeFactory.h \
-  jni/../../Classes/UI/MYButton.h \
+  jni/../../Classes/UI/MYButton.h jni/../../Classes/UI/MYScene.h \
   jni/../../Classes/Physics/GravityPhysics.h \
   jni/../../Classes/Physics/PhysicHelp.h \
   jni/../../Classes/Object/Runner.h \
@@ -403,6 +403,7 @@
   jni/../../Classes/Physics/CollideRect.h \
   jni/../../Classes/Object/SpiderPoison.h \
   jni/../../Classes/Object/Spider.h jni/../../Classes/Object/Bullet.h \
+  jni/../../Classes/Utils/ActionHelp.h \
   jni/../../Classes/Object/BossDoubleHeads.h \
   jni/../../Classes/Object/Boss.h jni/../../Classes/UI/Score.h \
   jni/../../cocos2d/extensions/../extensions/cocos-ext.h \
@@ -1106,6 +1107,8 @@ jni/../../Classes/Factory/PhysicNodeFactory.h:
 
 jni/../../Classes/UI/MYButton.h:
 
+jni/../../Classes/UI/MYScene.h:
+
 jni/../../Classes/Physics/GravityPhysics.h:
 
 jni/../../Classes/Physics/PhysicHelp.h:
@@ -1249,6 +1252,8 @@ jni/../../Classes/Object/SpiderPoison.h:
 jni/../../Classes/Object/Spider.h:
 
 jni/../../Classes/Object/Bullet.h:
+
+jni/../../Classes/Utils/ActionHelp.h:
 
 jni/../../Classes/Object/BossDoubleHeads.h:
 

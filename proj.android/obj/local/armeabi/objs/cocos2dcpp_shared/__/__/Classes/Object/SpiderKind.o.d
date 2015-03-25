@@ -390,7 +390,8 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCFrame.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h \
-  jni/../../Classes/Object/Runner.h jni/../../Classes/Object/Bullet.h
+  jni/../../Classes/Object/Runner.h jni/../../Classes/Object/Bullet.h \
+  jni/../../Classes/Utils/ActionHelp.h
 
 jni/../../Classes/Object/SpiderKind.h:
 
@@ -1183,3 +1184,5 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/C
 jni/../../Classes/Object/Runner.h:
 
 jni/../../Classes/Object/Bullet.h:
+
+jni/../../Classes/Utils/ActionHelp.h:

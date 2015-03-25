@@ -383,7 +383,8 @@
   /Users/manyou/GameWork/Android/android-ndk-r9d/platforms/android-9/arch-arm/usr/include/linux/capability.h \
   /Users/manyou/GameWork/Android/android-ndk-r9d/platforms/android-9/arch-arm/usr/include/pathconf.h \
   jni/../../Classes/Mission/Mission.h jni/../../Classes/CoolRunScene.h \
-  jni/../../Classes/GameController.h jni/../../Classes/UI/MYButton.h
+  jni/../../Classes/GameController.h jni/../../Classes/UI/MYButton.h \
+  jni/../../Classes/UI/MYScene.h
 
 jni/../../Classes/Editor/Scene/EditorScene.h:
 
@@ -1158,3 +1159,5 @@ jni/../../Classes/CoolRunScene.h:
 jni/../../Classes/GameController.h:
 
 jni/../../Classes/UI/MYButton.h:
+
+jni/../../Classes/UI/MYScene.h:

@@ -388,7 +388,7 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCFrame.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h \
-  jni/../../Classes/Object/Villager.h
+  jni/../../Classes/Object/Villager.h jni/../../Classes/UI/MYScene.h
 
 jni/../../Classes/Scene/VillageScene.h:
 
@@ -1173,3 +1173,5 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/C
 jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h:
 
 jni/../../Classes/Object/Villager.h:
+
+jni/../../Classes/UI/MYScene.h:

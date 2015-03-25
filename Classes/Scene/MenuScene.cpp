@@ -88,8 +88,7 @@ bool MenuLayer::init()
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderKind.ExportJson");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderSpine.ExportJson");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderFly.ExportJson");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Boss010.plist");
-    ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss01.ExportJson");
+    
     
     
     
@@ -121,7 +120,7 @@ void MenuLayer::startCallback(Ref* _ref, MYButton::TouchEventType _type)
 {
     if (_type == MYButton::TouchEventType::ENDED)
     {
-        auto mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
+        auto mission = Mission::create("{\"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
         mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
         auto _scene = CoolRun::createScene(mission);
         Director::getInstance()->replaceScene(_scene);

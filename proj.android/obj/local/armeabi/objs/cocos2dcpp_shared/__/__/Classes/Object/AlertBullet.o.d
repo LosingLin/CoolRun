@@ -340,7 +340,8 @@
   jni/../../Classes/Factory/PhysicNodeFactory.h \
   jni/../../Classes/CoolRunScene.h jni/../../Classes/GameController.h \
   jni/../../Classes/UI/MYButton.h jni/../../Classes/Physics/PhysicHelp.h \
-  jni/../../Classes/Physics/CollideRect.h
+  jni/../../Classes/Physics/CollideRect.h \
+  jni/../../Classes/Utils/ActionHelp.h
 
 jni/../../Classes/Object/AlertBullet.h:
 
@@ -1029,3 +1030,5 @@ jni/../../Classes/UI/MYButton.h:
 jni/../../Classes/Physics/PhysicHelp.h:
 
 jni/../../Classes/Physics/CollideRect.h:
+
+jni/../../Classes/Utils/ActionHelp.h:

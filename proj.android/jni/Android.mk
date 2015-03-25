@@ -48,7 +48,11 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Object/Animal.cpp \
                    ../../Classes/Object/Boss.cpp \
                    ../../Classes/Object/BossBullet.cpp \
+                   ../../Classes/Object/BossBulletNet.cpp \
                    ../../Classes/Object/BossDoubleHeads.cpp \
+                   ../../Classes/Object/BossTrebleHeads.cpp \
+                   ../../Classes/Object/BossFourflodHeads.cpp \
+                   ../../Classes/Object/DeathMoth.cpp \
                    ../../Classes/Object/Bullet.cpp \
                    ../../Classes/Object/Coin.cpp \
                    ../../Classes/Object/Collection.cpp \

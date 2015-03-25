@@ -11,6 +11,19 @@
 
 #include "Boss.h"
 
+enum BossDoubleHeadsPlayIndex
+{
+    kBDHPlayIndex_Walk = 0,
+    kBDHPlayIndex_Atk_01 = 1,
+    kBDHPlayIndex_Atk_02 = 2,
+    kBDHPlayIndex_Atk_03 = 3,
+    kBDHPlayIndex_OpenMouth = 4,
+    kBDHPlayIndex_Stand = 5,
+    kBDHPlayIndex_Hurt = 6,
+    kBDHPlayIndex_Dead = 7
+};
+
+class Spider;
 class BossDoubleHeads : public Boss
 {
 public:
@@ -37,12 +50,14 @@ public:
     virtual void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex) override;
     
     
+    virtual void initRes() override;
+    virtual void destoryRes() override;
     virtual void hurted() override;
     virtual void dead() override;
+    virtual void play(int index) override;
     
-    void atk(int index);
-    void shot(const Vec2& pos);
-    void bornSpider(const Vec2& pos);
+    virtual Bullet* createShotBullet(int index) override;
+    virtual Spider* createBornSpider(int index) override;
     
     void attkSequence(int index);
     void attkSequenceEnd();
