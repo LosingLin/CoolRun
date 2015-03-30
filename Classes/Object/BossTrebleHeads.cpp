@@ -47,12 +47,6 @@ bool BossTrebleHeads::init()
     m_totalHp = 8.0f;
     m_curHp = 8.0f;
     
-    m_hpBar = HpBar::create(m_totalHp);
-    m_hpBar->setAnchorPoint(Vec2(0.5, 0.5));
-    m_hpBar->setPosition(Vec2(csize.width/2, csize.height+30));
-    this->addChild(m_hpBar);
-    
-    
     this->play(kBTHPlayIndex_Stand);
     
     return true;
@@ -383,6 +377,9 @@ void BossTrebleHeads::trackCollideWithRunner(Runner* _runner)
             this->setXV(0.0f);
             this->setReady(true);
             this->play(kBTHPlayIndex_Walk);
+            
+            m_hpBar = HpBar::create(m_totalHp);
+            m_gameController->addBossHpBar(m_hpBar);
         }
     }
     if (x_dis <= 600)

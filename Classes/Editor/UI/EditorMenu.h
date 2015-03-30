@@ -23,6 +23,7 @@ public:
         COLLECION,
         DETAIL,
         OPENFILE,
+        PAGE,
     };
 public:
     EditorMenu();

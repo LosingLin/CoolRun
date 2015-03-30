@@ -52,11 +52,6 @@ bool DeathMoth::init()
     m_totalHp = 5.0f;
     m_curHp = 5.0f;
     
-    m_hpBar = HpBar::create(m_totalHp);
-    m_hpBar->setAnchorPoint(Vec2(0.5, 0.5));
-    m_hpBar->setPosition(Vec2(csize.width/2, -30));
-    this->addChild(m_hpBar);
-    
     this->play(kDeathMothPlayIndex_Stand);
     
     return true;
@@ -143,7 +138,7 @@ void DeathMoth::attkSequence(int index)
             m_atkSeq = AttackSequence::ATK_03;
             auto delay = DelayTime::create(1.0f);
             auto call01 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
-            auto moveTo01 = MoveTo::create(0.4, Vec2(760, -40));
+            auto moveTo01 = MoveTo::create(0.4, Vec2(780, -40));
             auto call02 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Atk01));
             auto delay02 = DelayTime::create(0.3f);
             auto call03 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
@@ -169,7 +164,7 @@ void DeathMoth::attkSequence(int index)
             m_atkSeq = AttackSequence::ATK_04;
             auto delay = DelayTime::create(1.0f);
             auto call01 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
-            auto moveTo01 = MoveTo::create(0.4, Vec2(760, -40));
+            auto moveTo01 = MoveTo::create(0.4, Vec2(780, -40));
             auto call02 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Atk01));
             auto delay02 = DelayTime::create(0.3f);
             auto moveTo03 = MoveTo::create(0.2, Vec2(700, 0));
@@ -202,7 +197,7 @@ void DeathMoth::attkSequence(int index)
             
             auto delay = DelayTime::create(1.0f);
             auto call01 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
-            auto moveTo01 = MoveTo::create(0.2, Vec2(700, -60));
+            auto moveTo01 = MoveTo::create(0.2, Vec2(760, -40));
             auto call02 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Atk01));
             auto delay02 = DelayTime::create(0.3f);
             //auto call03 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
@@ -433,6 +428,9 @@ void DeathMoth::trackCollideWithRunner(Runner* _runner)
             this->setReady(true);
             
             this->play(kDeathMothPlayIndex_Stand);
+            
+            m_hpBar = HpBar::create(m_totalHp);
+            m_gameController->addBossHpBar(m_hpBar);
         }
     }
     if (x_dis <= 500)

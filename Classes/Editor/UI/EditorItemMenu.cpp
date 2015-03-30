@@ -38,7 +38,7 @@ bool EditorItemMenu::init()
     auto layer = LayerColor::create(Color4B(200, 20, 200, 150), 200, 1000);
     this->addChild(layer);
     
-    string texts[] = {"普通物体", "集合"};
+    string texts[] = {"普通物体", "集合", "清空"};
     auto _size = Size(160, 80);
     int fontSize = 30;
     
@@ -69,6 +69,11 @@ void EditorItemMenu::menuCallback(int index)
         case 1:
         {
             this->getEditorListener()->showMenu(EditorListener::MenuState::THIRD, EditorCollectionMenu::create());
+        }
+            break;
+        case 2:
+        {
+            this->getEditorListener()->clearUpCurrentPage();
         }
             break;
             

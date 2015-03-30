@@ -33,8 +33,11 @@ public:
     static Mission* create(const std::string& jsonStr);
     static Mission* createWithDataStr(const std::string& data);
     
+    int getMissionPageCount();
     MissionPage* getMissionPage(int _index);
     MissionPage* getNextMissionPage();
+    
+    const string* getDataStr() { return m_jsonStr; }
     
     void setMissionRepeatModel(MissionRepeatModel model) { m_repeatModel = model; }
     

@@ -27,6 +27,7 @@ public:
     void setCurrentHp(float hp);
     void barUpdate();
     void delayUpdate();
+    void check();
     
     float getCurrentHp() { return m_currentHp; }
 private:

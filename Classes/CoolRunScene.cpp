@@ -37,6 +37,7 @@
 #include "Stretch.h"
 #include "PopViewLayer.h"
 #include "MenuScene.h"
+#include "HpBar.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -778,6 +779,24 @@ void CoolRun::bulletCollideTrack()
     }
 }
 
+void CoolRun::runnerPositionTrack()
+{
+    for (int i = 0; i < m_runners->count(); ++ i)
+    {
+        auto _runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
+        auto pos = _runner->getPosition();
+        if (pos.x < 200)
+        {
+            pos.x ++;
+        }
+        else if (pos.x > 220)
+        {
+            pos.x --;
+        }
+        _runner->setPosition(pos);
+    }
+}
+
 #pragma mark - updates
 
 void CoolRun::gameMain(float delta)
@@ -848,6 +867,8 @@ void CoolRun::gameMain(float delta)
     m_gPhysics->updatePhysicNodes(delta);
     
     this->checkEvents();
+    
+    this->runnerPositionTrack();
     
     
     //检测活物与方向上碰撞类型的物体的碰撞
@@ -1487,6 +1508,19 @@ void CoolRun::destory(PhysicNode* _node)
     }
     
     _node = nullptr;
+}
+
+void CoolRun::addBossHpBar(HpBar* bar)
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    bar->setAnchorPoint(Vec2(1, 1));
+    bar->setPosition(Vec2(origin.x + visibleSize.width, origin.y + visibleSize.height - 80));
+    this->addChild(bar);
+}
+void CoolRun::removeBossHpBar(HpBar* bar)
+{
+    bar->removeFromParentAndCleanup(true);
 }
 
 #pragma mark - Item

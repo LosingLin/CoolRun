@@ -10,6 +10,7 @@
 #include "EditorUIBase.h"
 #include "EditorItemMenu.h"
 #include "EditorOpenFileMenu.h"
+#include "EditorPageMenu.h"
 #include "MenuScene.h"
 
 EditorMainMenu::EditorMainMenu()
@@ -40,7 +41,7 @@ bool EditorMainMenu::init()
     auto layer = LayerColor::create(Color4B(200, 20, 200, 150), 200, 1000);
     this->addChild(layer);
     
-    string texts[] = {"添加物体", "添加页", "文件", "运行", "退出"};
+    string texts[] = {"添加物体", "页", "文件", "运行", "退出"};
     auto _size = Size(160, 80);
     int fontSize = 30;
     
@@ -72,6 +73,11 @@ void EditorMainMenu::menuCallback(int index)
         case 0:
         {
             this->getEditorListener()->showMenu(EditorListener::MenuState::SECOND, EditorItemMenu::create());
+        }
+            break;
+        case 1:
+        {
+            this->getEditorListener()->showMenu(EditorListener::MenuState::SECOND, EditorPageMenu::create());
         }
             break;
         case 2:

@@ -9,6 +9,7 @@
 #include "Boss.h"
 #include "SpiderKind.h"
 #include "BossBullet.h"
+#include "HpBar.h"
 
 Boss::Boss()
 : Animal()

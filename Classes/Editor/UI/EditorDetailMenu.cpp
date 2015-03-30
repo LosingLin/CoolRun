@@ -546,6 +546,11 @@ void EditorDetailMenu::textInputDone(const string& text, EditorTextInput* input)
         float f = 0.0f;
         ss << text;
         ss >> f;
+        if (f < 20)
+        {
+            f = 20;
+            input->setText("20");
+        }
         auto csize = m_pNodeCor->getContentSize();
         csize.width = f;
         m_pNodeCor->setContentSize(csize);
@@ -556,6 +561,11 @@ void EditorDetailMenu::textInputDone(const string& text, EditorTextInput* input)
         float f = 0.0f;
         ss << text;
         ss >> f;
+        if (f < 20)
+        {
+            f = 20;
+            input->setText("20");
+        }
         auto csize = m_pNodeCor->getContentSize();
         csize.height = f;
         m_pNodeCor->setContentSize(csize);

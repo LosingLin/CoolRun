@@ -49,6 +49,23 @@ void Mission::setJsonStr(const string& str)
     m_pageIndex = -1;
 }
 
+int Mission::getMissionPageCount()
+{
+    rapidjson::Document doc;
+    doc.Parse<0>(m_jsonStr->c_str());
+    if (doc.HasParseError())
+    {
+        CCASSERT(false, "json parse error");
+    }
+    rapidjson::Value _value;
+    if (JsonHelp::getValueByKey(doc, _value, "pages"))
+    {
+        return _value.Size();
+    }
+    
+    return 0;
+}
+
 MissionPage* Mission::getMissionPage(int _index)
 {
     rapidjson::Document doc;

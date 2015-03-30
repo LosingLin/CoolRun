@@ -28,6 +28,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Editor/UI/EditorPage.cpp \
                    ../../Classes/Editor/UI/EditorPhysicNodeContainer.cpp \
                    ../../Classes/Editor/UI/EditorPhysicNodeMenu.cpp \
+                   ../../Classes/Editor/UI/EditorPageMenu.cpp \
                    ../../Classes/Editor/UI/EditorScrollMenu.cpp \
                    ../../Classes/Editor/UI/EditorSelector.cpp \
                    ../../Classes/Editor/UI/EditorText.cpp \

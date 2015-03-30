@@ -32,9 +32,14 @@ public:
     virtual void addEvent(EditorPhysicNodeContainer* evt) {};
     virtual void addCollection(EditorPhysicNodeContainer* col, Collection* collection) {};
     virtual void removeEditorPhysicNodeContainer(EditorPhysicNodeContainer* cor) {};
+    virtual void clearUpCurrentPage() {};
     virtual void openFile(const std::string& filePath) {};
     virtual void save(const std::string& filePath) {};
     virtual void run() {};
+    virtual int pageNumber() { return 0; };
+    virtual void showPage(int index) {};
+    virtual void addPage() {};
+    virtual void deletePage(int index) {};
 };
 
 #endif /* defined(__CoolRun__EditorListener__) */

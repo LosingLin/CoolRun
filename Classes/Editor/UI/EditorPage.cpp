@@ -105,7 +105,7 @@ void EditorPage::save(string* buffer)
     buffer->append("\"collections\": [");
     log("RealCollecion num is %ld", m_realCollections->count());
     log("Collection num is %ld", m_collections->count());
-    for (int i = 0; i < m_realCollections->count(); ++ i)
+    for (int i = 0; i < m_collections->count(); ++ i)
     {
         auto obj = dynamic_cast<EditorPhysicNodeContainer*>(m_collections->getObjectAtIndex(i));
         auto col = dynamic_cast<Collection*>(m_realCollections->getObjectAtIndex(i));
@@ -116,7 +116,7 @@ void EditorPage::save(string* buffer)
         data->append("}");
         buffer->append(data->c_str());
         delete data;
-        if (i != m_realCollections->count() - 1)
+        if (i != m_collections->count() - 1)
         {
             buffer->append(",");
         }
@@ -160,11 +160,11 @@ void EditorPage::loadMissionPage(MissionPage* page)
         auto csize = pNode->getContentSize();
         pNode->setPosition(Vec2::ZERO);
         auto epnc = EditorPhysicNodeContainer::create();
+        epnc->setEditorListener(this->getEditorListener());
         epnc->setPhysicNode(pNode);
         epnc->setPosition(pos);
         epnc->setContentSize(csize);
         this->addChild(epnc);
-        epnc->setEditorListener(this->getEditorListener());
         m_collections->addObject(epnc);
     }
     //this->_loadMissionDataInterface(interface->getMissionCollection());
@@ -187,11 +187,11 @@ void EditorPage::_loadArrayPhysicNode(__Array* arr)
         pNode->setPosition(Vec2::ZERO);
         
         auto epnc = EditorPhysicNodeContainer::create();
+        epnc->setEditorListener(this->getEditorListener());
         epnc->setPhysicNode(pNode);
         epnc->setPosition(pos);
         epnc->setContentSize(csize);
         this->addChild(epnc);
-        epnc->setEditorListener(this->getEditorListener());
         m_objects->addObject(epnc);
         
     }

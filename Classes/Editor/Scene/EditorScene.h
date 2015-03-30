@@ -22,6 +22,7 @@ class EditorScrollMenu;
 class EditorMainMenu;
 class EditorMenu;
 class EditorPage;
+class Mission;
 class EditorScene : public Layer, public ScrollViewDelegate, public EditorListener
 {
 public:
@@ -35,9 +36,15 @@ public:
     
     void setFileName(const string& filename);
     string* getFileName() { return m_fileName; }
+    void setFileData(const string& filename);
+    string* getFileData() { return m_fileData; }
     
     void showAlter(const string& msg);
     void showAlterDone(Node* alter);
+    
+    //Mission
+    void setMission(Mission* mission);
+    Mission* getMission();
     
     //scrollView
     virtual void scrollViewDidScroll(ScrollView* view) {};
@@ -51,9 +58,14 @@ public:
     virtual void addEvent(EditorPhysicNodeContainer* evt) override;
     virtual void addCollection(EditorPhysicNodeContainer* col, Collection* collection) override;
     virtual void removeEditorPhysicNodeContainer(EditorPhysicNodeContainer* cor) override;
+    virtual void clearUpCurrentPage() override;
     virtual void openFile(const std::string& filePath) override;
     virtual void save(const std::string& filePath) override;
     virtual void run() override;
+    virtual int pageNumber() override;
+    virtual void showPage(int index) override;
+    virtual void addPage() override;
+    virtual void deletePage(int index) override;
 private:
     void layoutScene();
     void _hideMenu(EditorScrollMenu* container);
@@ -63,6 +75,11 @@ private:
     ScrollView* m_scrollView;
     Node* m_content;
     EditorPage* m_curPage;
+    
+    __Array* m_editorPages;
+    
+    Mission* m_mission;
+    string* m_fileData;
     
     EditorScrollMenu* m_firstMenuContainer;
     EditorScrollMenu* m_secondMenuContainer;

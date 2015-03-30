@@ -39,6 +39,9 @@ EditorScene::EditorScene()
 , m_thirdMenuContainer(nullptr)
 , m_curPage(nullptr)
 , m_fileName(nullptr)
+, m_fileData(nullptr)
+, m_mission(nullptr)
+, m_editorPages(nullptr)
 {
 }
 EditorScene::~EditorScene()
@@ -49,6 +52,8 @@ EditorScene::~EditorScene()
         m_fileName = nullptr;
     }
     
+    CC_SAFE_RELEASE_NULL(m_mission);
+    CC_SAFE_RELEASE_NULL(m_editorPages);
 }
 
 bool EditorScene::init()
@@ -61,6 +66,8 @@ bool EditorScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
+    m_editorPages = __Array::create();
+    CC_SAFE_RETAIN(m_editorPages);
     
     m_content = Node::create();
     m_scrollView = ScrollView::create(Size(visibleSize.width, 640), m_content);
@@ -69,10 +76,10 @@ bool EditorScene::init()
     m_scrollView->setLocalZOrder(kPageScrollViewZOrder);
     this->addChild(m_scrollView);
     
-    m_curPage = EditorPage::create();
-    m_curPage->setEditorListener(this);
-    m_content->addChild(m_curPage);
-    m_scrollView->setContentSize(m_curPage->getContentSize());
+//    m_curPage = EditorPage::create();
+//    m_curPage->setEditorListener(this);
+//    m_content->addChild(m_curPage);
+//    m_scrollView->setContentSize(m_curPage->getContentSize());
     
     //m_scrollView->setViewSize(Size(visibleSize.width - 200, visibleSize.height));
     
@@ -147,6 +154,16 @@ void EditorScene::setFileName(const string& filename)
     m_fileName = new string(filename);
     
 }
+void EditorScene::setFileData(const string& filename)
+{
+    if (m_fileData)
+    {
+        delete m_fileData;
+        m_fileData = nullptr;
+    }
+    
+    m_fileData = new string(filename);
+}
 
 void EditorScene::showAlter(const string& msg)
 {
@@ -169,6 +186,19 @@ void EditorScene::showAlter(const string& msg)
 void EditorScene::showAlterDone(Node* alter)
 {
     alter->removeFromParentAndCleanup(true);
+}
+
+#pragma mark -  data
+
+void EditorScene::setMission(Mission* mission)
+{
+    CC_SAFE_RELEASE_NULL(m_mission);
+    m_mission = mission;
+    CC_SAFE_RETAIN(m_mission);
+}
+Mission* EditorScene::getMission()
+{
+    return m_mission;
 }
 
 #pragma mark - editor listener
@@ -342,6 +372,10 @@ void EditorScene::removeEditorPhysicNodeContainer(EditorPhysicNodeContainer* cor
     m_curPage->removeEditorPhysicNodeContainer(cor);
     this->hideMenu(EditorListener::MenuState::FIRST);
 }
+void EditorScene::clearUpCurrentPage()
+{
+    m_curPage->clearPage();
+}
 void EditorScene::openFile(const std::string& filePath)
 {
     if ("" == filePath || " " == filePath)
@@ -350,6 +384,7 @@ void EditorScene::openFile(const std::string& filePath)
         return;
     }
     string data = string();
+    
     bool isExist = false;
     if (FileUtils::getInstance()->isFileExist(filePath))
     {
@@ -408,16 +443,42 @@ void EditorScene::openFile(const std::string& filePath)
     
     if (isExist)
     {
+        
+        this->setFileData(data);
+        //封装成Mission
+        auto missionData = string();
+        missionData.append("{");
+        missionData.append("\"pages\":[");
+        missionData.append(data);
+        missionData.append("]}");
+        
         rapidjson::Document doc;
-        doc.Parse<0>(data.c_str());
+        doc.Parse<0>(missionData.c_str());
         if (doc.HasParseError())
         {
             CCASSERT(false, "json parse error");
         }
-        m_curPage->clearPage();
-        auto missionPage = MissionPage::create(doc);
-        m_curPage->loadMissionPage(missionPage);
-        
+        //clear last pages
+        for (int i = 0; i < m_editorPages->count(); ++ i)
+        {
+            auto page = dynamic_cast<EditorPage*>(m_editorPages->getObjectAtIndex(i));
+            page->removeFromParentAndCleanup(true);
+        }
+        m_editorPages->removeAllObjects();
+
+        auto mission = Mission::createWithDataStr(missionData);
+        this->setMission(mission);
+
+        for (int i = 0; i < m_mission->getMissionPageCount(); ++ i)
+        {
+            auto missionPage = mission->getMissionPage(i);
+            auto page = EditorPage::create();
+            page->setEditorListener(this);
+            page->loadMissionPage(missionPage);
+            m_content->addChild(page);
+            m_editorPages->addObject(page);
+        }
+        this->showPage(0);
         this->hideMenu(EditorListener::MenuState::FIRST);
     }
     else
@@ -465,12 +526,19 @@ void EditorScene::save(const std::string& filePath)
     if (fp)
     {
         auto data = new string();
-        m_curPage->save(data);
+        for (int i = 0; i < m_editorPages->count(); ++ i)
+        {
+            auto page = dynamic_cast<EditorPage*>(m_editorPages->getObjectAtIndex(i));
+            page->save(data);
+            if (i != m_editorPages->count()-1)
+            {
+                data->append(",");
+            }
+        }
         fwrite(data->c_str(), strlen(data->c_str()), 1, fp);
         fclose(fp);
         log("SAVE: %s", data->c_str());
         delete data;
-        
         this->showAlter("SAVE SUCCESSED!");
     }
     else
@@ -493,19 +561,82 @@ void EditorScene::run()
 {
     //default save
     this->save("");
-    
-    auto data = new string();
-    data->append("{");
-    data->append("\"pages\":[");
-    m_curPage->save(data);
-    data->append("]}");
-    log("%s", data->c_str());
-    auto mission = Mission::createWithDataStr(data->c_str());
+    auto dataStr = new string();
+    dataStr->append("{\"pages\":[");
+    for (int i = 0; i < m_editorPages->count(); ++ i)
+    {
+        auto page = dynamic_cast<EditorPage*>(m_editorPages->getObjectAtIndex(i));
+        page->save(dataStr);
+        if (i != m_editorPages->count()-1)
+        {
+            dataStr->append(",");
+        }
+    }
+    dataStr->append("]}");
+    auto mission = Mission::createWithDataStr(*dataStr);
+    delete dataStr;
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::ALL);
     auto cr = CoolRun::createScene(mission);
     Director::getInstance()->replaceScene(cr);
 }
 
+int EditorScene::pageNumber()
+{
+    return (int)m_editorPages->count();
+}
+
+void EditorScene::showPage(int index)
+{
+    CCASSERT(index >=0 && index < m_editorPages->count(), "page index is out of range");
+    for (int i = 0; i < m_editorPages->count(); ++ i)
+    {
+        auto page = dynamic_cast<EditorPage*>(m_editorPages->getObjectAtIndex(i));
+        if (i == index)
+        {
+            if (!page->isVisible())
+            {
+                page->setVisible(true);
+            }
+            
+            m_curPage = page;
+            m_content->setContentSize(m_curPage->getContentSize());
+        }
+        else
+        {
+            if (page->isVisible())
+            {
+                page->setVisible(false);
+            }
+        }
+    }
+}
+
+void EditorScene::addPage()
+{
+    auto page = EditorPage::create();
+    page->setEditorListener(this);
+    m_content->addChild(page);
+    m_editorPages->addObject(page);
+    this->showPage((int)m_editorPages->count()-1);
+}
+
+void EditorScene::deletePage(int index)
+{
+    for (int i = 0; i < m_editorPages->count(); ++ i)
+    {
+        if (i == index)
+        {
+            auto page = dynamic_cast<EditorPage*>(m_editorPages->getObjectAtIndex(i));
+            page->removeFromParentAndCleanup(true);
+            m_editorPages->removeObject(page);
+            break;
+        }
+    }
+    if (m_editorPages->count() > 0)
+    {
+        this->showPage(index-1);
+    }
+}
 
 #pragma mark - help
 

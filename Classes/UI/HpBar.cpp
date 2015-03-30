@@ -92,12 +92,22 @@ void HpBar::barUpdate()
     float percentage = m_currentHp/m_totalHp * 100;
     m_bg01->runAction(ProgressTo::create(0.3, percentage));
     
-    m_bg02->runAction(Sequence::create(DelayTime::create(0.1), ProgressTo::create(0.3, percentage), NULL));
+    m_bg02->runAction(Sequence::create(DelayTime::create(0.1),
+                                       ProgressTo::create(0.3, percentage),
+                                       CallFunc::create(CC_CALLBACK_0(HpBar::check, this)),
+                                       NULL));
 }
 void HpBar::delayUpdate()
 {
     float percentage = m_currentHp/m_totalHp * 100;
     m_bg02->setPercentage(percentage);
+}
+void HpBar::check()
+{
+    if (m_currentHp <= 0)
+    {
+        this->removeFromParentAndCleanup(true);
+    }
 }
 
 HpBar* HpBar::create(float totalHp)

@@ -43,6 +43,7 @@ class Land;
 class Spider;
 class Score;
 class Stretch;
+class HpBar;
 class CoolRun : public Layer, public GameController
 {
 public:
@@ -84,6 +85,7 @@ public:
     void directionCollideTrack();
     void simpleCollideTrack();
     void bulletCollideTrack();
+    void runnerPositionTrack();
     
     void backGroundUpdate(float delta);
     void totalStretchUpdate(float delta);
@@ -139,6 +141,8 @@ public:
     void loadNextMission();
     virtual void addCoin(int num);
     virtual void destory(PhysicNode* _node);
+    void addBossHpBar(HpBar* bar);
+    void removeBossHpBar(HpBar* bar);
     
     //Item
     void spareRunner(Runner* runner);

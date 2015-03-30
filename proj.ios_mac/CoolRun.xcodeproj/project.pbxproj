@@ -123,6 +123,7 @@
 		FC8FF8D519A452EE00B26A99 /* Mission.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC8FF8D319A452EE00B26A99 /* Mission.cpp */; };
 		FC927C6119B7296A0002C44A /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC927C5F19B7296A0002C44A /* MenuScene.cpp */; };
 		FC935E38199E1FDC0047ADBF /* PhysicNodeFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC935E36199E1FDC0047ADBF /* PhysicNodeFactory.cpp */; };
+		FC9444611AC54DE3007F855A /* EditorPageMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC94445F1AC54DE3007F855A /* EditorPageMenu.cpp */; };
 		FC946EAE19B9AAFC00A7F9A1 /* Villager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC946EAC19B9AAFC00A7F9A1 /* Villager.cpp */; };
 		FC95278319B93DA6001266C7 /* SettingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC95278119B93DA6001266C7 /* SettingScene.cpp */; };
 		FC95278819B95688001266C7 /* VillageScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC95278619B95688001266C7 /* VillageScene.cpp */; };
@@ -471,6 +472,8 @@
 		FC927C6019B7296A0002C44A /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		FC935E36199E1FDC0047ADBF /* PhysicNodeFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicNodeFactory.cpp; sourceTree = "<group>"; };
 		FC935E37199E1FDC0047ADBF /* PhysicNodeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicNodeFactory.h; sourceTree = "<group>"; };
+		FC94445F1AC54DE3007F855A /* EditorPageMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorPageMenu.cpp; sourceTree = "<group>"; };
+		FC9444601AC54DE3007F855A /* EditorPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorPageMenu.h; sourceTree = "<group>"; };
 		FC946EAC19B9AAFC00A7F9A1 /* Villager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Villager.cpp; sourceTree = "<group>"; };
 		FC946EAD19B9AAFC00A7F9A1 /* Villager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Villager.h; sourceTree = "<group>"; };
 		FC95278119B93DA6001266C7 /* SettingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingScene.cpp; sourceTree = "<group>"; };
@@ -1117,6 +1120,8 @@
 				FC82AC1B1A7CAB73001E49CC /* EditorDetailMenu.h */,
 				FC5B48EE1A81DBD600950971 /* EditorOpenFileMenu.cpp */,
 				FC5B48EF1A81DBD600950971 /* EditorOpenFileMenu.h */,
+				FC94445F1AC54DE3007F855A /* EditorPageMenu.cpp */,
+				FC9444601AC54DE3007F855A /* EditorPageMenu.h */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -1384,6 +1389,7 @@
 				FC887EDA1A9C4F6B0014D529 /* HpBar.cpp in Sources */,
 				FC95278819B95688001266C7 /* VillageScene.cpp in Sources */,
 				FC72341C199B56ED0059B543 /* JsonHelp.cpp in Sources */,
+				FC9444611AC54DE3007F855A /* EditorPageMenu.cpp in Sources */,
 				FC97AEFA1AB820310078D8DD /* BossBulletNet.cpp in Sources */,
 				FCF6E8A81A540614002AAFA0 /* ItemLandBuild.cpp in Sources */,
 				FC61E9261A8B4FB00031A199 /* Score.cpp in Sources */,

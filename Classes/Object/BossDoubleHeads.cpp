@@ -29,7 +29,6 @@ bool BossDoubleHeads::init()
     {
         return false;
     }
-    
     m_armature = Armature::create("Boss01");
     auto csize = m_armature->getContentSize();
     this->setContentSize(csize);
@@ -47,11 +46,6 @@ bool BossDoubleHeads::init()
     
     m_totalHp = 5.0f;
     m_curHp = 5.0f;
-    
-    m_hpBar = HpBar::create(m_totalHp);
-    m_hpBar->setAnchorPoint(Vec2(0.5, 0.5));
-    m_hpBar->setPosition(Vec2(csize.width/2, csize.height+30));
-    this->addChild(m_hpBar);
     
     this->play(kBDHPlayIndex_Stand);
     
@@ -358,6 +352,9 @@ void BossDoubleHeads::trackCollideWithRunner(Runner* _runner)
             this->setReady(true);
             
             this->play(kBDHPlayIndex_Walk);
+            
+            m_hpBar = HpBar::create(m_totalHp);
+            m_gameController->addBossHpBar(m_hpBar);
         }
     }
     if (x_dis <= 600)
