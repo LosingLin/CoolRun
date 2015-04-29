@@ -21,6 +21,7 @@ BossDoubleHeads::BossDoubleHeads()
 }
 BossDoubleHeads::~BossDoubleHeads()
 {
+    this->destoryRes();
 }
 
 bool BossDoubleHeads::init()
@@ -31,6 +32,7 @@ bool BossDoubleHeads::init()
     }
     m_armature = Armature::create("Boss01");
     auto csize = m_armature->getContentSize();
+    //auto csize = Size(433, 342);
     this->setContentSize(csize);
     m_armature->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_armature);
@@ -48,6 +50,8 @@ bool BossDoubleHeads::init()
     m_curHp = 5.0f;
     
     this->play(kBDHPlayIndex_Stand);
+    
+    this->setScore(500);
     
     return true;
 }
@@ -254,6 +258,8 @@ void BossDoubleHeads::movementEvent(Armature *armature, MovementEventType moveme
         if ("dead" == movementID)
         {
             m_gameController->loadNextMission();
+            
+            this->addPlayerScore();
             this->setDestoryed(true);
         }
         else if ("hurt" == movementID)

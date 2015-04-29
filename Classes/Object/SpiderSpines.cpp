@@ -35,7 +35,12 @@ bool SpiderSpines::init()
     
     this->setCollideRect(Rect(40, 44, csize.width * 0.8f, csize.height - 60));
     
+    this->addRect(Rect(40, 44, 180, 70));
+    this->addRect(Rect(60, 114, 140, 50));
+    
     this->debugShow();
+    
+    this->setScore(5);
     
     return true;
 }
@@ -65,6 +70,7 @@ void SpiderSpines::setState(SpiderState state)
 
 void SpiderSpines::dead()
 {
+    Spider::dead();
     this->setState(kSpiderState_Hurted);
     this->setCollideEffect(false);
 }
@@ -110,9 +116,14 @@ void SpiderSpines::trackCollideWithRunner(Runner* _runner)
         
     }
     
+    auto bodyRect1 = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(0));
+    auto bodyRect2 = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(1));
+    
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
-    bool isKilled = CollideTrackHelp::trackCollide(rect1, rect2);
-    if (isKilled)
+    CollideDirection dir = CollideTrackHelp::trackCollideDirection(bodyRect1, rect2);
+    CollideDirection dir2 = CollideTrackHelp::trackCollideDirection(bodyRect1, rect2);
+    if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir &&
+        kCollideDirectionMiss != dir2 && kCollideDirectionRight != dir2 )
     {
         m_gameController->dead(_runner);
 //        this->setCollideEffect(false);

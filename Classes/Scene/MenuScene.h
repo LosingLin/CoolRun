@@ -19,7 +19,7 @@ using namespace cocostudio;
 USING_NS_CC;
 
 
-
+class Home;
 class MenuLayer : public Layer
 {
 public:
@@ -28,6 +28,8 @@ public:
     
     virtual bool init();
     CREATE_FUNC(MenuLayer);
+    
+    virtual void onEnter() override;
     
     static Scene* createScene();
     
@@ -38,8 +40,12 @@ public:
     
     void movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex);
-private:
     
+    void start();
+private:
+    Sprite* m_logo;
+    Node* m_menu;
+    Home* m_home;
 };
 
 #endif /* defined(__CoolRun__MenuScene__) */

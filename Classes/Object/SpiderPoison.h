@@ -19,6 +19,9 @@ public:
     virtual bool init();
     CREATE_FUNC(SpiderPoison);
     
+    virtual void loadJson(rapidjson::Value& value) override;
+    virtual void saveData(string* buffer) override;
+    
     virtual void setState(SpiderState state) override;
     virtual void dead() override;
     
@@ -33,9 +36,11 @@ public:
     void attackDone();
     
     void setAtkDirection(CRDirection direction);
+    CRDirection getAtkDirection() { return m_atkDirection; }
 private:
     bool b_isAtking;
     CRDirection m_atkDirection;
+    Sprite* m_atkAlert;
 };
 
 #endif /* defined(__CoolRun__SpiderPoison__) */

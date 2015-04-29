@@ -21,6 +21,7 @@ BossTrebleHeads::BossTrebleHeads()
 }
 BossTrebleHeads::~BossTrebleHeads()
 {
+    this->destoryRes();
 }
 
 bool BossTrebleHeads::init()
@@ -48,6 +49,8 @@ bool BossTrebleHeads::init()
     m_curHp = 8.0f;
     
     this->play(kBTHPlayIndex_Stand);
+    
+    this->setScore(1000);
     
     return true;
 }
@@ -293,6 +296,8 @@ void BossTrebleHeads::movementEvent(Armature *armature, MovementEventType moveme
         if ("dead" == movementID)
         {
             m_gameController->loadNextMission();
+            
+            this->addPlayerScore();
             this->setDestoryed(true);
         }
         else if ("hurt" == movementID)

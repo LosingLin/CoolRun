@@ -38,7 +38,6 @@ public:
     virtual void loadJson(rapidjson::Value& value) override;
     virtual void saveData(string* buffer) override;
     
-    virtual void dead(){};
     
     virtual void CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node);
     virtual void CollideTrackListener_CollideAll(CollideDirection direction);

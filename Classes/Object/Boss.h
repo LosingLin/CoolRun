@@ -38,7 +38,6 @@ public:
     virtual void destoryRes() {};
     virtual void play(int index) {};
     virtual void hurted() {};
-    virtual void dead() {};
     
     virtual Bullet* createShotBullet(int index);
     virtual void shot(const Vec2& pos, float vel, int bulIndex = 0);

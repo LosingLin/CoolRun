@@ -105,6 +105,7 @@ void EditorPage::save(string* buffer)
     buffer->append("\"collections\": [");
     log("RealCollecion num is %ld", m_realCollections->count());
     log("Collection num is %ld", m_collections->count());
+    CCASSERT(m_realCollections->count() == m_collections->count(), "Collection Num is error!");
     for (int i = 0; i < m_collections->count(); ++ i)
     {
         auto obj = dynamic_cast<EditorPhysicNodeContainer*>(m_collections->getObjectAtIndex(i));
@@ -132,6 +133,7 @@ void EditorPage::clearPage()
     this->_clearArrayPhysicNode(m_objects);
     this->_clearArrayPhysicNode(m_events);
     this->_clearArrayPhysicNode(m_collections);
+    m_realCollections->removeAllObjects();
 }
 
 void EditorPage::_clearArrayPhysicNode(__Array* arr)

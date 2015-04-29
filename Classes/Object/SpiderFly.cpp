@@ -44,6 +44,8 @@ bool SpiderFly::init()
     
     this->setGravityEffect(false);
     
+    this->setScore(4);
+    
     return true;
 }
 
@@ -72,6 +74,7 @@ void SpiderFly::setState(SpiderState state)
 
 void SpiderFly::dead()
 {
+    Spider::dead();
     this->setState(kSpiderState_Hurted);
     this->setCollideEffect(false);
     this->setGravityEffect(true);
@@ -142,7 +145,7 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
         this->setYV(100);
         this->dead();
     }
-    else if (kCollideDirectionMiss != dir)
+    else if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir)
     {
         m_gameController->dead(_runner);
         

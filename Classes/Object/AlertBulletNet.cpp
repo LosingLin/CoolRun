@@ -51,10 +51,10 @@ bool AlertBulletNet::init()
     m_line->setPosition(Vec2(0, csize.height/2));
     this->addChild(m_line);
     
-    m_alert = Sprite::createWithSpriteFrameName("Skill_n.png");
+    m_alert = Sprite::createWithSpriteFrameName("exclamation_net.png");
     auto asize = m_alert->getContentSize();
     m_alert->setPosition(Vec2(-asize.width*0.5f, csize.height/2));
-    m_alert->setScale(0.5f);
+    m_alert->setScale(0.8f);
     this->addChild(m_alert);
     
     m_line->setVisible(false);

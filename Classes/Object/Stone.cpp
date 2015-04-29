@@ -75,25 +75,25 @@ void Stone::setLand(bool flag)
 void Stone::setLeftIgnore(bool flag)
 {
     Land::setLeftIgnore(flag);
-    if (this->isLeftIgnore())
-    {
-        if (m_left)
-        {
-            m_left->setColor(Color3B::GREEN);
-        }
-    }
+//    if (this->isLeftIgnore())
+//    {
+//        if (m_left)
+//        {
+//            m_left->setColor(Color3B::GREEN);
+//        }
+//    }
 }
 void Stone::setRightIgnore(bool flag)
 {
     Land::setRightIgnore(flag);
     
-    if (this->isRightIgnore())
-    {
-        if (m_right)
-        {
-            m_right->setColor(Color3B::GREEN);
-        }
-    }
+//    if (this->isRightIgnore())
+//    {
+//        if (m_right)
+//        {
+//            m_right->setColor(Color3B::GREEN);
+//        }
+//    }
 }
 
 void Stone::setContentSize(const Size& _size)

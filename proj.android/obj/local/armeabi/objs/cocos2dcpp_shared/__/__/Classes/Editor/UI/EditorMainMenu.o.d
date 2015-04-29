@@ -367,6 +367,7 @@
   jni/../../Classes/Editor/UI/EditorSelector.h \
   jni/../../Classes/Editor/UI/EditorItemMenu.h \
   jni/../../Classes/Editor/UI/EditorOpenFileMenu.h \
+  jni/../../Classes/Editor/UI/EditorPageMenu.h \
   jni/../../Classes/Scene/MenuScene.h jni/../../Classes/UI/MYButton.h \
   jni/../../cocos2d/cocos/./editor-support/cocostudio/CocoStudio.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/CCActionFrame.h \
@@ -1153,6 +1154,8 @@ jni/../../Classes/Editor/UI/EditorSelector.h:
 jni/../../Classes/Editor/UI/EditorItemMenu.h:
 
 jni/../../Classes/Editor/UI/EditorOpenFileMenu.h:
+
+jni/../../Classes/Editor/UI/EditorPageMenu.h:
 
 jni/../../Classes/Scene/MenuScene.h:
 

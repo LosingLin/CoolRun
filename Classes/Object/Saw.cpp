@@ -31,7 +31,7 @@ bool Saw::init()
     this->setContentSize(csize);
     sp->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(sp);
-    sp->runAction(RepeatForever::create(RotateBy::create(0.4, -60)));
+    sp->runAction(RepeatForever::create(RotateBy::create(0.2, -60)));
     this->setCollideEffect(true);
     this->setGravityEffect(false);
     this->setCollideType(kCollideTypeSimple);
@@ -41,6 +41,8 @@ bool Saw::init()
     this->addRect(Rect(90, 50, 130, 100)); //尾部
     
     this->debugShow();
+    
+    this->setLocalZOrder(ZORDER_SAW);
     
     return true;
 }

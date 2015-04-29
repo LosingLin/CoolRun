@@ -174,7 +174,7 @@ Mission* Mission::create(const std::string& jsonStr)
 {
     auto _mission = Mission::create();
     int e = 0, n = 0, h = 0;
-    int s = 1, b = 1;
+    int s = 0, b = 1;
     rapidjson::Document doc;
     doc.Parse<rapidjson::kParseDefaultFlags>(jsonStr.c_str());
     if (doc.HasParseError())
@@ -182,6 +182,16 @@ Mission* Mission::create(const std::string& jsonStr)
         CCASSERT(false, "json parse error");
     }
     rapidjson::Value _value;
+    if (doc.HasMember("s"))
+    {
+        if (JsonHelp::getValueByKey(doc, _value, "s"))
+        {
+            if (_value.HasMember("num"))
+            {
+                s = JsonHelp::getInt(_value["num"]);
+            }
+        }
+    }
     if (JsonHelp::getValueByKey(doc, _value, "e"))
     {
         if (_value.HasMember("num"))
@@ -203,6 +213,7 @@ Mission* Mission::create(const std::string& jsonStr)
             h = JsonHelp::getInt(_value["num"]);
         }
     }
+    
     log("MISSION : easy : %d, normal: %d, hard : %d", e, n, h);
     auto missionData = FileUtils::getInstance()->getStringFromFile("head");
     
@@ -222,6 +233,8 @@ Mission* Mission::create(const std::string& jsonStr)
         missionData += ",";
     }
     missionData += _mission->getRandomMissionData(MISSIONDATA_HARD_PATH, MISSIONDATA_HARD_FORMAT, h);
+    missionData += ",";
+    missionData += _mission->getRandomMissionData(MISSIONDATA_Boss_PATH , MISSIONDATA_Boss_FORMAT, b);
     missionData += ",";
     missionData += _mission->getRandomMissionData(MISSIONDATA_Boss_PATH , MISSIONDATA_Boss_FORMAT, b);
     missionData += FileUtils::getInstance()->getStringFromFile("tail");

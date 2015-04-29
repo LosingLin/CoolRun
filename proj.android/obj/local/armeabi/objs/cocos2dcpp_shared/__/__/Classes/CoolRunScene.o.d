@@ -405,7 +405,10 @@
   jni/../../Classes/Object/Spider.h jni/../../Classes/Object/Bullet.h \
   jni/../../Classes/Utils/ActionHelp.h \
   jni/../../Classes/Object/BossDoubleHeads.h \
-  jni/../../Classes/Object/Boss.h jni/../../Classes/UI/Score.h \
+  jni/../../Classes/Object/Boss.h \
+  jni/../../Classes/Object/BossTrebleHeads.h \
+  jni/../../Classes/Object/BossFourflodHeads.h \
+  jni/../../Classes/Object/DeathMoth.h jni/../../Classes/UI/Score.h \
   jni/../../cocos2d/extensions/../extensions/cocos-ext.h \
   jni/../../cocos2d/extensions/../extensions/ExtensionMacros.h \
   jni/../../cocos2d/extensions/../extensions/GUI/CCControlExtension/CCControlExtensions.h \
@@ -429,7 +432,9 @@
   jni/../../cocos2d/extensions/../extensions/physics-nodes/CCPhysicsSprite.h \
   jni/../../cocos2d/extensions/../extensions/assets-manager/AssetsManager.h \
   jni/../../Classes/UI/Stretch.h jni/../../Classes/UI/PopViewLayer.h \
-  jni/../../Classes/Scene/MenuScene.h
+  jni/../../Classes/Scene/MenuScene.h jni/../../Classes/UI/HpBar.h \
+  jni/../../Classes/UI/Leaves.h \
+  jni/../../Classes/Scene/FreshGuideScene.h
 
 jni/../../Classes/CoolRunScene.h:
 
@@ -1259,6 +1264,12 @@ jni/../../Classes/Object/BossDoubleHeads.h:
 
 jni/../../Classes/Object/Boss.h:
 
+jni/../../Classes/Object/BossTrebleHeads.h:
+
+jni/../../Classes/Object/BossFourflodHeads.h:
+
+jni/../../Classes/Object/DeathMoth.h:
+
 jni/../../Classes/UI/Score.h:
 
 jni/../../cocos2d/extensions/../extensions/cocos-ext.h:
@@ -1310,3 +1321,9 @@ jni/../../Classes/UI/Stretch.h:
 jni/../../Classes/UI/PopViewLayer.h:
 
 jni/../../Classes/Scene/MenuScene.h:
+
+jni/../../Classes/UI/HpBar.h:
+
+jni/../../Classes/UI/Leaves.h:
+
+jni/../../Classes/Scene/FreshGuideScene.h:

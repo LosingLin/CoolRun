@@ -15,15 +15,18 @@
 
 #define ZORDER_STONE        0
 #define ZORDER_COIN         1
+#define ZORDER_SAW          1
 #define ZORDER_ANIMAL       2
 #define ZORDER_BULLET       3
 #define ZORDER_ITEM         4
 #define ZORDER_RUNNER       5
-#define ZORDER_WARNING      6
 
+#define ZORDER_LEAVES       8
+#define ZORDER_WARNING      9
 #define ZORDER_HEADMENU     10
 
-#define ZORDER_POPVIEW     100
+#define ZORDER_POPVIEW      200
+#define ZORDER_FRESHGUIDE   199
 
 USING_NS_CC;
 class Runner;
@@ -44,9 +47,15 @@ class Spider;
 class Score;
 class Stretch;
 class HpBar;
+class Leaves;
 class CoolRun : public Layer, public GameController
 {
 public:
+    enum class RunType
+    {
+        NORMAL,
+        EDITOR
+    };
     enum class GameState
     {
         HOME,
@@ -59,7 +68,7 @@ public:
     CoolRun();
     ~CoolRun();
     
-    static Scene* createScene(Mission* mission);
+    static Scene* createScene(Mission* mission, RunType _type = RunType::NORMAL);
     
     virtual bool init();
     virtual void update(float delta);
@@ -73,6 +82,8 @@ public:
     static CoolRun* create(Mission* mission);
     CREATE_FUNC(CoolRun);
     
+    void setRunType(RunType _type) { m_runType = _type; };
+    RunType getRunType() { return m_runType; }
     void setMission(Mission* mission);
     
     void finishAddImage(Texture2D* texture);
@@ -108,9 +119,15 @@ public:
     
     void hideController();
     void showController();
+    void hideInfoView();
+    void showInfoView();
     
     void actionCallback();
     void doorCloseCallback();
+    
+    //guide
+    void showGuide();
+    void hideGuide(Ref* _btn, MYButton::TouchEventType _type, Node* _guide);
     
     void setVelocity(int v);
     int getVelocity() { return m_velocity; }
@@ -171,6 +188,7 @@ private:
     void _setVelocity(__Array* _nodes, int vc);
     void _smoothLand();
 private:
+    RunType m_runType;
     GameState m_gameState;
     
     int m_resCacheCount;
@@ -216,6 +234,11 @@ private:
     int m_score;
     Stretch* m_stretchView;
     int m_stretch;
+    
+    
+    Leaves* m_leaves;
+    
+    int m_missionIndex;
 };
 
 #endif /* defined(__CoolRun__CoolRunScene__) */

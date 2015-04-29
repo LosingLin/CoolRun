@@ -102,15 +102,20 @@ void Runner::setRunnerState(RunnerState state)
         {
             case kRunnerState_Running:
                 m_armature->getAnimation()->play("run");
+                this->setCollideRect(Rect(2, 8, 86, 126));
                 break;
             case kRunnerState_JumpUp:
                 m_armature->getAnimation()->play("jump");
+                this->setCollideRect(Rect(2, 8, 86, 126));
                 break;
             case kRunnerState_JumpUp2:
                 m_armature->getAnimation()->play("fly");
+                this->setCollideRect(Rect(2, 26, 86, 90));
+                //this->showRect(Rect(2, 26, 86, 90));
                 break;
             case kRunnerState_JumpDown:
                 m_armature->getAnimation()->play("down");
+                this->setCollideRect(Rect(2, 8, 86, 126));
                 break;
             default:
                 break;
@@ -251,15 +256,17 @@ void Runner::CollideTrackListener_CollideOnce(CollideDirection direction, Physic
         //return;
         PhysicHelp::showTips("Down", this, Vec2(0, 0));
         
-        auto dis = rect1.size.height - rect2.origin.y + rect1.origin.y;
+        auto dis = rect2.size.height + rect2.origin.y - rect1.origin.y;
         auto pos = this->getPosition();
-        //pos.y -= dis;
-        if (pos.y > (pos.y - dis)) {
-            pos.y --;
-        }
+        pos.y -= dis;
+//        if (pos.y > (pos.y - dis)) {
+//            pos.y --;
+//        }
         this->setPosition(pos);
         
         this->setYA(0.0f);
+//        auto yv = this->getYV();
+//        this->setYV(-yv);
         this->setYV(0.0f);
     }
 }
@@ -300,6 +307,7 @@ void Runner::trackCollideWithBullet(Bullet* bullet)
         if (isAtked)
         {
             bullet->setDestoryed(true);
+            m_gameController->addScore(5);
             return;
         }
     }

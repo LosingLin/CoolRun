@@ -41,6 +41,8 @@ bool SpiderKind::init()
     
     this->debugShow();
     
+    this->setScore(2);
+    
     return true;
 }
 
@@ -69,6 +71,7 @@ void SpiderKind::setState(SpiderState state)
 
 void SpiderKind::dead()
 {
+    Spider::dead();
     this->setState(kSpiderState_Hurted);
     this->setCollideEffect(false);
 }
@@ -133,7 +136,7 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
         
         this->dead();
     }
-    else if (kCollideDirectionMiss != dir)
+    else if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir)
     {
         m_gameController->dead(_runner);
         

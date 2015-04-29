@@ -11,9 +11,10 @@
 #include "CoolRunScene.h"
 #include "VillageScene.h"
 #include "EditorScene.h"
+#include "FreshGuideScene.h"
 #include "Mission.h"
 #include "ActionHelp.h"
-
+#include "Leaves.h"
 
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
@@ -23,6 +24,9 @@ using namespace cocostudio;
 
 MenuLayer::MenuLayer()
 : Layer()
+, m_logo(nullptr)
+, m_menu(nullptr)
+, m_home(nullptr)
 {
 }
 MenuLayer::~MenuLayer()
@@ -56,33 +60,37 @@ bool MenuLayer::init()
     //_bg->setPosition(Vec2(origin.x, origin.y));
     //this->addChild(_bg);
     
+    m_menu = Node::create();
+    m_menu->setPosition(Vec2(origin.x, origin.y - 600));
+    this->addChild(m_menu, 100);
+    
     auto banner = Sprite::createWithSpriteFrameName("banner_tree.png");
     banner->setAnchorPoint(Vec2(0.5, 0));
-    banner->setPosition(Vec2(origin.x + visibleSize.width - 200, origin.y - 200));
-    this->addChild(banner, 10);
+    banner->setPosition(Vec2(origin.x + visibleSize.width - 210, origin.y - 200));
+    m_menu->addChild(banner, 10);
     
-    auto _startBtn = MYButton::createWithFrameName("btn_run.png", "btn_hl_run.png");
+    auto _startBtn = MYButton::createWithFrameName("btn_start.png", "btn_start_hl.png");
     _startBtn->addTouchEventListener(CC_CALLBACK_2(MenuLayer::startCallback, this));
     _startBtn->setPosition(Vec2(origin.x + visibleSize.width - 260, origin.y + 20));
-    this->addChild(_startBtn, 10);
+    m_menu->addChild(_startBtn, 10);
     
-    auto _chapterBtn = MYButton::createWithFrameName("btn_editor.png", "btn_hl_editor.png");
+    auto _chapterBtn = MYButton::createWithFrameName("btn_editor.png", "btn_editor_hl.png");
     _chapterBtn->addTouchEventListener(CC_CALLBACK_2(MenuLayer::editorCallback, this));
     _chapterBtn->setPosition(Vec2(origin.x + visibleSize.width - 260, origin.y + 220));
-    this->addChild(_chapterBtn, 10);
+    m_menu->addChild(_chapterBtn, 10);
     
-    auto _settingBtn = MYButton::createWithFrameName("btn_setting.png", "btn_hl_setting.png");
+    auto _settingBtn = MYButton::createWithFrameName("btn_setting.png", "btn_setting_hl.png");
     _settingBtn->addTouchEventListener(CC_CALLBACK_2(MenuLayer::settingCallback, this));
     _settingBtn->setPosition(Vec2(origin.x + visibleSize.width - 260, origin.y + 320));
-    this->addChild(_settingBtn, 10);
+    m_menu->addChild(_settingBtn, 10);
     
 //    auto _sp = Sprite::createWithSpriteFrameName("runner_01.png");
 //    _sp->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
 //    this->addChild(_sp);
 //    
 //    _sp->runAction(ActionHelp::createFrameAction("runner_%02d.png", 1, 8, 0.1, true));
-    
-    ArmatureDataManager::getInstance()->addArmatureFileInfo("Runner0.png", "Runner0.plist", "Runner.ExportJson");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner_bone.plist");
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("Runner.ExportJson");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("spider_bone.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderPoison.ExportJson");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderKind.ExportJson");
@@ -92,10 +100,10 @@ bool MenuLayer::init()
     
     
     
-    auto armature = Armature::create("Runner");
-    armature->getAnimation()->play("walk", 0, 1);
+//    auto armature = Armature::create("Runner");
+//    armature->getAnimation()->play("walk", 0, 1);
     //armature->setScale(0.6f);
-    Bone* leftSword = armature->getBone("右手");
+//    Bone* leftSword = armature->getBone("右手");
     //leftSword->addDisplay(_enemy, 2);
 //    leftSword->setOpacity(0);
 //    leftSword->setScale(2);
@@ -103,16 +111,51 @@ bool MenuLayer::init()
 //    leftSword->setVisible(false);
 //    leftSword->setOpacityModifyRGB(true);
 //    leftSword->setRotation(-90);
-    armature->setPosition(Vec2(origin.x + visibleSize.width/2 - 200, origin.y + visibleSize.height/2));
-    this->addChild(armature, 20, 111);
+//    armature->setPosition(Vec2(origin.x + visibleSize.width/2 - 200, origin.y + visibleSize.height/2));
+//    this->addChild(armature, 20, 111);
     
     
-    auto home = Home::create();
-    this->addChild(home);
+    m_home = Home::create();
+    //home->setPosition(Vec2(origin.x, origin.y-160));
+    //home->setScale(0.8f);
+    //m_home->setAnchorPoint(Vec2(0.1, 0.1));
+    this->addChild(m_home);
+    
+    m_logo = Sprite::createWithSpriteFrameName("logo.png");
+    m_logo->setAnchorPoint(Vec2(0.5, 0));
+    m_logo->setPosition(Vec2(origin.x + visibleSize.width/2 - 130, origin.y + visibleSize.height));
+    this->addChild(m_logo, 100);
+    
+    
+    auto leaves = Leaves::create();
+    this->addChild(leaves, 90);
     
     return true;
 }
 
+
+void MenuLayer::onEnter()
+{
+    Layer::onEnter();
+    
+    auto _scaleTo = ScaleTo::create(0.3, 1.2f);
+    m_home->runAction(_scaleTo);
+    
+    auto _moveBy = MoveBy::create(0.3, Vec2(0, -420));
+    m_logo->runAction(_moveBy);
+    
+    auto _moveBy02 = MoveBy::create(0.3, Vec2(0, 600));
+    m_menu->runAction(_moveBy02);
+}
+
+
+void MenuLayer::start()
+{
+    auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
+    mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
+    auto _scene = CoolRun::createScene(mission);
+    Director::getInstance()->replaceScene(_scene);
+}
 
 #pragma mark - btn callback
 
@@ -120,10 +163,13 @@ void MenuLayer::startCallback(Ref* _ref, MYButton::TouchEventType _type)
 {
     if (_type == MYButton::TouchEventType::ENDED)
     {
-        auto mission = Mission::create("{\"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
-        mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
-        auto _scene = CoolRun::createScene(mission);
-        Director::getInstance()->replaceScene(_scene);
+        auto _scaleTo = ScaleTo::create(0.3, 1.0f);
+        m_home->runAction(_scaleTo);
+        auto _moveBy02 = MoveBy::create(0.3, Vec2(0, 420));
+        m_logo->runAction(_moveBy02);
+        auto _moveBy = MoveBy::create(0.3, Vec2(0, -600));
+        auto _call = CallFunc::create(CC_CALLBACK_0(MenuLayer::start, this));
+        m_menu->runAction(Sequence::create(_moveBy, _call, NULL));
     }
     
 }
@@ -160,7 +206,8 @@ void MenuLayer::settingCallback(Ref* _ref, MYButton::TouchEventType _type)
 //    _sp->runAction(RotateBy::create(0.2, 30));
     if (_type == MYButton::TouchEventType::ENDED)
     {
-
+        auto _layer = FreshGuideLayer::create();
+        this->addChild(_layer);
     }
 }
 

@@ -90,10 +90,10 @@ void HpBar::setCurrentHp(float hp)
 void HpBar::barUpdate()
 {
     float percentage = m_currentHp/m_totalHp * 100;
-    m_bg01->runAction(ProgressTo::create(0.3, percentage));
+    m_bg01->runAction(ProgressTo::create(0.4, percentage));
     
-    m_bg02->runAction(Sequence::create(DelayTime::create(0.1),
-                                       ProgressTo::create(0.3, percentage),
+    m_bg02->runAction(Sequence::create(DelayTime::create(0.2),
+                                       ProgressTo::create(0.4, percentage),
                                        CallFunc::create(CC_CALLBACK_0(HpBar::check, this)),
                                        NULL));
 }

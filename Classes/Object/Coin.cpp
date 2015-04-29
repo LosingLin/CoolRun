@@ -14,6 +14,7 @@ Coin::Coin()
 : CollideNode()
 , b_isAnimating(false)
 , m_sp(nullptr)
+, m_score(0)
 {
 }
 Coin::~Coin()
@@ -42,6 +43,15 @@ bool Coin::init()
     
     this->setLocalZOrder(ZORDER_COIN);
     
+    int random = rand() % 3;
+    auto delay = DelayTime::create(random);
+    auto action01 = ActionHelp::createFrameAction("coin_%02d.png", 0, 4, 0.1, false);
+    auto action02 = ActionHelp::createFrameAction("coin_%02d.png", 4, 0, 0.1, false);
+    auto sequence = Sequence::create(delay, action01, action02, NULL);
+    m_sp->runAction(RepeatForever::create(sequence));
+    
+    m_score = 1;
+    
     return true;
 }
 
@@ -49,11 +59,14 @@ void Coin::onEnter()
 {
     CollideNode::onEnter();
     
-    this->schedule(schedule_selector(Coin::update), 1);
+//    this->schedule(schedule_selector(Coin::update), 1);
+    
+    //m_sp->stopAllActions();
+    
 }
 void Coin::onExit()
 {
-    this->unschedule(schedule_selector(Coin::update));
+//    this->unschedule(schedule_selector(Coin::update));
     CollideNode::onExit();
 }
 
@@ -124,6 +137,8 @@ void Coin::acionDoneCallback()
 
 void Coin::times()
 {
+    m_score *= 2;
+    
     float ssize = 1.5f;
     m_sp->setScale(ssize, ssize);
     auto csize = this->getContentSize();
@@ -133,10 +148,12 @@ void Coin::times()
 
 void Coin::bePicked()
 {
-    this->unschedule(schedule_selector(Coin::update));
+    //this->unschedule(schedule_selector(Coin::update));
     
     m_sp->stopAllActions();
     m_sp->removeFromParentAndCleanup(true);
+    
+    m_gameController->addScore(m_score);
     
     auto csize = this->getContentSize();
     auto psq = ParticleSystemQuad::create("coin.plist");

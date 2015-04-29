@@ -22,10 +22,16 @@ public:
     virtual bool init();
     CREATE_FUNC(Animal);
     
-
+    void setScore(int score) { m_score = score; }
+    int getScore() { return m_score; }
+    virtual void dead();
+    virtual void addPlayerScore();
     
     virtual void CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node) override;
     virtual void CollideTrackListener_CollideAll(CollideDirection direction) override;
+    
+private:
+    int m_score;
 };
 
 #endif /* defined(__CoolRun__Animal__) */

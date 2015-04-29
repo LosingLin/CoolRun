@@ -66,6 +66,8 @@ private:
     
     //Spider
     EditorSelector* m_spideState;
+    //SpiderPoison
+    EditorSelector* m_spiderPosionDir;
     //Bullet
     EditorSelector* m_isAnimalHurt;
     EditorSelector* m_isRunnerHurt;

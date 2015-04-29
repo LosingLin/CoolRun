@@ -388,7 +388,12 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimelineMacro.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCFrame.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h \
-  jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h
+  jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h \
+  jni/../../Classes/Object/SpiderKind.h \
+  jni/../../Classes/Object/Spider.h \
+  jni/../../Classes/Object/BossBullet.h \
+  jni/../../Classes/Object/Bullet.h jni/../../Classes/Utils/ActionHelp.h \
+  jni/../../Classes/UI/HpBar.h
 
 jni/../../Classes/Object/Boss.h:
 
@@ -1175,3 +1180,15 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/C
 jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCTimeLine.h:
 
 jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h:
+
+jni/../../Classes/Object/SpiderKind.h:
+
+jni/../../Classes/Object/Spider.h:
+
+jni/../../Classes/Object/BossBullet.h:
+
+jni/../../Classes/Object/Bullet.h:
+
+jni/../../Classes/Utils/ActionHelp.h:
+
+jni/../../Classes/UI/HpBar.h:

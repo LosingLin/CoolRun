@@ -41,6 +41,7 @@ public:
 private:
     Sprite *m_sp;
     bool b_isAnimating;
+    int m_score;
 };
 
 #endif /* defined(__CoolRun__Coin__) */

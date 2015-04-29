@@ -37,6 +37,9 @@ public:
     MissionPage* getMissionPage(int _index);
     MissionPage* getNextMissionPage();
     
+    void setPageIndex(int _index) { m_pageIndex = _index; }
+    int getPageIndex() { return m_pageIndex; }
+    
     const string* getDataStr() { return m_jsonStr; }
     
     void setMissionRepeatModel(MissionRepeatModel model) { m_repeatModel = model; }

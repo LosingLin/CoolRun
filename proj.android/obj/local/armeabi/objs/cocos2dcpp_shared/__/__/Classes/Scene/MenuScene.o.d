@@ -412,12 +412,13 @@
   jni/../../cocos2d/extensions/../extensions/physics-nodes/CCPhysicsSprite.h \
   jni/../../cocos2d/extensions/../extensions/assets-manager/AssetsManager.h \
   jni/../../Classes/Editor/Listener/EditorListener.h \
+  jni/../../Classes/Scene/FreshGuideScene.h \
   jni/../../Classes/Mission/Mission.h \
   jni/../../Classes/Mission/MissionPage.h \
   jni/../../Classes/Mission/MissionInterface.h \
   jni/../../Classes/Mission/MissionEvent.h \
-  jni/../../Classes/Utils/ActionHelp.h jni/../../Classes/Object/Home.h \
-  jni/../../Classes/Object/Land.h
+  jni/../../Classes/Utils/ActionHelp.h jni/../../Classes/UI/Leaves.h \
+  jni/../../Classes/Object/Home.h jni/../../Classes/Object/Land.h
 
 jni/../../Classes/Scene/MenuScene.h:
 
@@ -1247,6 +1248,8 @@ jni/../../cocos2d/extensions/../extensions/assets-manager/AssetsManager.h:
 
 jni/../../Classes/Editor/Listener/EditorListener.h:
 
+jni/../../Classes/Scene/FreshGuideScene.h:
+
 jni/../../Classes/Mission/Mission.h:
 
 jni/../../Classes/Mission/MissionPage.h:
@@ -1256,6 +1259,8 @@ jni/../../Classes/Mission/MissionInterface.h:
 jni/../../Classes/Mission/MissionEvent.h:
 
 jni/../../Classes/Utils/ActionHelp.h:
+
+jni/../../Classes/UI/Leaves.h:
 
 jni/../../Classes/Object/Home.h:
 

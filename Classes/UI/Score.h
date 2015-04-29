@@ -25,6 +25,8 @@ public:
     CREATE_FUNC(Score);
     
     void setString(const std::string& str);
+    
+    void addAction(int num);
 private:
     Label* m_numLab;
 };

@@ -10,6 +10,7 @@
 #include "EditorUIBase.h"
 #include "EditorZOrder.h"
 #include "Spider.h"
+#include "SpiderPoison.h"
 #include "Bullet.h"
 #include "Item.h"
 
@@ -41,6 +42,7 @@ EditorDetailMenu::EditorDetailMenu()
 , m_cType(nullptr)
 , m_y(0.0f)
 , m_spideState(nullptr)
+, m_spiderPosionDir(nullptr)
 , m_isAnimalHurt(nullptr)
 , m_isRunnerHurt(nullptr)
 , m_isAtkable(nullptr)
@@ -240,7 +242,25 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
         m_spideState->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_spideState);
         m_spideState->setPosition(Vec2(50, m_y));
         this->addChild(m_spideState);
+        if (pType == kPhysicNodeSpiderPoison)
+        {
+            NORMALDIS(m_y);
+            m_spiderPosionDir = EditorSelector::create(__Array::create(
+                                                                  __String::create("Up"),
+                                                                  __String::create("Down"),
+                                                                  __String::create("Left"),
+                                                                  __String::create("Right"),
+                                                                  nullptr),
+                                                  "PoisonDirector",
+                                                  Size(260, 60));
+            m_spiderPosionDir->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
+            m_spiderPosionDir->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_spiderPosionDir);
+            m_spiderPosionDir->setPosition(Vec2(50, m_y));
+            this->addChild(m_spiderPosionDir);
+            
+        }
         BIGDIS(m_y);
+        
     }
     else
     {
@@ -457,6 +477,26 @@ void EditorDetailMenu::updateMenu()
                     break;
                 default:
                     break;
+            }
+            if (pType == kPhysicNodeSpiderPoison)
+            {
+                auto ccPNode = dynamic_cast<SpiderPoison*>(pNode);
+                auto dir = ccPNode->getAtkDirection();
+                switch (dir)
+                {
+                    case kCRDirectionUp:
+                        m_spiderPosionDir->setSelected("Up");
+                        break;
+                    case kCRDirectionDown:
+                        m_spiderPosionDir->setSelected("Down");
+                        break;
+                    case kCRDirectionLeft:
+                        m_spiderPosionDir->setSelected("Left");
+                    case kCRDirectionRight:
+                        m_spiderPosionDir->setSelected("Right");
+                    default:
+                        break;
+                }
             }
         }
         if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlertPoison || pType == kPhysicNodeBulletAlertNet)
@@ -743,6 +783,26 @@ void EditorDetailMenu::selectedDone(const string& key, EditorSelector* selector)
         else
         {
             cPNode->setAtkable(false);
+        }
+    }
+    else if (selector == m_spiderPosionDir)
+    {
+        auto cPNode = dynamic_cast<SpiderPoison*>(pNode);
+        if ("Up" == key)
+        {
+            cPNode->setAtkDirection(CRDirection::kCRDirectionUp);
+        }
+        else if ("Down" == key)
+        {
+            cPNode->setAtkDirection(CRDirection::kCRDirectionDown);
+        }
+        else if ("Left" == key)
+        {
+            cPNode->setAtkDirection(CRDirection::kCRDirectionLeft);
+        }
+        else if ("Right" == key)
+        {
+            cPNode->setAtkDirection(CRDirection::kCRDirectionRight);
         }
     }
 }

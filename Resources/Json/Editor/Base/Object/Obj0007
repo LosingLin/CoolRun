@@ -1,6 +1,7 @@
 {
     "pNodeType": 7,
     "state": 1,
+    "atk_dir": 3,
     "aPoint": { 
         "x": 0.0,
         "y": 0.0

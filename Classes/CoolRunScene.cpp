@@ -38,10 +38,13 @@
 #include "PopViewLayer.h"
 #include "MenuScene.h"
 #include "HpBar.h"
+#include "Leaves.h"
+#include "FreshGuideScene.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
 #define kOverViewTag  102
+#define kWarningFrameTag 103
 
 CoolRun::CoolRun()
 : Layer()
@@ -78,6 +81,9 @@ CoolRun::CoolRun()
 , m_score(0)
 , m_stretchView(nullptr)
 , m_stretch(0)
+, m_leaves(nullptr)
+, m_runType(RunType::NORMAL)
+, m_missionIndex(0)
 {
 }
 CoolRun::~CoolRun()
@@ -93,10 +99,11 @@ CoolRun::~CoolRun()
     CC_SAFE_RELEASE_NULL(m_nextPage);
 }
 
-Scene* CoolRun::createScene(Mission* mission)
+Scene* CoolRun::createScene(Mission* mission, RunType _type)
 {
     auto _scene = MYScene::create();
     auto _layer = CoolRun::create(mission);
+    _layer->setRunType(_type);
     _scene->addChild(_layer);
     _scene->scenePause = CC_CALLBACK_0(CoolRun::addPauseMenu, _layer);
     _scene->sceneResume = CC_CALLBACK_0(CoolRun::removePauseMenu, _layer);
@@ -186,7 +193,7 @@ bool CoolRun::init()
     this->addChild(m_scoreView);
     
     m_stretchView = Stretch::create();
-    m_stretchView->setPosition(Vec2(origin.x + 600, origin.y + visibleSize.height - 56));
+    m_stretchView->setPosition(Vec2(origin.x + visibleSize.width/2 - 50, origin.y + visibleSize.height - 56));
     m_stretchView->setLocalZOrder(ZORDER_HEADMENU);
     this->addChild(m_stretchView);
     
@@ -205,6 +212,9 @@ bool CoolRun::init()
     m_pageSLab->setAnchorPoint(Vec2(0, 0.5));
     m_pageSLab->setPosition(Vec2(origin.x + 520, origin.y + visibleSize.height - 20));
     this->addChild(m_pageSLab, 100);
+    
+    m_stretchLab->setVisible(false);
+    m_pageSLab->setVisible(false);
     
     //m_mission = Mission::create("test", Mission::MissionRepeatModel::LAST);
 //    m_mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
@@ -241,6 +251,11 @@ bool CoolRun::init()
     m_pacBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
     this->addChild(m_pacBtn, 100);
     //m_pacBtn->setOpacity(100);
+    
+    
+    m_leaves = Leaves::create();
+    m_leaves->setLocalZOrder(ZORDER_LEAVES);
+    this->addChild(m_leaves);
     
     return true;
 }
@@ -324,7 +339,11 @@ void CoolRun::addBoss()
     //auto boss = BossFourflodHeads::create();
     Boss* boss = nullptr;
     auto r = rand() % 4;
-    r = 3;
+    if (m_missionIndex < 4)
+    {
+        r = m_missionIndex;
+    }
+    //r = 1;
     switch (r)
     {
         case 0:
@@ -333,19 +352,19 @@ void CoolRun::addBoss()
             boss->setPosition(Vec2(1400, 500));
         }
             break;
-        case 1:
+        case 2:
         {
             boss = BossTrebleHeads::create();
             boss->setPosition(Vec2(1400, 500));
         }
             break;
-        case 2:
+        case 3:
         {
             boss = BossFourflodHeads::create();
             boss->setPosition(Vec2(1400, 500));
         }
             break;
-        case 3:
+        case 1:
         {
             boss = DeathMoth::create();
             boss->setPosition(Vec2(1400, 100));
@@ -365,6 +384,8 @@ void CoolRun::addBoss()
     boss->setLocalZOrder(ZORDER_ANIMAL);
     boss->setXV(-this->getVelocity());
     this->addChild(boss);
+    
+    m_missionIndex ++;
 }
 
 void CoolRun::showBossWarning()
@@ -372,23 +393,43 @@ void CoolRun::showBossWarning()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    auto label = Label::createWithSystemFont("WARNING", "", 102);
-    label->setTag(kWarningTag);
-    label->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
-    label->setLocalZOrder(ZORDER_WARNING);
-    this->addChild(label);
+    auto frame = Scale9Sprite::createWithSpriteFrameName("warning_frame.png");
+    frame->setPreferredSize(Size(visibleSize.width, visibleSize.height));
+    frame->setTag(kWarningFrameTag);
+    frame->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
+    frame->setLocalZOrder(ZORDER_WARNING);
+    this->addChild(frame);
     
-    auto scale01 = ScaleTo::create(0.5, 1.2);
-    auto scale02 = ScaleTo::create(0.5, 1.0);
-    auto fadeOut = FadeOut::create(0.5);
+    auto fade01 = FadeOut::create(0.3);
+    auto fade02 = FadeIn::create(0.3);
+    auto fade03 = FadeOut::create(0.3);
+    auto fade04 = FadeIn::create(0.3);
+    auto fade05 = FadeOut::create(0.3);
+    frame->runAction(Sequence::create(fade01, fade02, fade03, fade04, fade05, NULL));
+    
+    
+    auto warning = Sprite::createWithSpriteFrameName("warning.png");
+    warning->setTag(kWarningTag);
+    warning->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 80));
+    warning->setLocalZOrder(ZORDER_WARNING);
+    this->addChild(warning);
+    warning->setScale(0.8f);
+    
+    auto scale01 = ScaleBy::create(0.3, 1.2);
+    auto scale02 = ScaleBy::create(0.3, 0.8);
+    auto scale03 = ScaleBy::create(0.3, 1.2);
+    auto fadeOut = FadeOut::create(0.3);
     auto callfunc = CallFunc::create(CC_CALLBACK_0(CoolRun::showBossWarningEnd, this));
     
-    label->runAction(Sequence::create(scale01, scale02, fadeOut, callfunc, NULL));
+    warning->runAction(Sequence::create(scale01, scale02, scale03, fadeOut, callfunc, NULL));
+    
 }
 void CoolRun::showBossWarningEnd()
 {
+    this->getChildByTag(kWarningFrameTag)->removeFromParentAndCleanup(true);
     this->getChildByTag(kWarningTag)->removeFromParentAndCleanup(true);
     this->addBoss();
+    this->hideInfoView();
 }
 
 void CoolRun::hideController()
@@ -400,6 +441,28 @@ void CoolRun::showController()
 {
     m_jumpBtn->setVisible(true);
     m_atkBtn->setVisible(true);
+}
+void CoolRun::hideInfoView()
+{
+//    Size visibleSize = Director::getInstance()->getVisibleSize();
+//    Vec2 origin = Director::getInstance()->getVisibleOrigin();m_scoreView = Score::create();
+//    m_scoreView->setPosition(Vec2(origin.x + 2, origin.y + visibleSize.height - 56));
+//    m_stretchView->setPosition(Vec2(origin.x + 600, origin.y + visibleSize.height - 56));
+    
+    auto moveBy = MoveBy::create(0.2, Vec2(0, 120));
+    m_scoreView->runAction(moveBy);
+    
+    moveBy = MoveBy::create(0.2, Vec2(0, 120));
+    m_stretchView->runAction(moveBy);
+    
+}
+void CoolRun::showInfoView()
+{
+    auto moveBy = MoveBy::create(0.2, Vec2(0, -120));
+    m_scoreView->runAction(moveBy);
+    
+    moveBy = MoveBy::create(0.2, Vec2(0, -120));
+    m_stretchView->runAction(moveBy);
 }
 
 void CoolRun::actionCallback()
@@ -416,6 +479,15 @@ void CoolRun::actionCallback()
         this->addRunner();
         
         this->showController();
+        
+        bool isGuided = UserDefault::getInstance()->getBoolForKey(IS_PLAYER_GUIDED);
+        if (!isGuided)
+        {
+            auto delay = DelayTime::create(0.5f);
+            auto callfun = CallFunc::create(CC_CALLBACK_0(CoolRun::showGuide, this));
+            this->runAction(Sequence::create(delay, callfun, NULL));
+            //this->showGuide();
+        }
     }
 }
 void CoolRun::doorCloseCallback()
@@ -432,8 +504,9 @@ void CoolRun::setVelocity(int v)
     this->_setVelocity(m_dirCollideObjs, vc);
     this->_setVelocity(m_bulletObjs, vc);
     m_awayBG->setVelocity(m_velocity*0.2f);
-    m_farBG->setVelocity(m_velocity*0.4f);
-    m_midBG->setVelocity(m_velocity*0.8f);
+    m_farBG->setVelocity(m_velocity*0.6f);
+    m_midBG->setVelocity(m_velocity*1.0f);
+    m_leaves->setVelocity(m_velocity*1.2f);
 }
 void CoolRun::_setVelocity(__Array* _nodes, int vc)
 {
@@ -656,34 +729,6 @@ void CoolRun::directionCollideTrack()
             continue;
         }
         
-        //碰到前面的地面
-        if (cTimes[kCollideDirectionLeft] > 0) {
-            auto leftLand = dynamic_cast<Land*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionLeft]));
-            if (leftLand->isLeftIgnore())
-            {
-                node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, leftLand);
-            }
-            else
-            {
-                node2->CollideTrackListener_CollideOnce(kCollideDirectionLeft, leftLand);
-            }
-//            node2->CollideTrackListener_CollideOnce(kCollideDirectionLeft, dynamic_cast<PhysicNode*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionLeft])));
-            continue;
-        }
-        
-        if (cTimes[kCollideDirectionRight])
-        {
-            auto leftLand = dynamic_cast<Land*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionRight]));
-            if (leftLand->isRightIgnore())
-            {
-                node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, leftLand);
-            }
-            else
-            {
-                node2->CollideTrackListener_CollideOnce(kCollideDirectionRight, leftLand);
-            }
-            continue;
-        }
         
         //头顶到地面
         if (cTimes[kCollideDirectionDown] > 0) {
@@ -700,6 +745,36 @@ void CoolRun::directionCollideTrack()
 //            node2->CollideTrackListener_CollideOnce(kCollideDirectionDown, dynamic_cast<PhysicNode*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionDown])));
             continue;
         }
+        
+        //碰到前面的地面
+        if (cTimes[kCollideDirectionLeft] > 0) {
+            auto leftLand = dynamic_cast<Land*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionLeft]));
+            if (leftLand->isLeftIgnore())
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, leftLand);
+            }
+            else
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionLeft, leftLand);
+            }
+            //            node2->CollideTrackListener_CollideOnce(kCollideDirectionLeft, dynamic_cast<PhysicNode*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionLeft])));
+            continue;
+        }
+        
+        if (cTimes[kCollideDirectionRight] > 0)
+        {
+            auto leftLand = dynamic_cast<Land*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionRight]));
+            if (leftLand->isRightIgnore())
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, leftLand);
+            }
+            else
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionRight, leftLand);
+            }
+            continue;
+        }
+        
         
     }
 }
@@ -892,7 +967,7 @@ void CoolRun::gameMain(float delta)
             }
             
             auto pos = runner->getPosition();
-            if (pos.y <= -120)
+            if (pos.y <= -220)
             {
                 this->dead(runner);
             }
@@ -913,6 +988,7 @@ void CoolRun::gameMain(float delta)
         if (runner->isLandBuildING())
         {
             this->buildLand(runner);
+            this->_smoothLand();
         }
     }
     
@@ -929,7 +1005,7 @@ void CoolRun::update(float delta)
 
 void CoolRun::backGroundUpdate(float delta)
 {
-    
+    m_awayBG->updateBackGround(delta);
     m_farBG->updateBackGround(delta);
     m_midBG->updateBackGround(delta);
     
@@ -949,17 +1025,21 @@ void CoolRun::backGroundUpdate(float delta)
 
 void CoolRun::totalStretchUpdate(float delta)
 {
+    if (GameState::BOSS == m_gameState)
+    {
+        return;
+    }
     m_totalStretch += m_velocity * delta;
     
-    if (m_totalStretchForInt != (int)m_totalStretch/30)
+    if (m_totalStretchForInt != (int)m_totalStretch/50)
     {
-        m_totalStretchForInt = (int)m_totalStretch/30;
+        m_totalStretchForInt = (int)m_totalStretch/50;
         
         string s;
         stringstream ss(s);
         ss << m_totalStretchForInt;
         m_stretchLab->setString(ss.str());
-        this->addScore(1);
+        //this->addScore(1);
         this->addStretch(1);
     }
     
@@ -1139,7 +1219,7 @@ void CoolRun::_smoothLand()
         auto rect1 = PhysicHelp::countPhysicNodeRect(land1);
         if (land1->isLand())
         {
-            land1->setDownIgnore(true);
+            land1->setDownIgnore(false);
         }
 
         for (int j = 0; j < m_dirCollideObjs->count(); ++j)
@@ -1200,10 +1280,10 @@ void CoolRun::_checkObjectsOut(__Array* _nodes)
         _cSize = _node->getContentSize();
         
         bool isNeedMove = false;
-        if (_pos.x < origin.x)
+        if (_pos.x < origin.x - 200)
         {
             
-            if (_pos.x + (1-_aPoint.x) * _cSize.width < origin.x)
+            if (_pos.x + (1-_aPoint.x) * _cSize.width < origin.x - 200)
             {
                 isNeedMove = true;
             }
@@ -1316,6 +1396,24 @@ void CoolRun::addSpider(Spider* spider)
     }
 }
 
+#pragma mark - guide
+void CoolRun::showGuide()
+{
+    this->setVelocity(0.0f);
+    auto _guide = FreshGuideLayer::create();
+    _guide->setCloseCallback(CC_CALLBACK_2(CoolRun::hideGuide, this, _guide));
+    this->addChild(_guide);
+}
+void CoolRun::hideGuide(Ref* _btn, MYButton::TouchEventType _type, Node* _guide)
+{
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+        _guide->removeFromParentAndCleanup(true);
+        this->setVelocity(400);
+        UserDefault::getInstance()->setBoolForKey(IS_PLAYER_GUIDED, true);
+    }
+}
+
 #pragma mark - pop view
 
 void CoolRun::addPauseMenu()
@@ -1327,14 +1425,14 @@ void CoolRun::addPauseMenu()
     layer->setTag(kPauseViewTag);
     this->addChild(layer, ZORDER_POPVIEW);
     
-    auto resumeBtn = MYButton::createWithFrameName("btn_resume.png", "btn_hl_resume.png");
+    auto resumeBtn = MYButton::createWithFrameName("btn_resume.png", "btn_resume_hl.png");
     resumeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::ResumeBtnCallback, this));
     resumeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
     resumeBtn->setAnchorPoint(Vec2(0.5, 0.5));
     resumeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(resumeBtn);
     
-    auto giveUpBtn = MYButton::createWithFrameName("btn_giveup.png", "btn_hl_giveup.png");
+    auto giveUpBtn = MYButton::createWithFrameName("btn_home.png", "btn_home_hl.png");
     giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
     giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
     giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
@@ -1353,14 +1451,14 @@ void CoolRun::addOverMenu()
     layer->setTag(kOverViewTag);
     this->addChild(layer, ZORDER_POPVIEW);
     
-    auto helpmeBtn = MYButton::createWithFrameName("btn_helpme.png", "btn_hl_helpme.png");
+    auto helpmeBtn = MYButton::createWithFrameName("btn_restart.png", "btn_restart_hl.png");
     helpmeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::HelpMeBtnCallback, this));
-    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 60));
+    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
     helpmeBtn->setAnchorPoint(Vec2(0.5, 0.5));
     helpmeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     layer->addChild(helpmeBtn);
     
-    auto giveUpBtn = MYButton::createWithFrameName("btn_giveup.png", "btn_hl_giveup.png");
+    auto giveUpBtn = MYButton::createWithFrameName("btn_home.png", "btn_home_hl.png");
     giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
     giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
     giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
@@ -1419,7 +1517,21 @@ void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     if (_type == MYButton::TouchEventType::ENDED)
     {
         this->removeOverMenu();
-        this->addRunner();
+//        this->addRunner();
+        if (m_runType == RunType::NORMAL)
+        {
+            auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":1}}");
+            mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
+            auto _scene = CoolRun::createScene(mission);
+            Director::getInstance()->replaceScene(_scene);
+        }
+        else if (m_runType == RunType::EDITOR)
+        {
+            m_mission->setPageIndex(-1);
+            auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
+            Director::getInstance()->replaceScene(_scene);
+        }
+        
     }
 }
 
@@ -1455,6 +1567,11 @@ void CoolRun::dead(Runner* runner)
 }
 void CoolRun::addScore(int score)
 {
+    if (GameState::BOSS == m_gameState)
+    {
+        return;
+    }
+    
     m_score += score;
     
     string s;
@@ -1464,6 +1581,11 @@ void CoolRun::addScore(int score)
 }
 void CoolRun::addStretch(int stretch)
 {
+    if (GameState::BOSS == m_gameState)
+    {
+        return;
+    }
+    
     m_stretch += stretch;
     
     string s;
@@ -1473,10 +1595,24 @@ void CoolRun::addStretch(int stretch)
 }
 void CoolRun::loadNextMission()
 {
-    auto mission = Mission::create("{\"e\":{\"num\":1}, \"n\":{\"num\":1}, \"h\":{\"num\":1}}");
+    Mission* mission = nullptr;
+    if (m_missionIndex < 2)
+    {
+        mission = Mission::create("{\"e\":{\"num\":5}, \"n\":{\"num\":5}, \"h\":{\"num\":3}}");
+    }
+    else if(m_missionIndex < 5)
+    {
+        mission = Mission::create("{\"e\":{\"num\":3}, \"n\":{\"num\":7}, \"h\":{\"num\":6}}");
+    }
+    else
+    {
+        mission = Mission::create("{\"e\":{\"num\":2}, \"n\":{\"num\":6}, \"h\":{\"num\":9}}");
+    }
+    mission = Mission::create("{\"e\":{\"num\":2}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
     this->setMission(mission);
     m_gameState = GameState::RUNNING;
+    this->showInfoView();
 }
 void CoolRun::addCoin(int num)
 {
@@ -1514,9 +1650,12 @@ void CoolRun::addBossHpBar(HpBar* bar)
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    bar->setAnchorPoint(Vec2(1, 1));
-    bar->setPosition(Vec2(origin.x + visibleSize.width, origin.y + visibleSize.height - 80));
+    bar->setAnchorPoint(Vec2(0.5, 0.5));
+    bar->setPosition(Vec2((origin.x + visibleSize.width - 100) / 2, origin.y + visibleSize.height - 40 + 120));
     this->addChild(bar);
+    
+    auto moveBy = MoveBy::create(0.2, Vec2(0, -120));
+    bar->runAction(moveBy);
 }
 void CoolRun::removeBossHpBar(HpBar* bar)
 {

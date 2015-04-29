@@ -1,0 +1,12 @@
+info face="CooperBlackStd" size=32 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=2,2
+common lineHeight=38 base=22 scaleW=128 scaleH=64 pages=1 packed=0
+page id=0 file="Text_01.png"
+chars count=8
+char id=83 x=2 y=2 width=24 height=26 xoffset=-1 yoffset=-2 xadvance=22 page=0 chnl=0 letter="S"
+char id=109 x=28 y=2 width=35 height=20 xoffset=-1 yoffset=4 xadvance=32 page=0 chnl=0 letter="m"
+char id=111 x=65 y=2 width=22 height=20 xoffset=-1 yoffset=4 xadvance=20 page=0 chnl=0 letter="o"
+char id=99 x=89 y=2 width=20 height=20 xoffset=-1 yoffset=4 xadvance=18 page=0 chnl=0 letter="c"
+char id=114 x=2 y=30 width=20 height=20 xoffset=-1 yoffset=4 xadvance=18 page=0 chnl=0 letter="r"
+char id=101 x=24 y=30 width=20 height=20 xoffset=-1 yoffset=4 xadvance=18 page=0 chnl=0 letter="e"
+char id=58 x=46 y=30 width=10 height=20 xoffset=0 yoffset=4 xadvance=10 page=0 chnl=0 letter=":"
+char id=32 x=58 y=30 width=0 height=0 xoffset=0 yoffset=142 xadvance=10 page=0 chnl=0 letter="space"

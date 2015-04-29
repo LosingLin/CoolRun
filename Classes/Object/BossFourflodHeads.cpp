@@ -22,6 +22,7 @@ BossFourflodHeads::BossFourflodHeads()
 }
 BossFourflodHeads::~BossFourflodHeads()
 {
+    this->destoryRes();
 }
 
 bool BossFourflodHeads::init()
@@ -50,6 +51,8 @@ bool BossFourflodHeads::init()
     
     
     this->play(kBFHPlayIndex_Stand);
+    
+    this->setScore(3000);
     
     return true;
 }
@@ -317,6 +320,8 @@ void BossFourflodHeads::movementEvent(Armature *armature, MovementEventType move
         if ("dead" == movementID)
         {
             m_gameController->loadNextMission();
+            
+            this->addPlayerScore();
             this->setDestoryed(true);
         }
         else if ("hurt" == movementID)

@@ -26,7 +26,7 @@ bool Score::init()
         return false;
     }
     
-    auto csize = Size(260, 54);
+    auto csize = Size(320, 54);
     this->setContentSize(csize);
     
     auto bg = Scale9Sprite::createWithSpriteFrameName("num_bg.png");
@@ -34,15 +34,15 @@ bool Score::init()
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
     
-    auto scoreTxt = Label::createWithSystemFont("Score:", "", 30);
-    scoreTxt->setAnchorPoint(Vec2(0, 0.5));
-    scoreTxt->setPosition(Vec2(20, csize.height/2));
+    auto scoreTxt = Label::createWithBMFont("Text_01.fnt", "Score:");
+    scoreTxt->setAnchorPoint(Vec2(0, 0));
+    scoreTxt->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+    scoreTxt->setPosition(Vec2(12, 0));
     this->addChild(scoreTxt);
     
-    m_numLab = Label::createWithSystemFont("0", "", 30);
+    m_numLab = Label::createWithBMFont("Score.fnt", "0");
     m_numLab->setAnchorPoint(Vec2(0, 0.5));
-    m_numLab->setTextColor(Color4B::GREEN);
-    m_numLab->setPosition(Vec2(110, csize.height/2));
+    m_numLab->setPosition(Vec2(120, 20));
     m_numLab->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
     this->addChild(m_numLab);
     return true;
@@ -50,5 +50,8 @@ bool Score::init()
 
 void Score::setString(const std::string& str)
 {
+    auto _scaleTo = ScaleTo::create(0.1f, 1.2f);
+    auto _scaleTo2 = ScaleTo::create(0.1f, 1.0f);
+    m_numLab->runAction(Sequence::create(_scaleTo, _scaleTo2, NULL));
     m_numLab->setString(str);
 }

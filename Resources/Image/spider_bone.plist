@@ -231,13 +231,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>spider_bone.png</string>
+            <string>spider_bone.pvr.ccz</string>
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bb79e72b2979b615a2c25d28ddf5d2d4:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:e46d5e24844a729a6a5e72ac31610216:1/1$</string>
             <key>textureFileName</key>
-            <string>spider_bone.png</string>
+            <string>spider_bone.pvr.ccz</string>
         </dict>
     </dict>
 </plist>

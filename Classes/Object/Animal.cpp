@@ -10,6 +10,7 @@
 
 Animal::Animal()
 : MultipleCollideNode()
+, m_score(0)
 {
 }
 Animal::~Animal()
@@ -25,6 +26,17 @@ bool Animal::init()
     this->setLocalZOrder(ZORDER_ANIMAL);
     
     return true;
+}
+
+void Animal::dead()
+{
+    this->addPlayerScore();
+}
+
+void Animal::addPlayerScore()
+{
+    auto score = this->getScore();
+    m_gameController->addScore(score);
 }
 
 void Animal::CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node)

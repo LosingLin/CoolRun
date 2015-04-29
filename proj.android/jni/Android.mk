@@ -94,6 +94,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Scene/MenuScene.cpp \
                    ../../Classes/Scene/SettingScene.cpp \
                    ../../Classes/Scene/VillageScene.cpp \
+                   ../../Classes/Scene/FreshGuideScene.cpp \
                    ../../Classes/UI/Background.cpp \
                    ../../Classes/UI/Dialog.cpp \
                    ../../Classes/UI/HpBar.cpp \
@@ -103,6 +104,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/UI/Score.cpp \
                    ../../Classes/UI/Stretch.cpp \
                    ../../Classes/UI/MYScene.cpp \
+                   ../../Classes/UI/Leaves.cpp \
                    ../../Classes/Utils/ActionHelp.cpp \
                    ../../Classes/Utils/JsonHelp.cpp 
 

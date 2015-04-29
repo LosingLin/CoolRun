@@ -24,7 +24,7 @@ DeathMoth::DeathMoth()
 }
 DeathMoth::~DeathMoth()
 {
-    
+    this->destoryRes();
 }
 
 bool DeathMoth::init()
@@ -36,6 +36,7 @@ bool DeathMoth::init()
     
     m_armature = Armature::create("DeathMoth");
     auto csize = m_armature->getContentSize();
+    //auto csize = Size(458, 576);
     this->setContentSize(csize);
     m_armature->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_armature);
@@ -53,6 +54,8 @@ bool DeathMoth::init()
     m_curHp = 5.0f;
     
     this->play(kDeathMothPlayIndex_Stand);
+    
+    this->setScore(500);
     
     return true;
 }
@@ -241,6 +244,8 @@ void DeathMoth::attkSequenceEnd()
         {
             //this->setDestoryed(true);
             m_gameController->loadNextMission();
+            
+            this->addPlayerScore();
         }
     }
 }
@@ -424,6 +429,7 @@ void DeathMoth::trackCollideWithRunner(Runner* _runner)
         //        auto pos = this->getPosition();
         if (x_dis <= 500)
         {
+            
             this->setXV(0.0f);
             this->setReady(true);
             

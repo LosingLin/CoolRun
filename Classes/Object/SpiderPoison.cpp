@@ -43,7 +43,42 @@ bool SpiderPoison::init()
     
     this->debugShow();
     
+    m_atkAlert = Sprite::createWithSpriteFrameName("spider_poison_alert.png");
+    m_atkAlert->setAnchorPoint(Vec2(1, 0.5));
+    m_atkAlert->setPosition(Vec2(180, 120));
+    this->addChild(m_atkAlert);
+    this->setAtkDirection(CRDirection::kCRDirectionUp);
+    m_atkAlert->setOpacity(200);
+    m_atkAlert->runAction(RepeatForever::create(Blink::create(0.5, 1)));
+    
+    this->setScore(5);
+    
     return true;
+}
+
+void SpiderPoison::loadJson(rapidjson::Value& value)
+{
+    Spider::loadJson(value);
+    
+    CRDirection dir = kCRDirectionUp;
+    
+    if (value.HasMember("atk_dir")) {
+        dir = (CRDirection)JsonHelp::getInt(value["atk_dir"]);
+    }
+    this->setAtkDirection(dir);
+}
+
+void SpiderPoison::saveData(string* buffer)
+{
+    Spider::saveData(buffer);
+    
+    string str = string();
+    stringstream ss;
+    ss << "\"atk_dir\":";
+    ss << this->getAtkDirection();
+    ss << ",";
+    ss >> str;
+    buffer->append(str);
 }
 
 void SpiderPoison::setState(SpiderState state)
@@ -71,6 +106,7 @@ void SpiderPoison::setState(SpiderState state)
 
 void SpiderPoison::dead()
 {
+    Spider::dead();
     this->setState(kSpiderState_Hurted);
     this->setCollideEffect(false);
 }
@@ -97,6 +133,9 @@ void SpiderPoison::attack()
             break;
         case kCRDirectionDown:
         {
+            bullet->setXV(-v);
+            bullet->setYV(-600);
+            bullet->setPosition(Vec2(pos.x + 120, pos.y + 60));
             m_gameController->addBullet(bullet);
         }
             break;
@@ -130,19 +169,32 @@ void SpiderPoison::setAtkDirection(CRDirection direction)
     m_atkDirection = direction;
 //    Bone* bellyNormal = m_armature->getBone("belly_normal");
 //    Bone* bellyHurted = m_armature->getBone("belly_hurted");
-//    switch (m_atkDirection)
-//    {
-//        case kCRDirectionRight:
-//        {
-//            bellyNormal->setPosition(Vec2(-40, -120));
-//            bellyNormal->setRotation(96);
-//            bellyHurted->setRotation(98);
-//        }
-//            break;
-//            
-//        default:
-//            break;
-//    }
+    switch (m_atkDirection)
+    {
+        case kCRDirectionRight:
+        {
+            m_atkAlert->setRotation(180);
+        }
+            break;
+        case kCRDirectionUp:
+        {
+            m_atkAlert->setRotation(90);
+        }
+            break;
+        case kCRDirectionLeft:
+        {
+            m_atkAlert->setRotation(0);
+        }
+            break;
+        case kCRDirectionDown:
+        {
+            m_atkAlert->setRotation(-90);
+        }
+            break;
+            
+        default:
+            break;
+    }
     
 }
 
@@ -212,7 +264,7 @@ void SpiderPoison::trackCollideWithRunner(Runner* _runner)
             
             this->dead();
         }
-        else if (kCollideDirectionMiss != dir)
+        else if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir)
         {
             m_gameController->dead(_runner);
             

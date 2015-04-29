@@ -364,6 +364,11 @@ void EditorScene::addEvent(EditorPhysicNodeContainer* evt)
 }
 void EditorScene::addCollection(EditorPhysicNodeContainer* col, Collection* collection)
 {
+    auto offset = m_scrollView->getContentOffset();
+    //    auto viewSize = m_scrollView->getViewSize();
+    auto pos = Vec2(-offset.x, -offset.y);
+    col->setPosition(pos);
+    col->setEditorListener(this);
     col->setEditorListener(this);
     m_curPage->addCollection(col, collection);
 }
@@ -576,7 +581,7 @@ void EditorScene::run()
     auto mission = Mission::createWithDataStr(*dataStr);
     delete dataStr;
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::ALL);
-    auto cr = CoolRun::createScene(mission);
+    auto cr = CoolRun::createScene(mission, CoolRun::RunType::EDITOR);
     Director::getInstance()->replaceScene(cr);
 }
 
