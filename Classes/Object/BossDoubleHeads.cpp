@@ -60,17 +60,23 @@ bool BossDoubleHeads::init()
 
 void BossDoubleHeads::initRes()
 {
+    AudioHelp::preloadBossEft();
+    
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss01.ExportJson");
 }
 void BossDoubleHeads::destoryRes()
 {
+    AudioHelp::unloadBossEft();
+    
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss01.ExportJson");
 }
 
 void BossDoubleHeads::hurted()
 {
+    AudioHelp::playBeAttackedEft();
+    
     m_curHp --;
     m_hpBar->setCurrentHp(m_curHp);
     

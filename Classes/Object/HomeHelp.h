@@ -24,6 +24,8 @@ public:
     
     virtual void CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node);
     virtual void CollideTrackListener_CollideAll(CollideDirection direction);
+private:
+    bool b_isAudioed;
 };
 
 #endif /* defined(__CoolRun__HomeHelp__) */

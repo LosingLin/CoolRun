@@ -19,11 +19,14 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Editor/Scene/EditorScene.cpp \
                    ../../Classes/Editor/UI/EditorCollectionMenu.cpp \
                    ../../Classes/Editor/UI/EditorDetailMenu.cpp \
+                   ../../Classes/Editor/UI/EditorDetailAllMenu.cpp \
+                   ../../Classes/Editor/UI/EditorDetailSimpleMenu.cpp \
                    ../../Classes/Editor/UI/EditorItemMenu.cpp \
                    ../../Classes/Editor/UI/EditorMainMenu.cpp \
                    ../../Classes/Editor/UI/EditorMenu.cpp \
                    ../../Classes/Editor/UI/EditorNode.cpp \
                    ../../Classes/Editor/UI/EditorObjectMenu.cpp \
+                   ../../Classes/Editor/UI/EditorItemObjectMenu.cpp \
                    ../../Classes/Editor/UI/EditorOpenFileMenu.cpp \
                    ../../Classes/Editor/UI/EditorPage.cpp \
                    ../../Classes/Editor/UI/EditorPhysicNodeContainer.cpp \
@@ -33,6 +36,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Editor/UI/EditorSelector.cpp \
                    ../../Classes/Editor/UI/EditorText.cpp \
                    ../../Classes/Editor/UI/EditorTextInput.cpp \
+                   ../../Classes/Editor/Help/EditorManager.cpp \
                    ../../Classes/Event/Event.cpp \
                    ../../Classes/Factory/CollectionFactory.cpp \
                    ../../Classes/Factory/PhysicNodeFactory.cpp \
@@ -105,7 +109,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/UI/Stretch.cpp \
                    ../../Classes/UI/MYScene.cpp \
                    ../../Classes/UI/Leaves.cpp \
+                   ../../Classes/UI/BackgroundAudio.cpp \
                    ../../Classes/Utils/ActionHelp.cpp \
+                   ../../Classes/Utils/AudioHelp.cpp \
+                   ../../Classes/Utils/SceneHelp.cpp \
+                   ../../Classes/Utils/MYUserDefaultManager.cpp \
+                   ../../Classes/Utils/MYMultiLanguageManager.cpp \
                    ../../Classes/Utils/JsonHelp.cpp 
 
 

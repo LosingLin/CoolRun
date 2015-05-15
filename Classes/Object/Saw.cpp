@@ -52,8 +52,8 @@ void Saw::trackCollideWithRunner(Runner* _runner)
     auto rect1 = PhysicHelp::countPhysicNodeRect(_runner);
     auto rect2 = PhysicHelp::countPhysicNodeRect(this);
 
-    bool isAct = CollideTrackHelp::trackCollide(rect1, rect2);
-    if (isAct)
+    bool isCollide = _runner->isCollidedWithTrueBody(rect2);
+    if (isCollide)
     {
         m_gameController->dead(_runner);
     }

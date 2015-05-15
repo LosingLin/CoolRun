@@ -21,6 +21,7 @@ public:
         ITEM,
         OBJECT,
         COLLECION,
+        ITEMOBJECT,
         DETAIL,
         OPENFILE,
         PAGE,

@@ -61,17 +61,21 @@ bool BossFourflodHeads::init()
 
 void BossFourflodHeads::initRes()
 {
+    AudioHelp::preloadBossEft();
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss03.ExportJson");
 }
 void BossFourflodHeads::destoryRes()
 {
+    AudioHelp::unloadBossEft();
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss03.ExportJson");
 }
 
 void BossFourflodHeads::hurted()
 {
+    AudioHelp::playBeAttackedEft();
+    
     m_curHp --;
     m_hpBar->setCurrentHp(m_curHp);
     

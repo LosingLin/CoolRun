@@ -59,17 +59,21 @@ bool BossTrebleHeads::init()
 
 void BossTrebleHeads::initRes()
 {
+    AudioHelp::preloadBossEft();
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss02.ExportJson");
 }
 void BossTrebleHeads::destoryRes()
 {
+    AudioHelp::unloadBossEft();
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss02.ExportJson");
 }
 
 void BossTrebleHeads::hurted()
 {
+    AudioHelp::playBeAttackedEft();
+    
     m_curHp --;
     m_hpBar->setCurrentHp(m_curHp);
     

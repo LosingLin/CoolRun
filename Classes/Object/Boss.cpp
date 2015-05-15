@@ -9,7 +9,9 @@
 #include "Boss.h"
 #include "SpiderKind.h"
 #include "BossBullet.h"
+#include "BossBulletNet.h"
 #include "HpBar.h"
+#include "AudioHelp.h"
 
 Boss::Boss()
 : Animal()
@@ -45,7 +47,17 @@ Bullet* Boss::createShotBullet(int index)
 }
 void Boss::shot(const Vec2& pos, float vel, int bulIndex)
 {
+    AudioHelp::playEft("shoot_bullet.wav");
+    
     auto _bullet = this->createShotBullet(bulIndex);
+//    if (dynamic_cast<BossBullet*>(_bullet))
+//    {
+//        AudioHelp::playEft("shoot_bullet.wav");
+//    }
+//    else if(dynamic_cast<BossBulletNet*>(_bullet))
+//    {
+//        AudioHelp::playEft("shoot_net.wav");
+//    }
     _bullet->setPosition(pos);
     auto v = m_gameController->getVelocity();
     _bullet->setXV(-v + vel);
@@ -58,6 +70,8 @@ Spider* Boss::createBornSpider(int index)
 }
 void Boss::bornSpider(const Vec2& pos, float vel, int spdIndex)
 {
+    AudioHelp::playEft("spit.mp3");
+    
     auto spider = this->createBornSpider(spdIndex);
     spider->setState(SpiderState::kSpiderState_Walk);
     spider->setPosition(pos);

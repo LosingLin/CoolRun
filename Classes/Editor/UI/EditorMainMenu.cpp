@@ -12,6 +12,7 @@
 #include "EditorOpenFileMenu.h"
 #include "EditorPageMenu.h"
 #include "MenuScene.h"
+#include "SceneHelp.h"
 
 EditorMainMenu::EditorMainMenu()
 : EditorMenu()
@@ -92,7 +93,7 @@ void EditorMainMenu::menuCallback(int index)
             break;
         case 4:
         {
-            Director::getInstance()->replaceScene(MenuLayer::createScene());
+            SceneHelp::replaceScene(MenuLayer::createScene());
         }
             break;
             

@@ -48,6 +48,7 @@ class Score;
 class Stretch;
 class HpBar;
 class Leaves;
+class BackgroundAudio;
 class CoolRun : public Layer, public GameController
 {
 public:
@@ -239,6 +240,8 @@ private:
     Leaves* m_leaves;
     
     int m_missionIndex;
+    
+    BackgroundAudio* m_bgAudio;
 };
 
 #endif /* defined(__CoolRun__CoolRunScene__) */

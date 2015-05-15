@@ -25,6 +25,7 @@ bool SettingLayer::init()
         return false;
     }
     
+    
     return true;
 }
 

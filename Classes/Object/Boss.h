@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "Animal.h"
 #include "editor-support/cocostudio/CocoStudio.h"
+#include "AudioHelp.h"
 
 USING_NS_CC;
 using namespace cocostudio;

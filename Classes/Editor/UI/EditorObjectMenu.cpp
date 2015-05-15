@@ -41,7 +41,7 @@ bool EditorObjectMenu::init()
     int y = csize.height - 180;
     for (int i = 1; i < kPhysicNodeTypeCount; ++ i)
     {
-        if (i == kPhysicNodeSpider || i == kPhysicNodeEnemy || i == kPhysicNodeItem || i == kPhysicNodeBulletPoison)
+        if (i == kPhysicNodeSpider || i == kPhysicNodeEnemy || i == kPhysicNodeItem || i == kPhysicNodeBulletPoison || i == kPhysicNodeCoin || i == kPhysicNodeItemDad || i == kPhysicNodeItemFly ||  i == kPhysicNodeItemLandBuild || i == kPhysicNodeItemMagnet || i == kPhysicNodeItemSpare || i == kPhysicNodeItemTimesCoin || i == kPhysicNodeItemTimesJump)
         {
             continue;
         }

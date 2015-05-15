@@ -40,6 +40,10 @@
 #include "HpBar.h"
 #include "Leaves.h"
 #include "FreshGuideScene.h"
+#include "AudioHelp.h"
+#include "BackgroundAudio.h"
+#include "SceneHelp.h"
+#include "MYUserDefaultManager.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -84,14 +88,21 @@ CoolRun::CoolRun()
 , m_leaves(nullptr)
 , m_runType(RunType::NORMAL)
 , m_missionIndex(0)
+, m_bgAudio(nullptr)
 {
 }
 CoolRun::~CoolRun()
 {
+    //AudioHelp::unloadMainEft();
+    
     CC_SAFE_RELEASE_NULL(m_gPhysics);
     CC_SAFE_RELEASE_NULL(m_cTrack);
+    CC_SAFE_RELEASE_NULL(m_runners);
     CC_SAFE_RELEASE_NULL(m_dirCollideObjs);
     CC_SAFE_RELEASE_NULL(m_simpleCollideObjs);
+    CC_SAFE_RELEASE_NULL(m_gravityCollideObjs);
+    CC_SAFE_RELEASE_NULL(m_bulletObjs);
+    
     CC_SAFE_RELEASE_NULL(m_mission);
     CC_SAFE_RELEASE_NULL(m_events);
     
@@ -115,6 +126,7 @@ bool CoolRun::init()
     if (!Layer::init()) {
         return false;
     }
+    AudioHelp::preloadMainEft();
     
     //设置随机数种子
     srand((int)time(0));
@@ -257,6 +269,10 @@ bool CoolRun::init()
     m_leaves->setLocalZOrder(ZORDER_LEAVES);
     this->addChild(m_leaves);
     
+    m_bgAudio = BackgroundAudio::create();
+    m_bgAudio->setBGAType(BackgroundAudio::BGAType::DAY);
+    this->addChild(m_bgAudio);
+    
     return true;
 }
 
@@ -390,6 +406,9 @@ void CoolRun::addBoss()
 
 void CoolRun::showBossWarning()
 {
+    
+    AudioHelp::playEft("warning.wav");
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
@@ -400,12 +419,16 @@ void CoolRun::showBossWarning()
     frame->setLocalZOrder(ZORDER_WARNING);
     this->addChild(frame);
     
-    auto fade01 = FadeOut::create(0.3);
-    auto fade02 = FadeIn::create(0.3);
-    auto fade03 = FadeOut::create(0.3);
-    auto fade04 = FadeIn::create(0.3);
-    auto fade05 = FadeOut::create(0.3);
-    frame->runAction(Sequence::create(fade01, fade02, fade03, fade04, fade05, NULL));
+    auto fade01 = FadeOut::create(0.2);
+    auto fade02 = FadeIn::create(0.2);
+    auto fade03 = FadeOut::create(0.2);
+    auto fade04 = FadeIn::create(0.2);
+    auto fade05 = FadeOut::create(0.2);
+    auto fade06 = FadeIn::create(0.2);
+    auto fade07 = FadeOut::create(0.2);
+    auto fade08 = FadeIn::create(0.2);
+    auto fade09 = FadeOut::create(0.2);
+    frame->runAction(Sequence::create(fade01, fade02, fade03, fade04, fade05, fade06, fade07, fade08, fade09, NULL));
     
     
     auto warning = Sprite::createWithSpriteFrameName("warning.png");
@@ -415,13 +438,18 @@ void CoolRun::showBossWarning()
     this->addChild(warning);
     warning->setScale(0.8f);
     
-    auto scale01 = ScaleBy::create(0.3, 1.2);
-    auto scale02 = ScaleBy::create(0.3, 0.8);
-    auto scale03 = ScaleBy::create(0.3, 1.2);
-    auto fadeOut = FadeOut::create(0.3);
+    auto scale01 = ScaleBy::create(0.2, 1.2);
+    auto scale02 = ScaleBy::create(0.2, 0.8);
+    auto scale03 = ScaleBy::create(0.2, 1.2);
+    auto scale04 = ScaleBy::create(0.2, 0.8);
+    auto scale05 = ScaleBy::create(0.2, 1.2);
+    auto scale06 = ScaleBy::create(0.2, 0.8);
+    auto scale07 = ScaleBy::create(0.2, 1.2);
+    auto fadeOut = FadeOut::create(0.2);
     auto callfunc = CallFunc::create(CC_CALLBACK_0(CoolRun::showBossWarningEnd, this));
     
-    warning->runAction(Sequence::create(scale01, scale02, scale03, fadeOut, callfunc, NULL));
+    warning->runAction(Sequence::create(scale01, scale02, scale03, scale04, scale05,
+                                        scale06, scale07, fadeOut, callfunc, NULL));
     
 }
 void CoolRun::showBossWarningEnd()
@@ -480,7 +508,7 @@ void CoolRun::actionCallback()
         
         this->showController();
         
-        bool isGuided = UserDefault::getInstance()->getBoolForKey(IS_PLAYER_GUIDED);
+        bool isGuided = MYUserDefaultManager::getInstance()->isPlayedGuide();
         if (!isGuided)
         {
             auto delay = DelayTime::create(0.5f);
@@ -563,6 +591,8 @@ void CoolRun::onEnter()
     Layer::onEnter();
     log("CoolRun.......onEnter");
     
+    //AudioHelp::preloadMainEft();
+    
 //    m_bg->runAction(MoveTo::create(5, Vec2(-2268, 0)));
     
     //this->scheduleUpdate();
@@ -594,6 +624,7 @@ void CoolRun::onExitTransitionDidStart()
 void CoolRun::onExit()
 {
     log("CoolRun.......onExit");
+    
     Layer::onExit();
 }
 
@@ -1410,7 +1441,7 @@ void CoolRun::hideGuide(Ref* _btn, MYButton::TouchEventType _type, Node* _guide)
     {
         _guide->removeFromParentAndCleanup(true);
         this->setVelocity(400);
-        UserDefault::getInstance()->setBoolForKey(IS_PLAYER_GUIDED, true);
+        MYUserDefaultManager::getInstance()->setPlayedGuide(true);
     }
 }
 
@@ -1508,8 +1539,9 @@ void CoolRun::GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
         this->removePauseMenu();
         this->removeOverMenu();
         
+        AudioHelp::unloadMainEft();
         auto scene = MenuLayer::createScene();
-        Director::getInstance()->replaceScene(scene);
+        SceneHelp::replaceScene(scene);
     }
 }
 void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
@@ -1520,16 +1552,20 @@ void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 //        this->addRunner();
         if (m_runType == RunType::NORMAL)
         {
+            AudioHelp::unloadMainEft();
+            
             auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":1}}");
             mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
             auto _scene = CoolRun::createScene(mission);
-            Director::getInstance()->replaceScene(_scene);
+            SceneHelp::replaceScene(_scene);
         }
         else if (m_runType == RunType::EDITOR)
         {
+            AudioHelp::unloadMainEft();
+            
             m_mission->setPageIndex(-1);
             auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
-            Director::getInstance()->replaceScene(_scene);
+            SceneHelp::replaceScene(_scene);
         }
         
     }
@@ -1550,12 +1586,15 @@ void CoolRun::resume()
 }
 void CoolRun::dead(Runner* runner)
 {
+    AudioHelp::playBeAttackedEft();
+    
     m_runners->removeObject(runner);
     m_gPhysics->removePhysicNode(runner);
     m_gravityCollideObjs->removeObject(runner);
     runner->removeFromParentAndCleanup(true);
     if (m_runners->count() <= 0)
     {
+        AudioHelp::playEft("gameover.mp3");
         this->addOverMenu();
     }
     
@@ -1595,6 +1634,9 @@ void CoolRun::addStretch(int stretch)
 }
 void CoolRun::loadNextMission()
 {
+    
+    m_bgAudio->setBGAType(BackgroundAudio::BGAType::DAY);
+    
     Mission* mission = nullptr;
     if (m_missionIndex < 2)
     {
@@ -1648,6 +1690,9 @@ void CoolRun::destory(PhysicNode* _node)
 
 void CoolRun::addBossHpBar(HpBar* bar)
 {
+    
+    m_bgAudio->setBGAType(BackgroundAudio::BGAType::BOSS);
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     bar->setAnchorPoint(Vec2(0.5, 0.5));

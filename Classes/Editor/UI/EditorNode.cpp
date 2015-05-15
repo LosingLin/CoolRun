@@ -7,6 +7,7 @@
 //
 
 #include "EditorNode.h"
+#include "AudioHelp.h"
 
 EditorNode::EditorNode()
 : Node()
@@ -176,6 +177,7 @@ void EditorNode::onTouchEnded(Touch *touch, Event *unusedEvent)
         {
             if (touchNoneMoveEnded)
             {
+                AudioHelp::playEft("btn_click.wav");
                 touchNoneMoveEnded();
             }
         }

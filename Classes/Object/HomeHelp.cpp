@@ -8,10 +8,12 @@
 
 #include "HomeHelp.h"
 #include "ActionHelp.h"
+#include "AudioHelp.h"
 
 
 HomeHelp::HomeHelp()
 : Animal()
+, b_isAudioed(false)
 {
 }
 HomeHelp::~HomeHelp()
@@ -44,6 +46,11 @@ bool HomeHelp::init()
 
 void HomeHelp::CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node)
 {
+    if (!b_isAudioed && direction == kCollideDirectionUp)
+    {
+        b_isAudioed = true;
+        AudioHelp::playEft("help.mp3");
+    }
     Animal::CollideTrackListener_CollideOnce(direction, node);
 }
 void HomeHelp::CollideTrackListener_CollideAll(CollideDirection direction)

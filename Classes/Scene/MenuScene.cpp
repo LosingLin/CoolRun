@@ -15,10 +15,13 @@
 #include "Mission.h"
 #include "ActionHelp.h"
 #include "Leaves.h"
-
+#include "SceneHelp.h"
+#include "BackgroundAudio.h"
+#include "AudioHelp.h"
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "Home.h"
+#include "MYMultiLanguageManager.h"
 using namespace cocostudio;
 
 
@@ -31,6 +34,7 @@ MenuLayer::MenuLayer()
 }
 MenuLayer::~MenuLayer()
 {
+    AudioHelp::unloadMenuEft();
 }
 
 Scene* MenuLayer::createScene()
@@ -48,8 +52,10 @@ bool MenuLayer::init()
         return false;
     }
     
+    AudioHelp::preloadMenuEft();
+    
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
+    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
     //Director::getInstance()->getTextureCache()->addImage("bg001.png");
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -130,6 +136,13 @@ bool MenuLayer::init()
     auto leaves = Leaves::create();
     this->addChild(leaves, 90);
     
+    auto bga = BackgroundAudio::create();
+    bga->setBGAType(BackgroundAudio::BGAType::NIGHT);
+    this->addChild(bga);
+    
+    log("test ml key1 = %s", MYMultiLanguageManager::getInstance()->getText("key1").c_str());
+    log("test ml key2 = %s", MYMultiLanguageManager::getInstance()->getText("key2").c_str());
+    
     return true;
 }
 
@@ -154,7 +167,7 @@ void MenuLayer::start()
     auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
     auto _scene = CoolRun::createScene(mission);
-    Director::getInstance()->replaceScene(_scene);
+    SceneHelp::replaceScene(_scene);
 }
 
 #pragma mark - btn callback
@@ -182,7 +195,7 @@ void MenuLayer::editorCallback(Ref* _ref, MYButton::TouchEventType _type)
     if (_type == MYButton::TouchEventType::ENDED)
     {
         auto _scene = EditorScene::createScene();
-        Director::getInstance()->replaceScene(_scene);
+        SceneHelp::replaceScene(_scene);
     }
 }
 void MenuLayer::settingCallback(Ref* _ref, MYButton::TouchEventType _type)

@@ -370,6 +370,7 @@
   jni/../../Classes/Editor/UI/EditorScrollMenu.h \
   jni/../../Classes/Editor/UI/EditorMainMenu.h \
   jni/../../Classes/Editor/UI/EditorMenu.h \
+  jni/../../Classes/Utils/SceneHelp.h \
   jni/../../Classes/Mission/MissionPage.h \
   jni/../../Classes/Mission/MissionInterface.h \
   jni/../../Classes/Mission/MissionEvent.h \
@@ -1127,6 +1128,8 @@ jni/../../Classes/Editor/UI/EditorScrollMenu.h:
 jni/../../Classes/Editor/UI/EditorMainMenu.h:
 
 jni/../../Classes/Editor/UI/EditorMenu.h:
+
+jni/../../Classes/Utils/SceneHelp.h:
 
 jni/../../Classes/Mission/MissionPage.h:
 

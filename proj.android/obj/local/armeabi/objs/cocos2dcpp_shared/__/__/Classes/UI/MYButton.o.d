@@ -317,7 +317,8 @@
   jni/../../cocos2d/cocos/./deprecated/CCNotificationCenter.h \
   jni/../../cocos2d/cocos/./deprecated/CCDeprecated.h \
   jni/../../Classes/Base/Base.h jni/../../Classes/Base/GlobalDefined.h \
-  jni/../../Classes/Base/DrawableNode.h
+  jni/../../Classes/Base/DrawableNode.h \
+  jni/../../Classes/Utils/AudioHelp.h
 
 jni/../../Classes/UI/MYButton.h:
 
@@ -958,3 +959,5 @@ jni/../../Classes/Base/Base.h:
 jni/../../Classes/Base/GlobalDefined.h:
 
 jni/../../Classes/Base/DrawableNode.h:
+
+jni/../../Classes/Utils/AudioHelp.h:

@@ -18,6 +18,7 @@ MissionCollection::MissionCollection()
 }
 MissionCollection::~MissionCollection()
 {
+    CC_SAFE_RELEASE_NULL(m_collections);
 }
 bool MissionCollection::init()
 {

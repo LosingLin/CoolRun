@@ -45,7 +45,6 @@
 
 #define SAFESETVISIBLE(x, y) if (x) { if((x)->isVisible() != (y)) { (x)->setVisible((y)); } }
 
-//UserDefault
-#define IS_PLAYER_GUIDED "is_player_guided"
+
 
 #endif

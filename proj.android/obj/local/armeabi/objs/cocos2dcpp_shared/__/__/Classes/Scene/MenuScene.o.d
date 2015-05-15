@@ -418,7 +418,11 @@
   jni/../../Classes/Mission/MissionInterface.h \
   jni/../../Classes/Mission/MissionEvent.h \
   jni/../../Classes/Utils/ActionHelp.h jni/../../Classes/UI/Leaves.h \
-  jni/../../Classes/Object/Home.h jni/../../Classes/Object/Land.h
+  jni/../../Classes/Utils/SceneHelp.h \
+  jni/../../Classes/UI/BackgroundAudio.h \
+  jni/../../Classes/Utils/AudioHelp.h jni/../../Classes/Object/Home.h \
+  jni/../../Classes/Object/Land.h \
+  jni/../../Classes/Utils/MYMultiLanguageManager.h
 
 jni/../../Classes/Scene/MenuScene.h:
 
@@ -1262,6 +1266,14 @@ jni/../../Classes/Utils/ActionHelp.h:
 
 jni/../../Classes/UI/Leaves.h:
 
+jni/../../Classes/Utils/SceneHelp.h:
+
+jni/../../Classes/UI/BackgroundAudio.h:
+
+jni/../../Classes/Utils/AudioHelp.h:
+
 jni/../../Classes/Object/Home.h:
 
 jni/../../Classes/Object/Land.h:
+
+jni/../../Classes/Utils/MYMultiLanguageManager.h:

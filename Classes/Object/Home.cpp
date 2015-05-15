@@ -8,6 +8,7 @@
 
 #include "Home.h"
 #include "ActionHelp.h"
+#include "AudioHelp.h"
 
 Home::Home()
 : Land()
@@ -16,6 +17,7 @@ Home::Home()
 }
 Home::~Home()
 {
+    AudioHelp::unloadHomeEft();
 }
 bool Home::init()
 {
@@ -23,6 +25,8 @@ bool Home::init()
     {
         return false;
     }
+    
+    AudioHelp::preloadHomeEft();
     
     auto homeSp = Sprite::create("home.png");
     auto csize = homeSp->getContentSize();
@@ -49,12 +53,16 @@ bool Home::init()
 
 void Home::openDoor()
 {
+    AudioHelp::playEft("door_open.wav");
+    
     m_door->stopAllActions();
     auto action = ActionHelp::createFrameAction("door_%02d.png", 1, 3, 0.2, false);
     m_door->runAction(action);
 }
 void Home::closeDoor()
 {
+    AudioHelp::playEft("door_close.wav");
+    
     m_door->stopAllActions();
     auto action = ActionHelp::createFrameAction("door_%02d.png", 3, 1, 0.2, false);
     m_door->runAction(action);

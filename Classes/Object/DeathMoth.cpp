@@ -62,11 +62,13 @@ bool DeathMoth::init()
 
 void DeathMoth::initRes()
 {
+    AudioHelp::preloadBossEft();
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("DeadthMoth.plist");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("DeathMoth.ExportJson");
 }
 void DeathMoth::destoryRes()
 {
+    AudioHelp::unloadBossEft();
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("DeadthMoth.plist");
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("DeathMoth.ExportJson");
 }
@@ -481,6 +483,8 @@ void DeathMoth::trackCollideWithRunner(Runner* _runner)
             if (CollideTrackHelp::trackCollide(crect, atkRect))
             {
                 b_isHurting = true;
+                
+                AudioHelp::playBeAttackedEft();
                 
                 m_curHp --;
                 m_hpBar->setCurrentHp(m_curHp);

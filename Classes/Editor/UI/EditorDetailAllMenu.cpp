@@ -1,12 +1,12 @@
 //
-//  EditorDetailMenu.cpp
+//  EditorDetailAllMenu.cpp
 //  CoolRun
 //
-//  Created by ManYou on 15/1/31.
+//  Created by ManYou on 15/5/11.
 //
 //
 
-#include "EditorDetailMenu.h"
+#include "EditorDetailAllMenu.h"
 #include "EditorUIBase.h"
 #include "EditorZOrder.h"
 #include "Spider.h"
@@ -14,15 +14,8 @@
 #include "Bullet.h"
 #include "Item.h"
 
-#define NORMALDIS(x) (x) -= 80
-#define BIGDIS(x) (x) -= 120
-
-EditorDetailMenu::EditorDetailMenu()
-: EditorMenu()
-, m_pNodeCor(nullptr)
-, m_delete(nullptr)
-, m_posX(nullptr)
-, m_posY(nullptr)
+EditorDetailAllMenu::EditorDetailAllMenu()
+: EditorDetailMenu()
 , m_csizeWidth(nullptr)
 , m_csizeHeight(nullptr)
 , m_x_v(nullptr)
@@ -40,7 +33,6 @@ EditorDetailMenu::EditorDetailMenu()
 , m_isCEffect(nullptr)
 , m_isVIgnore(nullptr)
 , m_cType(nullptr)
-, m_y(0.0f)
 , m_spideState(nullptr)
 , m_spiderPosionDir(nullptr)
 , m_isAnimalHurt(nullptr)
@@ -50,56 +42,27 @@ EditorDetailMenu::EditorDetailMenu()
 {
     
 }
-EditorDetailMenu::~EditorDetailMenu()
+EditorDetailAllMenu::~EditorDetailAllMenu()
 {
     CC_SAFE_RELEASE_NULL(m_pNodeCor);
 }
 
-bool EditorDetailMenu::init()
+bool EditorDetailAllMenu::init()
 {
-    if (!EditorMenu::init())
+    if (!EditorDetailMenu::init())
     {
         return false;
     }
     
-    this->setMenuType(EditorMenu::MenuType::DETAIL);
-    
-    auto csize = Size(420, 2000);
-    this->setContentSize(csize);
-    
-    this->getTouchListener()->setSwallowTouches(false);
-    
-    auto layer = LayerColor::create(Color4B(200, 200, 20, 150), csize.width, csize.height);
-    this->addChild(layer);
-    
-    m_y = csize.height - 120;
-    
-    m_delete = EditorText::create("Delete", Size(260, 60), 30);
-    m_delete->setPosition(Vec2(50, m_y));
-    m_delete->touchNoneMoveEnded = CC_CALLBACK_0(EditorDetailMenu::deleteEditorNode, this);
-    this->addChild(m_delete);
-    BIGDIS(m_y);
-    
-    m_posX = EditorTextInput::create("x", Size(260, 60));
-    m_posX->setPosition(Vec2(50, m_y));
-    m_posX->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_posX);
-    this->addChild(m_posX);
-    NORMALDIS(m_y);
-    m_posY = EditorTextInput::create("y", Size(260, 60));
-    m_posY->setPosition(Vec2(50, m_y));
-    m_posY->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_posY);
-    this->addChild(m_posY);
-    BIGDIS(m_y);
-    
     
     m_csizeWidth = EditorTextInput::create("width", Size(260, 60));
     m_csizeWidth->setPosition(Vec2(50, m_y));
-    m_csizeWidth->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_csizeWidth);
+    m_csizeWidth->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_csizeWidth);
     this->addChild(m_csizeWidth);
     NORMALDIS(m_y);
     m_csizeHeight = EditorTextInput::create("height", Size(260, 60));
     m_csizeHeight->setPosition(Vec2(50, m_y));
-    m_csizeHeight->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_csizeHeight);
+    m_csizeHeight->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_csizeHeight);
     this->addChild(m_csizeHeight);
     BIGDIS(m_y);
     
@@ -110,52 +73,52 @@ bool EditorDetailMenu::init()
                                                          nullptr),
                                          "isVIgn",
                                          Size(260, 60));
-    m_isVIgnore->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-    m_isVIgnore->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isVIgnore);
+    m_isVIgnore->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+    m_isVIgnore->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isVIgnore);
     m_isVIgnore->setPosition(Vec2(50, m_y));
     this->addChild(m_isVIgnore);
     NORMALDIS(m_y);
     m_x_v = EditorTextInput::create("x_v", Size(260, 60));
     m_x_v->setPosition(Vec2(50, m_y));
-    m_x_v->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_x_v);
+    m_x_v->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_x_v);
     this->addChild(m_x_v);
     NORMALDIS(m_y);
     m_x_a = EditorTextInput::create("x_a", Size(260, 60));
     m_x_a->setPosition(Vec2(50, m_y));
-    m_x_a->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_x_a);
+    m_x_a->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_x_a);
     this->addChild(m_x_a);
     NORMALDIS(m_y);
     m_y_v = EditorTextInput::create("y_v", Size(260, 60));
     m_y_v->setPosition(Vec2(50, m_y));
-    m_y_v->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_y_v);
+    m_y_v->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_y_v);
     this->addChild(m_y_v);
     NORMALDIS(m_y);
     m_y_a = EditorTextInput::create("y_a", Size(260, 60));
     m_y_a->setPosition(Vec2(50, m_y));
-    m_y_a->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_y_a);
+    m_y_a->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_y_a);
     this->addChild(m_y_a);
     BIGDIS(m_y);
     
-//    m_cR_left = EditorTextInput::create("cRleft", Size(260, 60));
-//    m_cR_left->setPosition(Vec2(50, m_y));
-//    m_cR_left->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_cR_left);
-//    this->addChild(m_cR_left);
-//    NORMALDIS(m_y);
-//    m_cR_down = EditorTextInput::create("cRDown", Size(260, 60));
-//    m_cR_down->setPosition(Vec2(50, m_y));
-//    m_cR_down->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_cR_down);
-//    this->addChild(m_cR_down);
-//    NORMALDIS(m_y);
-//    m_cR_right = EditorTextInput::create("cRRight", Size(260, 60));
-//    m_cR_right->setPosition(Vec2(50, m_y));
-//    m_cR_right->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_cR_right);
-//    this->addChild(m_cR_right);
-//    NORMALDIS(m_y);
-//    m_cR_up = EditorTextInput::create("cRUp", Size(260, 60));
-//    m_cR_up->setPosition(Vec2(50, m_y));
-//    m_cR_up->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_cR_up);
-//    this->addChild(m_cR_up);
-//    BIGDIS(m_y);
+    //    m_cR_left = EditorTextInput::create("cRleft", Size(260, 60));
+    //    m_cR_left->setPosition(Vec2(50, m_y));
+    //    m_cR_left->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_cR_left);
+    //    this->addChild(m_cR_left);
+    //    NORMALDIS(m_y);
+    //    m_cR_down = EditorTextInput::create("cRDown", Size(260, 60));
+    //    m_cR_down->setPosition(Vec2(50, m_y));
+    //    m_cR_down->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_cR_down);
+    //    this->addChild(m_cR_down);
+    //    NORMALDIS(m_y);
+    //    m_cR_right = EditorTextInput::create("cRRight", Size(260, 60));
+    //    m_cR_right->setPosition(Vec2(50, m_y));
+    //    m_cR_right->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_cR_right);
+    //    this->addChild(m_cR_right);
+    //    NORMALDIS(m_y);
+    //    m_cR_up = EditorTextInput::create("cRUp", Size(260, 60));
+    //    m_cR_up->setPosition(Vec2(50, m_y));
+    //    m_cR_up->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_cR_up);
+    //    this->addChild(m_cR_up);
+    //    BIGDIS(m_y);
     
     m_isScreenPos = EditorSelector::create(__Array::create(
                                                            __String::create("Y"),
@@ -163,55 +126,55 @@ bool EditorDetailMenu::init()
                                                            nullptr),
                                            "isScrPos",
                                            Size(260, 60));
-    m_isScreenPos->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-    m_isScreenPos->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isScreenPos);
+    m_isScreenPos->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+    m_isScreenPos->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isScreenPos);
     m_isScreenPos->setPosition(Vec2(50, m_y));
     this->addChild(m_isScreenPos);
     NORMALDIS(m_y);
     m_alignX = EditorTextInput::create("align_x", Size(260, 60));
     m_alignX->setPosition(Vec2(50, m_y));
-    m_alignX->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_alignX);
+    m_alignX->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_alignX);
     this->addChild(m_alignX);
     NORMALDIS(m_y);
     m_alignY = EditorTextInput::create("align_y", Size(260, 60));
     m_alignY->setPosition(Vec2(50, m_y));
-    m_alignY->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_alignY);
+    m_alignY->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_alignY);
     this->addChild(m_alignY);
     BIGDIS(m_y);
     
     m_isGEffect = EditorSelector::create(__Array::create(
-                                                           __String::create("Y"),
-                                                           __String::create("N"),
-                                                           nullptr),
-                                           "isGEff",
-                                           Size(260, 60));
-    m_isGEffect->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-    m_isGEffect->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isGEffect);
+                                                         __String::create("Y"),
+                                                         __String::create("N"),
+                                                         nullptr),
+                                         "isGEff",
+                                         Size(260, 60));
+    m_isGEffect->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+    m_isGEffect->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isGEffect);
     m_isGEffect->setPosition(Vec2(50, m_y));
     this->addChild(m_isGEffect);
     NORMALDIS(m_y);
     m_isCEffect = EditorSelector::create(__Array::create(
-                                                           __String::create("Y"),
-                                                           __String::create("N"),
-                                                           nullptr),
-                                           "isCEff",
-                                           Size(260, 60));
-    m_isCEffect->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-    m_isCEffect->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isCEffect);
+                                                         __String::create("Y"),
+                                                         __String::create("N"),
+                                                         nullptr),
+                                         "isCEff",
+                                         Size(260, 60));
+    m_isCEffect->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+    m_isCEffect->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isCEffect);
     m_isCEffect->setPosition(Vec2(50, m_y));
     this->addChild(m_isCEffect);
     NORMALDIS(m_y);
     
     m_cType = EditorSelector::create(__Array::create(
-                                                           __String::create("Non"),
-                                                           __String::create("Dir"),
-                                                           __String::create("Sim"),
-                                                           __String::create("Bul"),
-                                                           nullptr),
-                                           "colide_type",
-                                           Size(260, 60));
-    m_cType->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-    m_cType->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_cType);
+                                                     __String::create("Non"),
+                                                     __String::create("Dir"),
+                                                     __String::create("Sim"),
+                                                     __String::create("Bul"),
+                                                     nullptr),
+                                     "colide_type",
+                                     Size(260, 60));
+    m_cType->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+    m_cType->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_cType);
     m_cType->setPosition(Vec2(50, m_y));
     this->addChild(m_cType);
     BIGDIS(m_y);
@@ -219,42 +182,35 @@ bool EditorDetailMenu::init()
     return true;
 }
 
-void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor)
+void EditorDetailAllMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor)
 {
-    if (m_pNodeCor != pNodeCor)
-    {
-        if (m_pNodeCor)
-        {
-            CC_SAFE_RELEASE_NULL(m_pNodeCor);
-        }
-        m_pNodeCor = pNodeCor;
-        CC_SAFE_RETAIN(m_pNodeCor);
-    }
+    EditorDetailMenu::setPhysicNodeContaner(pNodeCor);
+    
     auto pType = m_pNodeCor->getPhysicType();
     if (pType == kPhysicNodeSpiderKind || pType == kPhysicNodeSpiderPoison || pType == kPhysicNodeSpiderSpines) {
         m_spideState = EditorSelector::create(__Array::create(
-                                                         __String::create("Stand"),
-                                                         __String::create("Walk"),
-                                                         nullptr),
-                                         "spider_state",
-                                         Size(260, 60));
-        m_spideState->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-        m_spideState->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_spideState);
+                                                              __String::create("Stand"),
+                                                              __String::create("Walk"),
+                                                              nullptr),
+                                              "spider_state",
+                                              Size(260, 60));
+        m_spideState->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+        m_spideState->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_spideState);
         m_spideState->setPosition(Vec2(50, m_y));
         this->addChild(m_spideState);
         if (pType == kPhysicNodeSpiderPoison)
         {
             NORMALDIS(m_y);
             m_spiderPosionDir = EditorSelector::create(__Array::create(
-                                                                  __String::create("Up"),
-                                                                  __String::create("Down"),
-                                                                  __String::create("Left"),
-                                                                  __String::create("Right"),
-                                                                  nullptr),
-                                                  "PoisonDirector",
-                                                  Size(260, 60));
-            m_spiderPosionDir->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-            m_spiderPosionDir->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_spiderPosionDir);
+                                                                       __String::create("Up"),
+                                                                       __String::create("Down"),
+                                                                       __String::create("Left"),
+                                                                       __String::create("Right"),
+                                                                       nullptr),
+                                                       "PoisonDirector",
+                                                       Size(260, 60));
+            m_spiderPosionDir->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+            m_spiderPosionDir->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_spiderPosionDir);
             m_spiderPosionDir->setPosition(Vec2(50, m_y));
             this->addChild(m_spiderPosionDir);
             
@@ -273,24 +229,24 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
     if (pType == kPhysicNodeBulletPoison || pType == kPhysicNodeBulletAlertPoison || pType == kPhysicNodeBulletAlertNet)
     {
         m_isAnimalHurt = EditorSelector::create(__Array::create(
-                                                              __String::create("Y"),
-                                                              __String::create("N"),
-                                                              nullptr),
-                                              "animal_hurt",
-                                              Size(260, 60));
-        m_isAnimalHurt->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-        m_isAnimalHurt->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isAnimalHurt);
+                                                                __String::create("Y"),
+                                                                __String::create("N"),
+                                                                nullptr),
+                                                "animal_hurt",
+                                                Size(260, 60));
+        m_isAnimalHurt->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+        m_isAnimalHurt->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isAnimalHurt);
         m_isAnimalHurt->setPosition(Vec2(50, m_y));
         this->addChild(m_isAnimalHurt);
         NORMALDIS(m_y);
         m_isRunnerHurt = EditorSelector::create(__Array::create(
-                                                              __String::create("Y"),
-                                                              __String::create("N"),
-                                                              nullptr),
-                                              "player_hurt",
-                                              Size(260, 60));
-        m_isRunnerHurt->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-        m_isRunnerHurt->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isRunnerHurt);
+                                                                __String::create("Y"),
+                                                                __String::create("N"),
+                                                                nullptr),
+                                                "player_hurt",
+                                                Size(260, 60));
+        m_isRunnerHurt->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+        m_isRunnerHurt->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isRunnerHurt);
         m_isRunnerHurt->setPosition(Vec2(50, m_y));
         this->addChild(m_isRunnerHurt);
         NORMALDIS(m_y);
@@ -300,8 +256,8 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
                                                              nullptr),
                                              "atk_able",
                                              Size(260, 60));
-        m_isAtkable->active = CC_CALLBACK_1(EditorDetailMenu::selectedActive, this);
-        m_isAtkable->selectedKey = CC_CALLBACK_1(EditorDetailMenu::selectedDone, this, m_isAtkable);
+        m_isAtkable->active = CC_CALLBACK_1(EditorDetailAllMenu::selectedActive, this);
+        m_isAtkable->selectedKey = CC_CALLBACK_1(EditorDetailAllMenu::selectedDone, this, m_isAtkable);
         m_isAtkable->setPosition(Vec2(50, m_y));
         this->addChild(m_isAtkable);
         BIGDIS(m_y);
@@ -325,7 +281,7 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
     {
         m_flyV = EditorTextInput::create("fly_v", Size(260, 60));
         m_flyV->setPosition(Vec2(50, m_y));
-        m_flyV->textInputDone = CC_CALLBACK_1(EditorDetailMenu::textInputDone, this, m_flyV);
+        m_flyV->textInputDone = CC_CALLBACK_1(EditorDetailAllMenu::textInputDone, this, m_flyV);
         this->addChild(m_flyV);
         BIGDIS(m_y);
     }
@@ -340,8 +296,10 @@ void EditorDetailMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pNodeCor
     this->updateMenu();
 }
 
-void EditorDetailMenu::updateMenu()
+void EditorDetailAllMenu::updateMenu()
 {
+    EditorDetailMenu::updateMenu();
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
@@ -352,16 +310,6 @@ void EditorDetailMenu::updateMenu()
         
         auto pNode = m_pNodeCor->getPhysicNode();
         auto pType = m_pNodeCor->getPhysicType();
-        
-        auto pos = m_pNodeCor->getPosition();
-        ss << pos.x;
-        ss >> str;
-        m_posX->setText(str);
-        ss.clear();
-        ss << pos.y;
-        ss >> str;
-        m_posY->setText(str);
-        ss.clear();
         
         auto csize = m_pNodeCor->getContentSize();
         ss << csize.width;
@@ -541,47 +489,17 @@ void EditorDetailMenu::updateMenu()
     }
 }
 
-#pragma mark - 
-void EditorDetailMenu::deleteEditorNode()
+#pragma mark -
+void EditorDetailAllMenu::textInputDone(const string& text, EditorTextInput* input)
 {
-    this->getEditorListener()->removeEditorPhysicNodeContainer(m_pNodeCor);
-    m_pNodeCor = nullptr;
-}
-
-void EditorDetailMenu::textInputDone(const string& text, EditorTextInput* input)
-{
+    EditorDetailMenu::textInputDone(text, input);
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
     stringstream ss;
     auto pNode = m_pNodeCor->getPhysicNode();
-    if (input == m_posX)
-    {
-        float f = 0.0f;
-        ss << text;
-        ss >> f;
-        auto pos = m_pNodeCor->getPosition();
-        pos.x = f;
-        if (pNode->isScreenPos())
-        {
-            pos.x += visibleSize.width * pNode->getAlignX();
-        }
-        m_pNodeCor->setPosition(pos);
-    }
-    else if(input == m_posY)
-    {
-        float f = 0.0f;
-        ss << text;
-        ss >> f;
-        auto pos = m_pNodeCor->getPosition();
-        pos.y = f;
-        if (pNode->isScreenPos())
-        {
-            pos.y += visibleSize.height * pNode->getAlignY();
-        }
-        m_pNodeCor->setPosition(pos);
-    }
-    
-    else if (input == m_csizeWidth)
+    if (input == m_csizeWidth)
     {
         float f = 0.0f;
         ss << text;
@@ -664,15 +582,16 @@ void EditorDetailMenu::textInputDone(const string& text, EditorTextInput* input)
     }
 }
 
-void EditorDetailMenu::selectedActive(EditorSelector* selector)
+void EditorDetailAllMenu::selectedActive(EditorSelector* selector)
 {
-    selector->setLocalZOrder(kSelectorActiveZOrder);
+    EditorDetailMenu::selectedActive(selector);
+    
 }
 
-void EditorDetailMenu::selectedDone(const string& key, EditorSelector* selector)
+void EditorDetailAllMenu::selectedDone(const string& key, EditorSelector* selector)
 {
-    log("selectedDone :  %s", key.c_str());
-    selector->setLocalZOrder(kSelectorUnActiveZOrder);
+    EditorDetailMenu::selectedDone(key, selector);
+    
     auto pNode = m_pNodeCor->getPhysicNode();
     if (selector == m_isScreenPos)
     {
@@ -807,7 +726,7 @@ void EditorDetailMenu::selectedDone(const string& key, EditorSelector* selector)
     }
 }
 
-void EditorDetailMenu::spaceCallback()
+void EditorDetailAllMenu::spaceCallback()
 {
     //this->getEditorListener()->hideMenu(EditorListener::MenuState::FIRST);
 }

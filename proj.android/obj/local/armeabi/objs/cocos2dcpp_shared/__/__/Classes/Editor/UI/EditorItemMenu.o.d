@@ -357,7 +357,8 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/internal/strfunc.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/writer.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/stringbuffer.h \
-  jni/../../Classes/Editor/UI/EditorCollectionMenu.h
+  jni/../../Classes/Editor/UI/EditorCollectionMenu.h \
+  jni/../../Classes/Editor/UI/EditorItemObjectMenu.h
 
 jni/../../Classes/Editor/UI/EditorItemMenu.h:
 
@@ -1074,3 +1075,5 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/writer.
 jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/stringbuffer.h:
 
 jni/../../Classes/Editor/UI/EditorCollectionMenu.h:
+
+jni/../../Classes/Editor/UI/EditorItemObjectMenu.h:

@@ -114,6 +114,8 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
         bool isAtked = CollideTrackHelp::trackCollide(rect1, rect2);
         if (isAtked)
         {
+            AudioHelp::playBeAttackedEft();
+            
             this->dead();
             return;
         }
@@ -122,13 +124,13 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
     
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
     
-    if (CollideTrackHelp::trackCollide(headRect, rect2))
+    if (_runner->isCollidedWithTrueBody(headRect))
     {
         m_gameController->dead(_runner);
         return;
     }
     
-    CollideDirection dir = CollideTrackHelp::trackCollideDirection(tailRect, rect2);
+    CollideDirection dir = _runner->getDirectionWithTrueBody(tailRect);
     
     if (kCollideDirectionUp == dir)
     {
@@ -136,7 +138,7 @@ void SpiderKind::trackCollideWithRunner(Runner* _runner)
         
         this->dead();
     }
-    else if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir)
+    else if (kCollideDirectionMiss != dir)
     {
         m_gameController->dead(_runner);
         
@@ -152,6 +154,8 @@ void SpiderKind::trackCollideWithBullet(Bullet* bullet)
     bool isCollided = CollideTrackHelp::trackCollide(rect1, rect2);
     if (isCollided)
     {
+        AudioHelp::playBeAttackedEft();
+        
         this->dead();
         bullet->setDestoryed(true);
     }

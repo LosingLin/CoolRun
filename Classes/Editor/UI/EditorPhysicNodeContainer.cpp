@@ -8,6 +8,8 @@
 
 #include "EditorPhysicNodeContainer.h"
 #include "EditorDetailMenu.h"
+#include "EditorDetailAllMenu.h"
+#include "EditorDetailSimpleMenu.h"
 #include "Collection.h"
 
 #define kBasePhysicNodeJsonDataFileFormat "Editor/Base/Object/Obj%04d"
@@ -171,7 +173,7 @@ void EditorPhysicNodeContainer::_showDetailMenu()
     }
     else
     {
-        auto menu = EditorDetailMenu::create();
+        auto menu = EditorDetailSimpleMenu::create();
         menu->setPhysicNodeContaner(this);
         this->setDetailMenu(menu);
         this->getEditorListener()->showMenu(EditorListener::MenuState::FIRST, EditorMenu::create());

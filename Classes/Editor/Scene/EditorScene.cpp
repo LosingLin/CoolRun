@@ -15,6 +15,7 @@
 #include "EditorMainMenu.h"
 #include "EditorPhysicNodeContainer.h"
 #include "JsonHelp.h"
+#include "SceneHelp.h"
 #include "MissionPage.h"
 #include <sys/stat.h>
 //#include <fstream>
@@ -50,6 +51,11 @@ EditorScene::~EditorScene()
     {
         delete m_fileName;
         m_fileName = nullptr;
+    }
+    if (m_fileData)
+    {
+        delete m_fileData;
+        m_fileData = nullptr;
     }
     
     CC_SAFE_RELEASE_NULL(m_mission);
@@ -582,7 +588,7 @@ void EditorScene::run()
     delete dataStr;
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::ALL);
     auto cr = CoolRun::createScene(mission, CoolRun::RunType::EDITOR);
-    Director::getInstance()->replaceScene(cr);
+    SceneHelp::replaceScene(cr);
 }
 
 int EditorScene::pageNumber()

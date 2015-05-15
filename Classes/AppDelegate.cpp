@@ -2,6 +2,7 @@
 #include "MenuScene.h"
 #include "MYScene.h"
 #include "CoolRunScene.h"
+#include "AudioHelp.h"
 
 USING_NS_CC;
 
@@ -11,6 +12,7 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
+    AudioHelp::endAudio();
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
@@ -61,6 +63,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     FileUtils::getInstance()->addSearchPath("CocosStudio");
     FileUtils::getInstance()->addSearchPath("Particle");
     FileUtils::getInstance()->addSearchPath("fonts");
+    FileUtils::getInstance()->addSearchPath("Music");
     //FileUtils::getInstance()->addSearchPath("./D_Editor");
     
     std::vector<std::string> paths =  FileUtils::getInstance()->getSearchPaths();
@@ -68,6 +71,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         log("path : %s\n", _path.c_str());
     }
     
+    AudioHelp::preloadAppEft();
 
     // create a scene. it's an autorelease object
     //auto scene = CoolRun::createScene();
@@ -81,6 +85,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     //Director::getInstance()->stopAnimation();
+    
+    
+    
     if (!Director::getInstance()->isPaused())
     {
         auto coolRun = dynamic_cast<MYScene*>(Director::getInstance()->getRunningScene());
@@ -90,6 +97,9 @@ void AppDelegate::applicationDidEnterBackground() {
         }
     }
     
+    //AudioHelp::pauseAllEft();
+    AudioHelp::pauseBgA();
+    
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
@@ -97,11 +107,16 @@ void AppDelegate::applicationDidEnterBackground() {
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
     //Director::getInstance()->startAnimation();
+    
 //    auto coolRun = dynamic_cast<MYScene*>(Director::getInstance()->getRunningScene());
 //    if (coolRun)
 //    {
 //        coolRun->pause();
 //    }
+    
+    //AudioHelp::resumeAllEft();
+    AudioHelp::resumeBgA();
+    
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

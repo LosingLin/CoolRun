@@ -9,12 +9,14 @@
 #include "Coin.h"
 #include "ActionHelp.h"
 #include "Runner.h"
+#include "AudioHelp.h"
 
 Coin::Coin()
 : CollideNode()
 , b_isAnimating(false)
 , m_sp(nullptr)
 , m_score(0)
+, b_isTimed(false)
 {
 }
 Coin::~Coin()
@@ -137,7 +139,8 @@ void Coin::acionDoneCallback()
 
 void Coin::times()
 {
-    m_score *= 2;
+    m_score = m_score*2;
+    b_isTimed = true;
     
     float ssize = 1.5f;
     m_sp->setScale(ssize, ssize);
@@ -149,6 +152,11 @@ void Coin::times()
 void Coin::bePicked()
 {
     //this->unschedule(schedule_selector(Coin::update));
+    
+    int r = rand()%3 + 1;
+    char name[20] = {'\0'};
+    sprintf(name, "coin_%02d.mp3", r);
+    AudioHelp::playEft(name);
     
     m_sp->stopAllActions();
     m_sp->removeFromParentAndCleanup(true);
@@ -167,6 +175,7 @@ void Coin::bePicked()
 void Coin::bePickedDone()
 {
     this->setDestoryed(true);
+    this->removeAllChildrenWithCleanup(true);
 }
 
 
@@ -266,11 +275,12 @@ void Coin::trackCollideWithRunner(Runner* _runner)
             }
         }
         
-        if (_runner->isTimesCoinING())
+        if (_runner->isTimesCoinING() && !b_isTimed)
         {
             auto timesCoin_dis = _runner->getTimesCoinDistance();
             if (x_dis*x_dis + y_dis*y_dis < timesCoin_dis*timesCoin_dis)
             {
+                
                 this->times();
             }
             

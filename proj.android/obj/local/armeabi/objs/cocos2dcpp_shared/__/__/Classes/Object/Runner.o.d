@@ -388,7 +388,8 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../cocostudio/ActionTimeline/CCActionTimeline.h \
   jni/../../Classes/Utils/ActionHelp.h jni/../../Classes/Object/Bullet.h \
   jni/../../Classes/Physics/MultipleCollideNode.h \
-  jni/../../Classes/Physics/CollideRect.h
+  jni/../../Classes/Physics/CollideRect.h \
+  jni/../../Classes/Utils/AudioHelp.h
 
 jni/../../Classes/Object/Runner.h:
 
@@ -1177,3 +1178,5 @@ jni/../../Classes/Object/Bullet.h:
 jni/../../Classes/Physics/MultipleCollideNode.h:
 
 jni/../../Classes/Physics/CollideRect.h:
+
+jni/../../Classes/Utils/AudioHelp.h:

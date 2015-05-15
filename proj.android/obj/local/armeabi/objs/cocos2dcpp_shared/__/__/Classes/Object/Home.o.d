@@ -334,7 +334,8 @@
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/writer.h \
   jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/stringbuffer.h \
   jni/../../Classes/Factory/PhysicNodeFactory.h \
-  jni/../../Classes/Utils/ActionHelp.h
+  jni/../../Classes/Utils/ActionHelp.h \
+  jni/../../Classes/Utils/AudioHelp.h
 
 jni/../../Classes/Object/Home.h:
 
@@ -1011,3 +1012,5 @@ jni/../../cocos2d/cocos/editor-support/cocostudio/../../../external/json/stringb
 jni/../../Classes/Factory/PhysicNodeFactory.h:
 
 jni/../../Classes/Utils/ActionHelp.h:
+
+jni/../../Classes/Utils/AudioHelp.h:

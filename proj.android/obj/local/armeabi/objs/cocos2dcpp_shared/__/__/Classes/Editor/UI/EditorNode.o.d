@@ -339,7 +339,8 @@
   jni/../../cocos2d/extensions/../extensions/physics-nodes/CCPhysicsDebugNode.h \
   jni/../../cocos2d/extensions/../extensions/physics-nodes/CCPhysicsSprite.h \
   jni/../../cocos2d/extensions/../extensions/assets-manager/AssetsManager.h \
-  jni/../../Classes/Editor/Listener/EditorListener.h
+  jni/../../Classes/Editor/Listener/EditorListener.h \
+  jni/../../Classes/Utils/AudioHelp.h
 
 jni/../../Classes/Editor/UI/EditorNode.h:
 
@@ -1020,3 +1021,5 @@ jni/../../cocos2d/extensions/../extensions/physics-nodes/CCPhysicsSprite.h:
 jni/../../cocos2d/extensions/../extensions/assets-manager/AssetsManager.h:
 
 jni/../../Classes/Editor/Listener/EditorListener.h:
+
+jni/../../Classes/Utils/AudioHelp.h:

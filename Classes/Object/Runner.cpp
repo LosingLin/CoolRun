@@ -12,6 +12,7 @@
 #include "PhysicHelp.h"
 #include "ActionHelp.h"
 #include "Bullet.h"
+#include "AudioHelp.h"
 
 Runner::Runner()
 : CollideNode()
@@ -19,6 +20,9 @@ Runner::Runner()
 , m_actions(NULL)
 , m_jumpCount(0)
 , m_attckRect(Rect(0, 0, 0, 0))
+, m_headRect(Rect(0, 0, 0, 0))
+, m_bodyRect(Rect(0, 0, 0, 0))
+, m_legRect(Rect(0, 0, 0, 0))
 , b_isAtk(false)
 , b_isDad(false)
 , b_isIgnoreLand(false)
@@ -97,25 +101,50 @@ void Runner::setRunnerState(RunnerState state)
 
     if (m_state != state)
     {
+//        if (m_state == kRunnerState_JumpDown && state == kRunnerState_Running)
+//        {
+//            AudioHelp::playEft("runner_land.wav");
+//        }
         m_state = state;
         switch (m_state)
         {
             case kRunnerState_Running:
                 m_armature->getAnimation()->play("run");
                 this->setCollideRect(Rect(2, 8, 86, 126));
+                m_headRect = Rect(32, 90, 50, 42);
+                m_bodyRect = Rect(20, 50, 40, 40);
+                m_legRect = Rect(6, 20, 48, 40);
+//                this->showRect(m_headRect);
+//                this->showRect(m_bodyRect);
+//                this->showRect(m_legRect);
                 break;
             case kRunnerState_JumpUp:
                 m_armature->getAnimation()->play("jump");
                 this->setCollideRect(Rect(2, 8, 86, 126));
+                m_headRect = Rect(22, 90, 50, 42);
+                m_bodyRect = Rect(20, 50, 40, 40);
+                m_legRect = Rect(16, 20, 38, 40);
+//                this->showRect(m_headRect);
+//                this->showRect(m_bodyRect);
+//                this->showRect(m_legRect);
                 break;
             case kRunnerState_JumpUp2:
                 m_armature->getAnimation()->play("fly");
-                this->setCollideRect(Rect(2, 26, 86, 90));
+                this->setCollideRect(Rect(4, 26, 86, 90));
                 //this->showRect(Rect(2, 26, 86, 90));
+                m_headRect = Rect(2, 26, 86, 90);
+                m_bodyRect = Rect(2, 26, 86, 90);
+                m_legRect = Rect(2, 26, 86, 90);
                 break;
             case kRunnerState_JumpDown:
                 m_armature->getAnimation()->play("down");
                 this->setCollideRect(Rect(2, 8, 86, 126));
+                m_headRect = Rect(12, 90, 50, 42);
+                m_bodyRect = Rect(20, 50, 40, 40);
+                m_legRect = Rect(36, 20, 38, 40);
+//                this->showRect(m_headRect);
+//                this->showRect(m_bodyRect);
+//                this->showRect(m_legRect);
                 break;
             default:
                 break;
@@ -126,6 +155,7 @@ void Runner::setRunnerState(RunnerState state)
 
 void Runner::rebound()
 {
+    AudioHelp::playEft("runner_rebound.wav");
     this->setJumpCount(0);
     this->setRunnerState(kRunnerState_JumpUp);
     this->setYA(0.0f);
@@ -162,6 +192,8 @@ void Runner::attack()
     {
         return;
     }
+    
+    AudioHelp::playEft("runner_atk.wav");
     
     b_isAtk = true;
     
@@ -320,6 +352,49 @@ void Runner::trackCollideWithBullet(Bullet* bullet)
         }
         bullet->setCollideEffect(false);
         bullet->setDestoryed(true);
+    }
+}
+
+bool Runner::isCollidedWithTrueBody(const Rect& rect)
+{
+    auto headRect = PhysicHelp::countPhysicNodeRect(this, m_headRect);
+    if (CollideTrackHelp::trackCollide(rect, headRect))
+    {
+        return true;
+    }
+    auto bodyRect = PhysicHelp::countPhysicNodeRect(this, m_bodyRect);
+    if (CollideTrackHelp::trackCollide(rect, bodyRect))
+    {
+        return true;
+    }
+    auto legRect = PhysicHelp::countPhysicNodeRect(this, m_legRect);
+    if (CollideTrackHelp::trackCollide(rect, legRect))
+    {
+        return true;
+    }
+    return false;
+}
+CollideDirection Runner::getDirectionWithTrueBody(const Rect& rect)
+{
+    auto headRect = PhysicHelp::countPhysicNodeRect(this, m_headRect);
+    auto headDir = CollideTrackHelp::trackCollideDirection(rect, headRect);
+    auto bodyRect = PhysicHelp::countPhysicNodeRect(this, m_bodyRect);
+    auto bodyDir = CollideTrackHelp::trackCollideDirection(rect, bodyRect);
+    auto legRect = PhysicHelp::countPhysicNodeRect(this, m_legRect);
+    auto legDir = CollideTrackHelp::trackCollideDirection(rect, legRect);
+    if (headDir == kCollideDirectionMiss && bodyDir == kCollideDirectionMiss && legDir == kCollideDirectionUp)
+    {
+        return kCollideDirectionUp;
+    }
+    else if((headDir == kCollideDirectionMiss || headDir == kCollideDirectionRight)
+            && (bodyDir == kCollideDirectionMiss || bodyDir == kCollideDirectionRight)
+            && (legDir == kCollideDirectionMiss || legDir == kCollideDirectionRight))
+    {
+        return kCollideDirectionMiss;
+    }
+    else
+    {
+        return kCollideDirectionLeft; 
     }
 }
 

@@ -52,10 +52,13 @@ public:
     virtual void CollideTrackListener_CollideAll(CollideDirection direction);
     
     virtual void trackCollideWithBullet(Bullet* bullet);
+    bool isCollidedWithTrueBody(const Rect& rect);
+    CollideDirection getDirectionWithTrueBody(const Rect& rect);
     
     void setJumpCount(int count) { m_jumpCount = count; }
     int getJumpCount() { return m_jumpCount; }
     void addJumpCount() { m_jumpCount++; }
+    
     
     const Rect getAtkRect() { return m_attckRect; }
     void setAtkRect(const Rect& rect) { m_attckRect = rect; }
@@ -164,6 +167,11 @@ private:
     int m_jumpCount;
     __Array *m_actions;
     Rect m_attckRect;
+    
+    Rect m_headRect;
+    Rect m_bodyRect;
+    Rect m_legRect;
+    
     bool b_isAtk;
     bool b_isDad; //无敌
     

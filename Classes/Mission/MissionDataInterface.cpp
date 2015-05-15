@@ -21,6 +21,7 @@ MissionDataInterface::~MissionDataInterface()
 {
     CC_SAFE_RELEASE_NULL(m_dirColObjs);
     CC_SAFE_RELEASE_NULL(m_simpleColObjs);
+    CC_SAFE_RELEASE_NULL(m_bulletColObjs);
 }
 
 bool MissionDataInterface::init()

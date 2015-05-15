@@ -16,6 +16,7 @@
 #include "editor-support/cocostudio/CocoStudio.h"
 using namespace cocostudio;
 
+
 USING_NS_CC;
 
 

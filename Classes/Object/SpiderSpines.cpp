@@ -110,6 +110,9 @@ void SpiderSpines::trackCollideWithRunner(Runner* _runner)
         bool isAtked = CollideTrackHelp::trackCollide(rect1, rect2);
         if (isAtked)
         {
+            
+            AudioHelp::playBeAttackedEft();
+            
             this->dead();
             return;
         }
@@ -120,8 +123,8 @@ void SpiderSpines::trackCollideWithRunner(Runner* _runner)
     auto bodyRect2 = PhysicHelp::countPhysicNodeRect(this, this->getMultiRect(1));
     
     auto rect2 = PhysicHelp::countPhysicNodeRect(_runner);
-    CollideDirection dir = CollideTrackHelp::trackCollideDirection(bodyRect1, rect2);
-    CollideDirection dir2 = CollideTrackHelp::trackCollideDirection(bodyRect1, rect2);
+    CollideDirection dir = _runner->getDirectionWithTrueBody(bodyRect1);
+    CollideDirection dir2 = _runner->getDirectionWithTrueBody(bodyRect2);
     if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir &&
         kCollideDirectionMiss != dir2 && kCollideDirectionRight != dir2 )
     {
@@ -138,6 +141,9 @@ void SpiderSpines::trackCollideWithBullet(Bullet* bullet)
     bool isCollided = CollideTrackHelp::trackCollide(rect1, rect2);
     if (isCollided)
     {
+        
+        AudioHelp::playBeAttackedEft();
+        
         this->dead();
         bullet->setDestoryed(true);
     }

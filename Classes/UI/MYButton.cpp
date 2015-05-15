@@ -8,6 +8,7 @@
 
 #include "MYButton.h"
 #include "Base.h"
+#include "AudioHelp.h"
 
 MYButton::MYButton()
 : Node()
@@ -23,6 +24,8 @@ MYButton::MYButton()
 }
 MYButton::~MYButton()
 {
+    CC_SAFE_RELEASE_NULL(m_touchListener);
+    CC_SAFE_RELEASE_NULL(m_allTouchListener);
 }
 
 bool MYButton::init()
@@ -226,6 +229,8 @@ bool MYButton::onTouchBegan(Touch *touch, Event *unusedEvent)
         SAFESETVISIBLE(m_normalSp, false);
         SAFESETVISIBLE(m_highLightSp, true);
     }
+    
+    AudioHelp::playEft("btn_click.wav");
     
     if (m_callback)
     {

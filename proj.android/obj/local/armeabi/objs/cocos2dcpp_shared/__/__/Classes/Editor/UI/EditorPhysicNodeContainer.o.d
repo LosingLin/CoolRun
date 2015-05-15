@@ -361,6 +361,8 @@
   jni/../../Classes/Factory/PhysicNodeFactory.h \
   jni/../../Classes/Editor/UI/EditorDetailMenu.h \
   jni/../../Classes/Editor/UI/EditorMenu.h \
+  jni/../../Classes/Editor/UI/EditorDetailAllMenu.h \
+  jni/../../Classes/Editor/UI/EditorDetailSimpleMenu.h \
   jni/../../Classes/Object/Collection.h
 
 jni/../../Classes/Editor/UI/EditorPhysicNodeContainer.h:
@@ -1086,5 +1088,9 @@ jni/../../Classes/Factory/PhysicNodeFactory.h:
 jni/../../Classes/Editor/UI/EditorDetailMenu.h:
 
 jni/../../Classes/Editor/UI/EditorMenu.h:
+
+jni/../../Classes/Editor/UI/EditorDetailAllMenu.h:
+
+jni/../../Classes/Editor/UI/EditorDetailSimpleMenu.h:
 
 jni/../../Classes/Object/Collection.h:
