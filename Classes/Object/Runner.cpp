@@ -33,18 +33,28 @@ Runner::Runner()
 , item_isMagnetING(false)
 , item_magnetDistance(0.0f)
 , item_magnetLastTime(0.0f)
+, item_magnetCurrentTime(0.0f)
 , item_isTimesCoinING(false)
 , item_timesCoinDistance(0.0f)
 , item_timesCoinLastTime(0.0f)
+, item_timesCoinCurrentTime(0.0f)
 , item_isTimesJumpING(false)
 , item_timesJumpTimes(0)
 , item_timesJumpLastTime(0.0f)
+, item_timesJumpCurrentTime(0.0f)
 , item_isDadING(false)
 , item_dadLastTime(0.0f)
+, item_dadCurrentTime(0.0f)
 , item_isLandBuildING(false)
 , item_buildLandLastTime(0.0f)
+, item_buildLandCurrentTime(0.0f)
 , item_isFlyING(false)
+, item_isEndFlyING(false)
 , item_flyLastTime(0.0f)
+, item_flyCurrentTime(0.0f)
+, item_isRebornING(false)
+, item_rebornLastTime(0.0f)
+, item_rebornCurrentTime(0.0f)
 , item_buildLandIcon(nullptr)
 , item_dadIcon(nullptr)
 , item_flyIcon(nullptr)
@@ -93,6 +103,17 @@ bool Runner::init()
     this->addChild(item_spareNumLab);
     
     return true;
+}
+
+void Runner::onEnterTransitionDidFinish()
+{
+    CollideNode::onEnterTransitionDidFinish();
+    
+    Director::getInstance()->getScheduler()->schedule(schedule_selector(Runner::update), this, 0.0f, kRepeatForever, 0.01f, false);
+}
+void Runner::update(float delta)
+{
+    this->itemUpdate(delta);
 }
 
 void Runner::setRunnerState(RunnerState state)
@@ -346,7 +367,7 @@ void Runner::trackCollideWithBullet(Bullet* bullet)
     bool isCollided = CollideTrackHelp::trackCollide(rect1, rect2);
     if (isCollided)
     {
-        if (!this->isDad())
+        if (!this->isDad() && !this->isRebornING())
         {
             m_gameController->dead(this);
         }
@@ -399,30 +420,104 @@ CollideDirection Runner::getDirectionWithTrueBody(const Rect& rect)
 }
 
 #pragma mark - item
+void Runner::itemUpdate(float delta)
+{
+    if (item_magnetCurrentTime > 0.0f)
+    {
+        item_magnetCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::MAGNET, item_magnetCurrentTime/item_magnetLastTime*100);
+        if (item_magnetCurrentTime <= 0)
+        {
+            this->endMagnet();
+        }
+    }
+    if (item_timesCoinCurrentTime > 0.0f)
+    {
+        item_timesCoinCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::TIMESCOIN, item_timesCoinCurrentTime/item_timesCoinLastTime*100);
+        if (item_timesCoinCurrentTime <= 0)
+        {
+            this->endTimesCoin();
+        }
+    }
+    if (item_timesJumpCurrentTime > 0.0f)
+    {
+        item_timesJumpCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::TIMESJUMP, item_timesJumpCurrentTime/item_timesJumpLastTime*100);
+        if (item_timesJumpCurrentTime <= 0)
+        {
+            this->endTimesJump();
+        }
+    }
+    if (item_dadCurrentTime > 0.0f)
+    {
+        item_dadCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::DAD, item_dadCurrentTime/item_dadLastTime*100);
+        if (item_dadCurrentTime <= 0)
+        {
+            this->endDad();
+        }
+    }
+    if (item_buildLandCurrentTime > 0.0f)
+    {
+        item_buildLandCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::LANDBUILD, item_buildLandCurrentTime/item_buildLandLastTime*100);
+        if (item_buildLandCurrentTime <= 0)
+        {
+            this->endLandBuild();
+        }
+    }
+    if (item_flyCurrentTime > 0.0f)
+    {
+        item_flyCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::FLY, item_flyCurrentTime/item_flyLastTime*100);
+        if (item_flyCurrentTime <= 0)
+        {
+            this->endFlyEffect();
+        }
+        else if (item_flyCurrentTime <= 1)
+        {
+            this->endFly();
+        }
+    }
+    if (item_rebornCurrentTime > 0.0f)
+    {
+        item_rebornCurrentTime -= delta;
+        m_gameController->updatePowerIcon(PowerIcon::PowerType::REBORN, item_rebornCurrentTime/item_rebornLastTime*100);
+        if (item_rebornCurrentTime <= 0)
+        {
+            this->endReborn();
+        }
+    }
+}
 void Runner::initItemData()
 {
-    item_spareNum = 5;
+    item_spareNum = 3;
     
     item_isMagnetING = false;
-    item_magnetDistance = 400;
-    item_magnetLastTime = 12.0f;
+    item_magnetDistance = 500;
+    item_magnetLastTime = 4.2f;
     
     item_isTimesCoinING = false;
-    item_timesCoinDistance = 400;
-    item_timesCoinLastTime = 12.0f;
+    item_timesCoinDistance = 500;
+    item_timesCoinLastTime = 4.6f;
     
     item_isTimesJumpING = false;
-    item_timesJumpTimes = 3;
-    item_timesJumpLastTime = 12.0f;
+    item_timesJumpTimes = 3; 
+    item_timesJumpLastTime = 5.0f;
     
     item_isDadING = false;
-    item_dadLastTime = 12.0f;
+    item_dadLastTime = 4.0f;
     
     item_isLandBuildING = false;
-    item_buildLandLastTime = 12.0f;
+    item_buildLandLastTime = 5.0f;
     
     item_isFlyING = false;
-    item_flyLastTime = 5.0f;
+    item_flyLastTime = 3.0f;
+    
+    item_isRebornING = false;
+    item_rebornLastTime = 3.0f;
+    item_rebornCurrentTime = 0.0f;
 }
 void Runner::displaySpareNum(int num)
 {
@@ -451,126 +546,132 @@ void Runner::displaySpareNum(int num)
 void Runner::startMagnet()
 {
     this->setMagnetING(true);
-    auto delay = DelayTime::create(item_magnetLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endMagnet, this));
-    this->runAction(Sequence::create(delay, call, NULL));
-    if (!item_magnetIcon)
-    {
-        item_magnetIcon = Sprite::createWithSpriteFrameName("item_mag.png");
-        item_magnetIcon->setPosition(this->getIconPosition());
-        this->addChild(item_magnetIcon);
-    }
-    
+    item_magnetCurrentTime = item_magnetLastTime;
+//    if (!item_magnetIcon)
+//    {
+//        item_magnetIcon = Sprite::createWithSpriteFrameName("item_mag.png");
+//        item_magnetIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_magnetIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::MAGNET);
 }
 
 void Runner::endMagnet()
 {
-    this->setMagnetING(false);
-    if (item_magnetIcon)
+    if (!this->isFlyING())
     {
-        item_magnetIcon->removeFromParentAndCleanup(true);
-        item_magnetIcon = nullptr;
+        this->setMagnetING(false);
     }
+//    if (item_magnetIcon)
+//    {
+//        item_magnetIcon->removeFromParentAndCleanup(true);
+//        item_magnetIcon = nullptr;
+//        
+//    }
+    m_gameController->removePowerIcon(PowerIcon::PowerType::MAGNET);
 }
 
 void Runner::startTimesCoin()
 {
     this->setTimesCoinING(true);
-    auto delay = DelayTime::create(item_timesCoinLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endTimesCoin, this));
-    this->runAction(Sequence::create(delay, call, NULL));
+    item_timesCoinCurrentTime = item_timesCoinLastTime;
     
-    if (!item_timesCoinIcon)
-    {
-        item_timesCoinIcon = Sprite::createWithSpriteFrameName("item_timecoin.png");
-        item_timesCoinIcon->setPosition(this->getIconPosition());
-        this->addChild(item_timesCoinIcon);
-    }
+//    if (!item_timesCoinIcon)
+//    {
+//        item_timesCoinIcon = Sprite::createWithSpriteFrameName("item_timecoin.png");
+//        item_timesCoinIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_timesCoinIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::TIMESCOIN);
 }
 void Runner::endTimesCoin()
 {
     this->setTimesCoinING(false);
-    
-    if (item_timesCoinIcon)
-    {
-        item_timesCoinIcon->removeFromParentAndCleanup(true);
-        item_timesCoinIcon = nullptr;
-    }
+//    
+//    if (item_timesCoinIcon)
+//    {
+//        item_timesCoinIcon->removeFromParentAndCleanup(true);
+//        item_timesCoinIcon = nullptr;
+//    }
+    m_gameController->removePowerIcon(PowerIcon::PowerType::TIMESCOIN);
 }
 
 void Runner::startTimesJump()
 {
     this->setTimesJumpING(true);
-    auto delay = DelayTime::create(item_timesJumpLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endTimesJump, this));
-    this->runAction(Sequence::create(delay, call, NULL));
+    item_timesJumpCurrentTime = item_timesJumpLastTime;
     
-    if (!item_timesJumpIcon)
-    {
-        item_timesJumpIcon = Sprite::createWithSpriteFrameName("item_jump.png");
-        item_timesJumpIcon->setPosition(this->getIconPosition());
-        this->addChild(item_timesJumpIcon);
-    }
+//    if (!item_timesJumpIcon)
+//    {
+//        item_timesJumpIcon = Sprite::createWithSpriteFrameName("item_jump.png");
+//        item_timesJumpIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_timesJumpIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::TIMESJUMP);
 }
 void Runner::endTimesJump()
 {
     this->setTimesJumpING(false);
     
-    if (item_timesJumpIcon)
-    {
-        item_timesJumpIcon->removeFromParentAndCleanup(true);
-        item_timesJumpIcon = nullptr;
-    }
+//    if (item_timesJumpIcon)
+//    {
+//        item_timesJumpIcon->removeFromParentAndCleanup(true);
+//        item_timesJumpIcon = nullptr;
+//    }
+    m_gameController->removePowerIcon(PowerIcon::PowerType::TIMESJUMP);
 }
 
 void Runner::startDad()
 {
     this->setDadING(true);
-    auto delay = DelayTime::create(item_dadLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endDad, this));
-    this->runAction(Sequence::create(delay, call, NULL));
+    item_dadCurrentTime = item_dadLastTime;
     
-    if (!item_dadIcon)
-    {
-        item_dadIcon = Sprite::createWithSpriteFrameName("item_dad.png");
-        item_dadIcon->setPosition(this->getIconPosition());
-        this->addChild(item_dadIcon);
-    }
+//    if (!item_dadIcon)
+//    {
+//        item_dadIcon = Sprite::createWithSpriteFrameName("item_dad.png");
+//        item_dadIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_dadIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::DAD);
 }
 void Runner::endDad()
 {
     this->setDadING(false);
     
-    if (item_dadIcon)
-    {
-        item_dadIcon->removeFromParentAndCleanup(true);
-        item_dadIcon = nullptr;
-    }
+//    if (item_dadIcon)
+//    {
+//        item_dadIcon->removeFromParentAndCleanup(true);
+//        item_dadIcon = nullptr;
+//    }
+    m_gameController->removePowerIcon(PowerIcon::PowerType::DAD);
 }
 
 void Runner::startLandBuild()
 {
     this->setLandBuildING(true);
-    auto delay = DelayTime::create(item_buildLandLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endLandBuild, this));
-    this->runAction(Sequence::create(delay, call, NULL));
+    item_buildLandCurrentTime = item_buildLandLastTime;
     
-    if (!item_buildLandIcon)
-    {
-        item_buildLandIcon = Sprite::createWithSpriteFrameName("item_buildland.png");
-        item_buildLandIcon->setPosition(this->getIconPosition());
-        this->addChild(item_buildLandIcon);
-    }
+//    if (!item_buildLandIcon)
+//    {
+//        item_buildLandIcon = Sprite::createWithSpriteFrameName("item_buildland.png");
+//        item_buildLandIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_buildLandIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::LANDBUILD);
 }
 void Runner::endLandBuild()
 {
-    this->setLandBuildING(false);
-    
-    if (item_buildLandIcon)
+    if (!this->isFlyING())
     {
-        item_buildLandIcon->removeFromParentAndCleanup(true);
-        item_buildLandIcon = nullptr;
+        this->setLandBuildING(false);
     }
+    
+//    if (item_buildLandIcon)
+//    {
+//        item_buildLandIcon->removeFromParentAndCleanup(true);
+//        item_buildLandIcon = nullptr;
+//    }
+    m_gameController->removePowerIcon(PowerIcon::PowerType::LANDBUILD);
 }
 
 void Runner::startFly()
@@ -579,15 +680,14 @@ void Runner::startFly()
     {
         return;
     }
+    item_flyCurrentTime = item_flyLastTime;
+    
     this->setFlyING(true);
-    auto delay = DelayTime::create(item_flyLastTime);
-    auto call = CallFunc::create(CC_CALLBACK_0(Runner::endFly, this));
-    auto delay1 = DelayTime::create(2.0f);
-    auto call1 = CallFunc::create(CC_CALLBACK_0(Runner::endFlyEffect, this));
-    this->runAction(Sequence::create(delay, call, delay1, call1, NULL));
     this->setGravityEffect(false);
     this->setYA(0.0f);
     this->setYV(0.0f);
+    this->setXA(0.0f);
+    this->setXV(0.0f);
     this->setDad(true);
     this->setIgnoreLand(true);
     this->setRunnerState(kRunnerState_JumpUp);
@@ -596,19 +696,28 @@ void Runner::startFly()
 //    m_gameController->setVelocity(3600);
     m_gameController->startFly();
     
-    if (!item_flyIcon)
-    {
-        item_flyIcon = Sprite::createWithSpriteFrameName("item_fly.png");
-        item_flyIcon->setPosition(this->getIconPosition());
-        this->addChild(item_flyIcon);
-    }
+//    if (!item_flyIcon)
+//    {
+//        item_flyIcon = Sprite::createWithSpriteFrameName("item_fly.png");
+//        item_flyIcon->setPosition(this->getIconPosition());
+//        this->addChild(item_flyIcon);
+//    }
+    m_gameController->addPowerIcon(PowerIcon::PowerType::FLY);
 }
 void Runner::endFly()
 {
-    this->setFlyING(false);
+    if (item_isEndFlyING)
+    {
+        return;
+    }
+    
+    item_isEndFlyING = true;
     this->setGravityEffect(true);
     this->setIgnoreLand(false);
-    this->setMagnetING(false);
+    if (item_magnetCurrentTime <= 0)
+    {
+        this->setMagnetING(false);
+    }
     this->setLandBuildING(true);
     
 //    m_gameController->setVelocity(400);
@@ -616,14 +725,38 @@ void Runner::endFly()
 }
 void Runner::endFlyEffect()
 {
-    this->setDad(false);
-    this->setLandBuildING(false);
+    item_isEndFlyING = false;
+    this->setFlyING(false);
     
-    if (item_flyIcon)
+    if (item_dadCurrentTime <= 0)
     {
-        item_flyIcon->removeFromParentAndCleanup(true);
-        item_flyIcon = nullptr;
+        this->setDad(false);
     }
+    if (item_buildLandCurrentTime <= 0)
+    {
+        this->setLandBuildING(false);
+    }
+    
+//    if (item_flyIcon)
+//    {
+//        item_flyIcon->removeFromParentAndCleanup(true);
+//        item_flyIcon = nullptr;
+//    }
+    
+    m_gameController->removePowerIcon(PowerIcon::PowerType::FLY);
+}
+
+void Runner::startReborn()
+{
+    this->setRebornING(true);
+    item_rebornCurrentTime = item_rebornLastTime;
+    
+    m_gameController->addPowerIcon(PowerIcon::PowerType::REBORN);
+}
+void Runner::endReborn()
+{
+    this->setRebornING(false);
+    m_gameController->removePowerIcon(PowerIcon::PowerType::REBORN);
 }
 
 const Vec2 Runner::getIconPosition()

@@ -48,6 +48,10 @@ public:
     void setRunnerState(RunnerState);
     RunnerState getRunnerState() { return m_state; }
     
+    virtual void onEnterTransitionDidFinish() override;
+    virtual void update(float delta);
+    void itemUpdate(float delta);
+    
     virtual void CollideTrackListener_CollideOnce(CollideDirection direction, PhysicNode *node);
     virtual void CollideTrackListener_CollideAll(CollideDirection direction);
     
@@ -128,6 +132,11 @@ public:
     void endFly();
     void endFlyEffect();
     
+    void setRebornING(bool flag) { item_isRebornING = flag; }
+    bool isRebornING() { return item_isRebornING; }
+    void startReborn();
+    void endReborn();
+    
     const Vec2 getIconPosition();
 private:
     //Item
@@ -139,29 +148,41 @@ private:
     bool item_isMagnetING;
     float item_magnetDistance;
     float item_magnetLastTime;
+    float item_magnetCurrentTime;
     Sprite* item_magnetIcon;
     
     bool item_isTimesCoinING;
     float item_timesCoinDistance;
     float item_timesCoinLastTime;
+    float item_timesCoinCurrentTime;
     Sprite* item_timesCoinIcon;
     
     bool item_isTimesJumpING;
     int item_timesJumpTimes;
     float item_timesJumpLastTime;
+    float item_timesJumpCurrentTime;
     Sprite* item_timesJumpIcon;
     
     bool item_isDadING;
     float item_dadLastTime;
+    float item_dadCurrentTime;
     Sprite* item_dadIcon;
     
     bool item_isLandBuildING;
     float item_buildLandLastTime;
+    float item_buildLandCurrentTime;
     Sprite* item_buildLandIcon;
     
     bool item_isFlyING;
+    bool item_isEndFlyING;
     float item_flyLastTime;
+    float item_flyCurrentTime;
     Sprite* item_flyIcon;
+    
+    bool item_isRebornING;
+    float item_rebornLastTime;
+    float item_rebornCurrentTime;
+    
 private:
     RunnerState m_state;
     int m_jumpCount;

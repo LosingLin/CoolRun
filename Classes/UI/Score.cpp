@@ -7,6 +7,7 @@
 //
 
 #include "Score.h"
+#include "MYMultiLanguageManager.h"
 
 Score::Score()
 : Node()
@@ -34,10 +35,11 @@ bool Score::init()
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
     
-    auto scoreTxt = Label::createWithBMFont("Text_01.fnt", "Score:");
+    auto scoreTxt = Label::createWithBMFont(MYMultiLanguageManager::getInstance()->getText("Score_fnt"),
+                                            MYMultiLanguageManager::getInstance()->getText("Score:"));
     scoreTxt->setAnchorPoint(Vec2(0, 0));
     scoreTxt->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-    scoreTxt->setPosition(Vec2(12, 0));
+    scoreTxt->setPosition(Vec2(12, 2));
     this->addChild(scoreTxt);
     
     m_numLab = Label::createWithBMFont("Score.fnt", "0");

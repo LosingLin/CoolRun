@@ -11,6 +11,8 @@
 
 #include "EditorMenu.h"
 
+#define MAXEDITORPAGE   10
+
 class EditorPageMenu: public EditorMenu
 {
 public:

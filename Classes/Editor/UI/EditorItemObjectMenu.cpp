@@ -34,14 +34,14 @@ bool EditorItemObjectMenu::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(200, 200, 20, 150), csize.width, csize.height);
+    auto layer = LayerColor::create(Color4B(80, 120, 80, 255), csize.width, csize.height);
     this->addChild(layer);
     
     auto size = Size(160, 160);
     int y = csize.height - 180;
     for (int i = 1; i < kPhysicNodeTypeCount; ++ i)
     {
-        if (i == kPhysicNodeSpider || i == kPhysicNodeEnemy || i == kPhysicNodeItem || i == kPhysicNodeBulletPoison || i == kPhysicNodeCoin || i == kPhysicNodeBulletAlertNet || i == kPhysicNodeBulletAlertPoison || i == kPhysicNodeSaw || i == kPhysicNodeSpiderFly || i == kPhysicNodeSpiderKind || i == kPhysicNodeSpiderPoison || i == kPhysicNodeSpiderSpines || i == kPhysicNodeStone)
+        if (i == kPhysicNodeSpider || i == kPhysicNodeEnemy || i == kPhysicNodeItem || i == kPhysicNodeBulletPoison || i == kPhysicNodeCoin || i == kPhysicNodeBulletAlertNet || i == kPhysicNodeBulletAlertPoison || i == kPhysicNodeSaw || i == kPhysicNodeSpiderFly || i == kPhysicNodeSpiderKind || i == kPhysicNodeSpiderPoison || i == kPhysicNodeSpiderSpines || i == kPhysicNodeStone || i == kPhysicNodeItemSpare)
         {
             continue;
         }

@@ -26,6 +26,7 @@ bool EditorMenu::init()
         return false;
     }
     
+    this->getTouchListener()->setEnabled(false);
     this->touchNoneMoveEnded = CC_CALLBACK_0(EditorMenu::spaceCallback, this);
     
     return true;

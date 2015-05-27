@@ -49,6 +49,7 @@ const string MYMultiLanguageManager::getText(const char* key)
         return "Key.Err";
     }
 }
+
 const string MYMultiLanguageManager::getLanguageKey(MultiLanguageType type)
 {
     switch (type)
@@ -69,6 +70,16 @@ const string MYMultiLanguageManager::getLanguageKey(MultiLanguageType type)
     }
     
     return MULTI_LANGUAGE_ENGLISH;
+}
+
+
+MYMultiLanguageManager::MultiLanguageType MYMultiLanguageManager::getCurrentLanguage()
+{
+    return MYUserDefaultManager::getInstance()->getCurrentLanguage();
+}
+void MYMultiLanguageManager::setCurrentLanguage(MYMultiLanguageManager::MultiLanguageType _type)
+{
+    MYUserDefaultManager::getInstance()->setCurrentLanguage(_type);
 }
 
 #pragma mark -

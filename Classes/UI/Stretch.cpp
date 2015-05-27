@@ -7,6 +7,7 @@
 //
 
 #include "Stretch.h"
+#include "MYMultiLanguageManager.h"
 
 Stretch::Stretch()
 : Node()
@@ -35,10 +36,11 @@ bool Stretch::init()
     this->addChild(bg);
     
     
-    auto StretchTxt = Label::createWithBMFont("Text_01.fnt", "m");
+    auto StretchTxt = Label::createWithBMFont(MYMultiLanguageManager::getInstance()->getText("Score_fnt"),
+                                              MYMultiLanguageManager::getInstance()->getText("m"));
     StretchTxt->setAnchorPoint(Vec2(1, 0));
     StretchTxt->setAlignment(TextHAlignment::RIGHT, TextVAlignment::CENTER);
-    StretchTxt->setPosition(Vec2(csize.width - 18, 0));
+    StretchTxt->setPosition(Vec2(csize.width - 18, 2));
     this->addChild(StretchTxt);
     
     m_numLab = Label::createWithBMFont("M.fnt", "0");

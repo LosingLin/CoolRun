@@ -29,6 +29,7 @@ bool ItemSpare::init()
     m_icon->setPosition(Vec2(csize.width/2, csize.height - 74));
     this->addChild(m_icon);
     
+    m_icon->setScale(0.9f);
     return true;
 }
 

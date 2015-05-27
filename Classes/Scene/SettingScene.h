@@ -10,9 +10,14 @@
 #define __CoolRun__SettingScene__
 
 #include "cocos2d.h"
+#include "extensions/cocos-ext.h"
+#include "MYButton.h"
+#include "MYSwitch.h"
 
 USING_NS_CC;
-
+USING_NS_CC_EXT;
+class PopViewLayer;
+class NormalFrame;
 class SettingLayer : public Layer
 {
 public:
@@ -22,6 +27,20 @@ public:
     CREATE_FUNC(SettingLayer);
     
     static Scene* createScene();
+    
+    void switchBtnCallback(Ref* _ref, MYSwitch::MYSwitchStatus _status);
+    void closeBtnCallback(Ref* _ref, MYButton::TouchEventType _type);
+    void menuBtnCallback(Ref* _ref, MYButton::TouchEventType _type);
+    void backMenuCallback(Ref* _ref, MYButton::TouchEventType _type);
+    
+    void updateMainFrame();
+private:
+    Layer* m_mainFrame;
+    NormalFrame* m_normalFrame;
+    MYSwitch* m_effectSwitch;
+    MYSwitch* m_musicSwitch;
+    MYButton* m_languageBtn;
+    MYButton* m_creditBtn;
 };
 
 #endif /* defined(__CoolRun__SettingScene__) */

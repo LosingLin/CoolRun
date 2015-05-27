@@ -115,6 +115,7 @@ PhysicNode* Collection::createEditorPhysicNode()
     auto pNode = PhysicNodeFactory::getInstance()->create(doc);
     pNode->removeAllChildrenWithCleanup(true);
     //auto csize = pNode->getContentSize();
+#warning 这里强行改变了coin的csize
     auto csize = Size(50, 50);
     pNode->setContentSize(Size(5*this->getIncX() + csize.width, 5*this->getIncY() + csize.height));
     

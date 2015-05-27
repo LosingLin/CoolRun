@@ -26,6 +26,7 @@
 #include "Mission.h"
 #include "CoolRunScene.h"
 #include "MYScene.h"
+#include "MYMultiLanguageManager.h"
 
 
 #define kEditorTempFile  "Temp"
@@ -75,12 +76,29 @@ bool EditorScene::init()
     m_editorPages = __Array::create();
     CC_SAFE_RETAIN(m_editorPages);
     
+    auto layer = LayerColor::create(Color4B(200, 200, 200, 150), visibleSize.width, visibleSize.height - 640);
+    layer->setPosition(Vec2(origin.x, origin.y + 640));
+    this->addChild(layer);
+    
     m_content = Node::create();
     m_scrollView = ScrollView::create(Size(visibleSize.width, 640), m_content);
     m_scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
     m_scrollView->setDelegate(this);
     m_scrollView->setLocalZOrder(kPageScrollViewZOrder);
     this->addChild(m_scrollView);
+    
+    
+    
+    auto _title = Label::createWithBMFont(
+                                          "NFTitle.fnt",
+                                          MYMultiLanguageManager::getInstance()->getText("e_editorTitle")
+                                          );
+    _title->setAnchorPoint(Vec2(0.5, 0.5));
+    _title->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height - 30 - (visibleSize.height - 640)/4));
+    _title->setOpacity(100);
+    _title->setScale(0.8f);
+    this->addChild(_title);
+    
     
 //    m_curPage = EditorPage::create();
 //    m_curPage->setEditorListener(this);
@@ -531,7 +549,7 @@ void EditorScene::save(const std::string& filePath)
         return;
     }
     
-    log("SAVE FILE PATH: %s", savaFilePath.c_str());
+    //log("SAVE FILE PATH: %s", savaFilePath.c_str());
     
     FILE* fp = fopen(savaFilePath.c_str(), "wt");
     if (fp)
@@ -548,9 +566,9 @@ void EditorScene::save(const std::string& filePath)
         }
         fwrite(data->c_str(), strlen(data->c_str()), 1, fp);
         fclose(fp);
-        log("SAVE: %s", data->c_str());
+        //log("SAVE: %s", data->c_str());
         delete data;
-        this->showAlter("SAVE SUCCESSED!");
+        this->showAlter(MYMultiLanguageManager::getInstance()->getText("e_alertSaveSuccess"));
     }
     else
     {
@@ -561,11 +579,11 @@ void EditorScene::save(const std::string& filePath)
     }
     
 
-    int r = access(savaFilePath.c_str(), W_OK);
-    log("WRITE : %d", r);
-    
-    r = access(savaFilePath.c_str(), R_OK);
-    log("READ : %d", r);
+//    int r = access(savaFilePath.c_str(), W_OK);
+//    log("WRITE : %d", r);
+//    
+//    r = access(savaFilePath.c_str(), R_OK);
+//    log("READ : %d", r);
 }
 
 void EditorScene::run()

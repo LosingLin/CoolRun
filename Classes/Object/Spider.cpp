@@ -93,7 +93,7 @@ void Spider::frameEvent(Bone *bone, const std::string& frameEventName, int origi
 
 void Spider::trackCollideWithRunner(Runner* _runner)
 {
-    if (_runner->isDad())
+    if (_runner->isDad() || _runner->isRebornING())
     {
         auto rect1 = PhysicHelp::countPhysicNodeRect(_runner);
         auto rect2 = PhysicHelp::countPhysicNodeRect(this);

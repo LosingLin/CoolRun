@@ -128,7 +128,14 @@ void SpiderSpines::trackCollideWithRunner(Runner* _runner)
     if (kCollideDirectionMiss != dir && kCollideDirectionRight != dir &&
         kCollideDirectionMiss != dir2 && kCollideDirectionRight != dir2 )
     {
-        m_gameController->dead(_runner);
+        if (_runner->isDad() || _runner->isRebornING())
+        {
+            this->dead();
+        }
+        else
+        {
+            m_gameController->dead(_runner);
+        }
 //        this->setCollideEffect(false);
     }
 }

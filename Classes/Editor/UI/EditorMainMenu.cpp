@@ -13,6 +13,8 @@
 #include "EditorPageMenu.h"
 #include "MenuScene.h"
 #include "SceneHelp.h"
+#include "EditorManager.h"
+#include "MYMultiLanguageManager.h"
 
 EditorMainMenu::EditorMainMenu()
 : EditorMenu()
@@ -39,10 +41,26 @@ bool EditorMainMenu::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(200, 20, 200, 150), 200, 1000);
+    auto layer = LayerColor::create(Color4B(100, 20, 100, 255), 200, 1000);
     this->addChild(layer);
     
-    string texts[] = {"添加物体", "页", "文件", "运行", "退出"};
+    EditorManager::EditorType _type = EditorManager::getInstance()->getEditorType();
+    
+    string texts[] = {
+        MYMultiLanguageManager::getInstance()->getText("e_add"),
+        MYMultiLanguageManager::getInstance()->getText("e_pages"),
+        MYMultiLanguageManager::getInstance()->getText("e_save"),
+        MYMultiLanguageManager::getInstance()->getText("e_run"),
+        MYMultiLanguageManager::getInstance()->getText("e_exit")};
+    if (EditorManager::EditorType::PLAYER == _type)
+    {
+        texts[2] = MYMultiLanguageManager::getInstance()->getText("e_save");
+    }
+    else if(EditorManager::EditorType::DEVELOPER == _type)
+    {
+        texts[2] = MYMultiLanguageManager::getInstance()->getText("e_file");
+    }
+    
     auto _size = Size(160, 80);
     int fontSize = 30;
     
@@ -53,6 +71,7 @@ bool EditorMainMenu::init()
         menuItem->setPosition(Vec2(20, y));
         y -= 100;
         menuItem->touchNoneMoveEnded = CC_CALLBACK_0(EditorMainMenu::menuCallback, this, i);
+        menuItem->getTouchListener()->setSwallowTouches(false);
         this->addChild(menuItem);
     }
     
@@ -68,7 +87,7 @@ void EditorMainMenu::spaceCallback()
 
 void EditorMainMenu::menuCallback(int index)
 {
-    log("menuCallback %d", index);
+    //log("menuCallback %d", index);
     switch (index)
     {
         case 0:
@@ -83,7 +102,15 @@ void EditorMainMenu::menuCallback(int index)
             break;
         case 2:
         {
-            this->getEditorListener()->showMenu(EditorListener::MenuState::SECOND, EditorOpenFileMenu::create());
+            EditorManager::EditorType _type = EditorManager::getInstance()->getEditorType();
+            if (EditorManager::EditorType::PLAYER == _type)
+            {
+                this->getEditorListener()->save("");
+            }
+            else if(EditorManager::EditorType::DEVELOPER == _type)
+            {
+                this->getEditorListener()->showMenu(EditorListener::MenuState::SECOND, EditorOpenFileMenu::create());
+            }
         }
             break;
         case 3:

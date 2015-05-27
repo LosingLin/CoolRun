@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "GameController.h"
 #include "MYButton.h"
+#include "PowerIcon.h"
 
 #define ZORDER_STONE        0
 #define ZORDER_COIN         1
@@ -21,7 +22,9 @@
 #define ZORDER_ITEM         4
 #define ZORDER_RUNNER       5
 
+
 #define ZORDER_LEAVES       8
+#define ZORDER_POWERBAR     9
 #define ZORDER_WARNING      9
 #define ZORDER_HEADMENU     10
 
@@ -49,6 +52,8 @@ class Stretch;
 class HpBar;
 class Leaves;
 class BackgroundAudio;
+class PowerIconBar;
+class PowerIcon;
 class CoolRun : public Layer, public GameController
 {
 public:
@@ -112,7 +117,7 @@ public:
     void JumpBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
     void PacBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
     
-    void addRunner();
+    void addRunner(bool isReborn=true);
     void addSpiderAndHelp();
     void showBossWarning();
     void showBossWarningEnd();
@@ -161,6 +166,9 @@ public:
     virtual void destory(PhysicNode* _node);
     void addBossHpBar(HpBar* bar);
     void removeBossHpBar(HpBar* bar);
+    void addPowerIcon(PowerIcon::PowerType _type);
+    void removePowerIcon(PowerIcon::PowerType _type);
+    void updatePowerIcon(PowerIcon::PowerType _type, float _percentage);
     
     //Item
     void spareRunner(Runner* runner);
@@ -242,6 +250,7 @@ private:
     int m_missionIndex;
     
     BackgroundAudio* m_bgAudio;
+    PowerIconBar* m_powerBar;
 };
 
 #endif /* defined(__CoolRun__CoolRunScene__) */

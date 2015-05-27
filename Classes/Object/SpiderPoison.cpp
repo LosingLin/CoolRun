@@ -219,7 +219,7 @@ void SpiderPoison::frameEvent(Bone *bone, const std::string& frameEventName, int
 
 void SpiderPoison::trackCollideWithRunner(Runner* _runner)
 {
-    Spider::trackCollideWithRunner(_runner);
+    //Spider::trackCollideWithRunner(_runner);
     
     if (!this->isCollideEffect() || this->isDestoryed())
     {
@@ -254,7 +254,14 @@ void SpiderPoison::trackCollideWithRunner(Runner* _runner)
         
         if (_runner->isCollidedWithTrueBody(headRect))
         {
-            m_gameController->dead(_runner);
+            if (_runner->isDad() || _runner->isRebornING())
+            {
+                this->dead();
+            }
+            else
+            {
+                m_gameController->dead(_runner);
+            }
             return;
         }
         
@@ -268,7 +275,14 @@ void SpiderPoison::trackCollideWithRunner(Runner* _runner)
         }
         else if (kCollideDirectionMiss != dir)
         {
-            m_gameController->dead(_runner);
+            if (_runner->isDad() || _runner->isRebornING())
+            {
+                this->dead();
+            }
+            else
+            {
+                m_gameController->dead(_runner);
+            }
             
 //            this->setCollideEffect(false);
         }

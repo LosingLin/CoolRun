@@ -31,6 +31,10 @@ public:
     
     bool init();
     const string getText(const char* key);
+    
+    MYMultiLanguageManager::MultiLanguageType getCurrentLanguage();
+    void setCurrentLanguage(MYMultiLanguageManager::MultiLanguageType _type);
+    
 private:
     const string getLanguageKey(MultiLanguageType type);
 private:

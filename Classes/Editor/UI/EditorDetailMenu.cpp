@@ -13,6 +13,7 @@
 #include "SpiderPoison.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "MYMultiLanguageManager.h"
 
 EditorDetailMenu::EditorDetailMenu()
 : EditorMenu()
@@ -43,12 +44,16 @@ bool EditorDetailMenu::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(200, 200, 20, 150), csize.width, csize.height);
+    auto layer = LayerColor::create(Color4B(100, 20, 100, 255), csize.width, csize.height);
     this->addChild(layer);
     
     m_y = csize.height - 120;
     
-    m_delete = EditorText::create("Delete", Size(260, 60), 30);
+    m_delete = EditorText::create(
+                                  MYMultiLanguageManager::getInstance()->getText("e_delete"),
+                                  Size(260, 60),
+                                  30
+                                  );
     m_delete->setPosition(Vec2(50, m_y));
     m_delete->touchNoneMoveEnded = CC_CALLBACK_0(EditorDetailMenu::deleteEditorNode, this);
     this->addChild(m_delete);

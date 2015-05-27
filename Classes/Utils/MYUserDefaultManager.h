@@ -15,6 +15,8 @@
 //UserDefault
 #define IS_PLAYER_GUIDED "is_player_guided"
 #define MULTI_LANGUAGE_FLAG "current_language"
+#define IS_EFFECT_OFF "is_effect_off"
+#define IS_MUSIC_OFF "is_music_off"
 
 USING_NS_CC;
 using namespace std;
@@ -35,6 +37,12 @@ public:
     
     MYMultiLanguageManager::MultiLanguageType getCurrentLanguage();
     void setCurrentLanguage(MYMultiLanguageManager::MultiLanguageType _type);
+    
+    bool isEffectOff();
+    void setEffectOff(bool flag);
+    bool isMusicOff();
+    void setMusicOff(bool flag);
+    
 private:
     static MYUserDefaultManager* m_instance;
 };

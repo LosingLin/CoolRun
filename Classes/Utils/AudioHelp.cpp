@@ -7,62 +7,81 @@
 //
 
 #include "AudioHelp.h"
+#include "MYUserDefaultManager.h"
 
+#define CHECK_EFFECT_SWITCH if(MYUserDefaultManager::getInstance()->isEffectOff()) { return; }
+#define CHECK_BGMUSIC_SWITCH if(MYUserDefaultManager::getInstance()->isMusicOff()) { return; }
 
 void AudioHelp::preloadEft(const char* fpath)
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->preloadEffect(fpath);
 }
 void AudioHelp::unloadEft(const char* fpath)
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->unloadEffect(fpath);
 }
 void AudioHelp::playEft(const char* fpath)
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->playEffect(fpath, false, 1);
 }
 void AudioHelp::addEftVol(float vol)
 {
+    CHECK_EFFECT_SWITCH;
     float _vol = SimpleAudioEngine::getInstance()->getEffectsVolume();
     SimpleAudioEngine::getInstance()->setEffectsVolume(_vol + vol);
 }
 void AudioHelp::pauseAllEft()
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 void AudioHelp::resumeAllEft()
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
 void AudioHelp::stopAllEft()
 {
+    CHECK_EFFECT_SWITCH;
     SimpleAudioEngine::getInstance()->stopAllEffects();
 }
 
 
 void AudioHelp::preloadBgA(const char* fpath)
 {
+    CHECK_BGMUSIC_SWITCH;
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic(fpath);
 }
 void AudioHelp::unloadBgA(const char* fpath)
 {
-    
+    CHECK_BGMUSIC_SWITCH;
 }
 void AudioHelp::playBgA(const char* fpath)
 {
+    CHECK_BGMUSIC_SWITCH;
     SimpleAudioEngine::getInstance()->playBackgroundMusic(fpath, true);
 }
 void AudioHelp::stopAllBgA()
 {
+    CHECK_BGMUSIC_SWITCH;
     SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 }
 void AudioHelp::pauseBgA()
 {
+    CHECK_BGMUSIC_SWITCH;
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 void AudioHelp::resumeBgA()
 {
+    CHECK_BGMUSIC_SWITCH;
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+bool AudioHelp::isBgAPlaying()
+{
+    return SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
 }
 
 void AudioHelp::endAudio()

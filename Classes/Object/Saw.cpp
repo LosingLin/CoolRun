@@ -55,7 +55,14 @@ void Saw::trackCollideWithRunner(Runner* _runner)
     bool isCollide = _runner->isCollidedWithTrueBody(rect2);
     if (isCollide)
     {
-        m_gameController->dead(_runner);
+        if (!_runner->isDad() && !_runner->isRebornING())
+        {
+            m_gameController->dead(_runner);
+        }
+        else
+        {
+            this->setDestoryed(true);
+        }
     }
 
 }

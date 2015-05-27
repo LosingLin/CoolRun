@@ -72,6 +72,23 @@ void MYUserDefaultManager::setCurrentLanguage(MYMultiLanguageManager::MultiLangu
     }
 }
 
+bool MYUserDefaultManager::isEffectOff()
+{
+    return UserDefault::getInstance()->getBoolForKey(IS_EFFECT_OFF, false);
+}
+void MYUserDefaultManager::setEffectOff(bool flag)
+{
+    UserDefault::getInstance()->setBoolForKey(IS_EFFECT_OFF, flag);
+}
+bool MYUserDefaultManager::isMusicOff()
+{
+    return UserDefault::getInstance()->getBoolForKey(IS_MUSIC_OFF, false);
+}
+void MYUserDefaultManager::setMusicOff(bool flag)
+{
+    UserDefault::getInstance()->setBoolForKey(IS_MUSIC_OFF, flag);
+}
+
 #pragma mark -
 
 MYUserDefaultManager* MYUserDefaultManager::getInstance()

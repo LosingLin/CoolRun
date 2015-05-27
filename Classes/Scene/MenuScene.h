@@ -21,6 +21,7 @@ USING_NS_CC;
 
 
 class Home;
+class CommonBackground;
 class MenuLayer : public Layer
 {
 public:
@@ -31,6 +32,7 @@ public:
     CREATE_FUNC(MenuLayer);
     
     virtual void onEnter() override;
+    virtual void onEnterTransitionDidFinish() override;
     
     static Scene* createScene();
     
@@ -47,6 +49,7 @@ private:
     Sprite* m_logo;
     Node* m_menu;
     Home* m_home;
+    CommonBackground* m_comBg;
 };
 
 #endif /* defined(__CoolRun__MenuScene__) */

@@ -14,6 +14,7 @@
 #include "SpiderPoison.h"
 #include "SpiderSpines.h"
 #include "HpBar.h"
+#include "GlobalDefined.h"
 
 BossFourflodHeads::BossFourflodHeads()
 : Boss()

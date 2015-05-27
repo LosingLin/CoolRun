@@ -44,6 +44,7 @@
 #include "BackgroundAudio.h"
 #include "SceneHelp.h"
 #include "MYUserDefaultManager.h"
+#include "PowerIconBar.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -89,6 +90,7 @@ CoolRun::CoolRun()
 , m_runType(RunType::NORMAL)
 , m_missionIndex(0)
 , m_bgAudio(nullptr)
+, m_powerBar(nullptr)
 {
 }
 CoolRun::~CoolRun()
@@ -141,10 +143,10 @@ bool CoolRun::init()
     
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg001.png", std::bind(&CoolRun::finishAddImage, this, std::placeholders::_1));
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
+//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
+//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
+//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
+//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
     
 //    Director::getInstance()->getTextureCache()->addImage("bg001.png");
 //    Director::getInstance()->getTextureCache()->addImage("bg002.png");
@@ -273,6 +275,14 @@ bool CoolRun::init()
     m_bgAudio->setBGAType(BackgroundAudio::BGAType::DAY);
     this->addChild(m_bgAudio);
     
+    m_powerBar = PowerIconBar::create();
+    m_powerBar->setAnchorPoint(Vec2(0.5, 0.5));
+    m_powerBar->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height-104));
+    m_powerBar->setLocalZOrder(ZORDER_POWERBAR);
+    m_powerBar->setScale(0.9f);
+    this->addChild(m_powerBar);
+    
+    
     return true;
 }
 
@@ -308,12 +318,17 @@ void CoolRun::setMission(Mission* mission)
 
 #pragma mark - add
 
-void CoolRun::addRunner()
+void CoolRun::addRunner(bool isReborn)
 {
     auto runner = Runner::create();
     runner->setPosition(Vec2(260, 300));
     runner->setGameController(this);
     this->addChild(runner);
+    if (isReborn)
+    {
+        m_powerBar->removeAllPowerIcon();
+        runner->startReborn();
+    }
     
     m_gPhysics->addPhysicNode(runner);
     m_gravityCollideObjs->addObject(runner);
@@ -504,7 +519,7 @@ void CoolRun::actionCallback()
         this->setVelocity(400);
         
         this->loadNextPage();
-        this->addRunner();
+        this->addRunner(false);
         
         this->showController();
         
@@ -1016,7 +1031,7 @@ void CoolRun::gameMain(float delta)
     for (int i = 0; i < m_runners->count(); ++ i)
     {
         auto runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
-        if (runner->isLandBuildING())
+        if (runner->isLandBuildING() || runner->isRebornING())
         {
             this->buildLand(runner);
             this->_smoothLand();
@@ -1330,9 +1345,9 @@ void CoolRun::_checkObjectsOut(__Array* _nodes)
         
         if (_nodes == m_bulletObjs)
         {
-            if (_pos.x > 2528)
+            if (_pos.x > 3792)
             {
-                if (_pos.x + (1-_aPoint.x) * _cSize.width > 2528)
+                if (_pos.x + (1-_aPoint.x) * _cSize.width > 3792)
                 {
                     isNeedMove = true;
                 }
@@ -1549,24 +1564,24 @@ void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     if (_type == MYButton::TouchEventType::ENDED)
     {
         this->removeOverMenu();
-//        this->addRunner();
-        if (m_runType == RunType::NORMAL)
-        {
-            AudioHelp::unloadMainEft();
-            
-            auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":1}}");
-            mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
-            auto _scene = CoolRun::createScene(mission);
-            SceneHelp::replaceScene(_scene);
-        }
-        else if (m_runType == RunType::EDITOR)
-        {
-            AudioHelp::unloadMainEft();
-            
-            m_mission->setPageIndex(-1);
-            auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
-            SceneHelp::replaceScene(_scene);
-        }
+        this->addRunner();
+//        if (m_runType == RunType::NORMAL)
+//        {
+//            AudioHelp::unloadMainEft();
+//            
+//            auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":1}}");
+//            mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
+//            auto _scene = CoolRun::createScene(mission);
+//            SceneHelp::replaceScene(_scene);
+//        }
+//        else if (m_runType == RunType::EDITOR)
+//        {
+//            AudioHelp::unloadMainEft();
+//            
+//            m_mission->setPageIndex(-1);
+//            auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
+//            SceneHelp::replaceScene(_scene);
+//        }
         
     }
 }
@@ -1705,6 +1720,19 @@ void CoolRun::addBossHpBar(HpBar* bar)
 void CoolRun::removeBossHpBar(HpBar* bar)
 {
     bar->removeFromParentAndCleanup(true);
+}
+
+void CoolRun::addPowerIcon(PowerIcon::PowerType _type)
+{
+    m_powerBar->addPowerIcon(_type);
+}
+void CoolRun::removePowerIcon(PowerIcon::PowerType _type)
+{
+    m_powerBar->removePowerIcon(_type);
+}
+void CoolRun::updatePowerIcon(PowerIcon::PowerType _type, float _percentage)
+{
+    m_powerBar->updatePowerIcon(_type, _percentage);
 }
 
 #pragma mark - Item
@@ -1994,11 +2022,21 @@ void CoolRun::startFly()
 {
     auto v = this->getVelocity();
     this->setVelocity(v+3200);
+    
+    m_jumpBtn->setVisible(false);
 }
 void CoolRun::endFly()
 {
     auto v = this->getVelocity();
     this->setVelocity(v-3200);
+    
+    for (int i = 0; i < m_bulletObjs->count(); ++ i)
+    {
+        auto bullet = dynamic_cast<Bullet*>(m_bulletObjs->getObjectAtIndex(i));
+        bullet->setDestoryed(true);
+    }
+    
+    m_jumpBtn->setVisible(true);
 }
 
 

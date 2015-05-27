@@ -30,6 +30,7 @@ namespace AudioHelp
     void playBgA(const char* fpath);
     void pauseBgA();
     void resumeBgA();
+    bool isBgAPlaying();
     void stopAllBgA();
     
     void endAudio();

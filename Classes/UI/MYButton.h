@@ -41,9 +41,12 @@ public:
     static MYButton* createWithContentSize(const Size& _size);
     virtual bool init();
     
+    void addBMFLabel(const char* fnt, const char* _str);
+    
     void setNormalSprite(Sprite* _sp);
     void setHighLightSprite(Sprite* _sp);
     void setDisableSprite(Sprite* _sp);
+    //void setBMFString(const string* _str);
     
     virtual void setOpacity(GLubyte opacity) override;
     
@@ -74,6 +77,8 @@ private:
     MYButtonType m_touchType;
     EventListenerTouchOneByOne* m_touchListener;
     EventListenerTouchAllAtOnce* m_allTouchListener;
+    
+    Label* m_bmfLabel;
 };
 
 #endif /* defined(__CoolRun__MYButton__) */

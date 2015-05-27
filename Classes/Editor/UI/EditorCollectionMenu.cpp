@@ -35,7 +35,7 @@ bool EditorCollectionMenu::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(200, 200, 20, 150), csize.width, csize.height);
+    auto layer = LayerColor::create(Color4B(80, 120, 80, 255), csize.width, csize.height);
     this->addChild(layer);
     
     auto size = Size(160, 160);

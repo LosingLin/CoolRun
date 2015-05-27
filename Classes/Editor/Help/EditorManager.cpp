@@ -9,6 +9,7 @@
 #include "EditorManager.h"
 
 EditorManager* EditorManager::m_instance = nullptr;
+EditorManager::EditorType EditorManager::m_editorType = EditorManager::EditorType::PLAYER;
 
 EditorManager::EditorManager()
 : Ref()

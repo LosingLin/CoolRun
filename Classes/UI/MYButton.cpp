@@ -20,6 +20,7 @@ MYButton::MYButton()
 , m_touchType(MYButtonType::ONEBYONE)
 , m_touchListener(nullptr)
 , m_allTouchListener(nullptr)
+, m_bmfLabel(nullptr)
 {
 }
 MYButton::~MYButton()
@@ -97,6 +98,20 @@ void MYButton::setOpacity(GLubyte opacity)
     if (m_disableSp) {
         m_disableSp->setOpacity(opacity);
     }
+}
+
+void MYButton::addBMFLabel(const char* fnt, const char* _str)
+{
+    if (m_bmfLabel)
+    {
+        m_bmfLabel->removeFromParentAndCleanup(true);
+        m_bmfLabel = nullptr;
+    }
+    m_bmfLabel = Label::createWithBMFont(fnt, _str);
+    m_bmfLabel->setAnchorPoint(Vec2(0.5, 0.5));
+    auto size = this->getContentSize();
+    m_bmfLabel->setPosition(Vec2(size.width/2, size.height/2));
+    this->addChild(m_bmfLabel);
 }
 
 void MYButton::setNormalSprite(Sprite* _sp)
@@ -224,6 +239,15 @@ bool MYButton::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         return false;
     }
+    
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     if (m_highLightSp)
     {
         SAFESETVISIBLE(m_normalSp, false);
@@ -281,6 +305,14 @@ void MYButton::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos
         {
             ++ touchIter;
             continue;
+        }
+        for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+        {
+            if (c->isVisible() == false)
+            {
+                ++ touchIter;
+                continue;
+            }
         }
         if (m_highLightSp)
         {

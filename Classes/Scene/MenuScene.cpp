@@ -11,6 +11,7 @@
 #include "CoolRunScene.h"
 #include "VillageScene.h"
 #include "EditorScene.h"
+#include "SettingScene.h"
 #include "FreshGuideScene.h"
 #include "Mission.h"
 #include "ActionHelp.h"
@@ -18,6 +19,7 @@
 #include "SceneHelp.h"
 #include "BackgroundAudio.h"
 #include "AudioHelp.h"
+#include "CommonBackground.h"
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "Home.h"
@@ -30,6 +32,7 @@ MenuLayer::MenuLayer()
 , m_logo(nullptr)
 , m_menu(nullptr)
 , m_home(nullptr)
+, m_comBg(nullptr)
 {
 }
 MenuLayer::~MenuLayer()
@@ -55,6 +58,9 @@ bool MenuLayer::init()
     AudioHelp::preloadMenuEft();
     
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
+    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
     //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
     //Director::getInstance()->getTextureCache()->addImage("bg001.png");
     
@@ -120,6 +126,8 @@ bool MenuLayer::init()
 //    armature->setPosition(Vec2(origin.x + visibleSize.width/2 - 200, origin.y + visibleSize.height/2));
 //    this->addChild(armature, 20, 111);
     
+    m_comBg = CommonBackground::create();
+    this->addChild(m_comBg);
     
     m_home = Home::create();
     //home->setPosition(Vec2(origin.x, origin.y-160));
@@ -140,6 +148,8 @@ bool MenuLayer::init()
     bga->setBGAType(BackgroundAudio::BGAType::NIGHT);
     this->addChild(bga);
     
+    MYMultiLanguageManager::getInstance();
+    
     log("test ml key1 = %s", MYMultiLanguageManager::getInstance()->getText("key1").c_str());
     log("test ml key2 = %s", MYMultiLanguageManager::getInstance()->getText("key2").c_str());
     
@@ -151,8 +161,17 @@ void MenuLayer::onEnter()
 {
     Layer::onEnter();
     
+    
+}
+
+void MenuLayer::onEnterTransitionDidFinish()
+{
+    Layer::onEnterTransitionDidFinish();
+    
     auto _scaleTo = ScaleTo::create(0.3, 1.2f);
     m_home->runAction(_scaleTo);
+    auto _scaleTo2 = ScaleTo::create(0.3, 1.1f);
+    m_comBg->runAction(_scaleTo2);
     
     auto _moveBy = MoveBy::create(0.3, Vec2(0, -420));
     m_logo->runAction(_moveBy);
@@ -178,6 +197,8 @@ void MenuLayer::startCallback(Ref* _ref, MYButton::TouchEventType _type)
     {
         auto _scaleTo = ScaleTo::create(0.3, 1.0f);
         m_home->runAction(_scaleTo);
+        auto _scaleTo2 = ScaleTo::create(0.3, 1.0f);
+        m_comBg->runAction(_scaleTo2);
         auto _moveBy02 = MoveBy::create(0.3, Vec2(0, 420));
         m_logo->runAction(_moveBy02);
         auto _moveBy = MoveBy::create(0.3, Vec2(0, -600));
@@ -219,8 +240,10 @@ void MenuLayer::settingCallback(Ref* _ref, MYButton::TouchEventType _type)
 //    _sp->runAction(RotateBy::create(0.2, 30));
     if (_type == MYButton::TouchEventType::ENDED)
     {
-        auto _layer = FreshGuideLayer::create();
-        this->addChild(_layer);
+//        auto _layer = FreshGuideLayer::create();
+//        this->addChild(_layer);
+        auto _scene = SettingLayer::createScene();
+        SceneHelp::replaceScene(_scene);
     }
 }
 

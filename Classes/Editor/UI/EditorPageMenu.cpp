@@ -8,6 +8,7 @@
 
 #include "EditorPageMenu.h"
 #include "EditorUIBase.h"
+#include "MYMultiLanguageManager.h"
 
 EditorPageMenu::EditorPageMenu()
 : EditorMenu()
@@ -29,11 +30,12 @@ bool EditorPageMenu::init()
     
     this->setMenuType(MenuType::PAGE);
     
-    auto csize = Size(200, 1000);
+    auto csize = Size(200, 2000);
     this->setContentSize(csize);
     
     this->getTouchListener()->setSwallowTouches(false);
     
+    this->getTouchListener()->setEnabled(false);
     
     
     return true;
@@ -53,6 +55,13 @@ void EditorPageMenu::onExit()
 void EditorPageMenu::menuCallback(int index)
 {
     auto pageNum = this->getEditorListener()->pageNumber();
+    
+    int totalPageNum = pageNum + 2;
+    if (pageNum >= MAXEDITORPAGE)
+    {
+        totalPageNum = MAXEDITORPAGE + 1;
+    }
+    
     if (index < pageNum)
     {
         if (b_isEditing)
@@ -66,12 +75,12 @@ void EditorPageMenu::menuCallback(int index)
         }
         
     }
-    else if(index == pageNum)
+    else if(index == totalPageNum - 2)
     {
         this->getEditorListener()->addPage();
         this->updatePage();
     }
-    else if(index == pageNum + 1)
+    else if(index == totalPageNum - 1)
     {
         b_isEditing = !b_isEditing;
         this->updatePage();
@@ -80,20 +89,28 @@ void EditorPageMenu::menuCallback(int index)
 
 void EditorPageMenu::spaceCallback()
 {
-    this->getEditorListener()->hideMenu(EditorListener::MenuState::SECOND);
+    //this->getEditorListener()->hideMenu(EditorListener::MenuState::SECOND);
 }
 
 void EditorPageMenu::updatePage()
 {
     this->removeAllChildrenWithCleanup(true);
     
-    auto pageNum = this->getEditorListener()->pageNumber();
+    auto csize = this->getContentSize();
+    auto layer = LayerColor::create(Color4B(100, 20, 140, 255), csize.width, csize.height);
+    this->addChild(layer);
     
+    auto pageNum = this->getEditorListener()->pageNumber();
     auto _size = Size(160, 80);
     int fontSize = 30;
     
-    int y = 900;
-    for (int i = 0; i < pageNum + 2; ++i)
+    int y = csize.height-100;
+    int totalPageNum = pageNum + 2;
+    if (pageNum >= MAXEDITORPAGE)
+    {
+        totalPageNum = MAXEDITORPAGE + 1;
+    }
+    for (int i = 0; i < totalPageNum; ++i)
     {
         auto str = string();
         
@@ -104,25 +121,25 @@ void EditorPageMenu::updatePage()
             {
                 str = "+";
             }
-            else if (i == pageNum + 1)
+            if (i == totalPageNum - 1)
             {
-                str = "返回";
+                str = MYMultiLanguageManager::getInstance()->getText("e_back");
             }
         }
         else
         {
             auto ss = stringstream();
-            ss << "第";
+            ss << MYMultiLanguageManager::getInstance()->getText("e_indexStart");
             ss << i+1;
-            ss << "页";
+            ss << MYMultiLanguageManager::getInstance()->getText("e_indexEnd");
             ss >> str;
             if (i == pageNum)
             {
                 str = "+";
             }
-            else if (i == pageNum + 1)
+            if (i == totalPageNum - 1)
             {
-                str = "编辑";
+                str = MYMultiLanguageManager::getInstance()->getText("e_edit");
             }
         }
         
@@ -130,6 +147,7 @@ void EditorPageMenu::updatePage()
         menuItem->setPosition(Vec2(20, y));
         y -= 100;
         menuItem->touchNoneMoveEnded = CC_CALLBACK_0(EditorPageMenu::menuCallback, this, i);
+        menuItem->getTouchListener()->setSwallowTouches(false);
         this->addChild(menuItem);
     }
     

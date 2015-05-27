@@ -11,6 +11,7 @@
 #include "EditorObjectMenu.h"
 #include "EditorCollectionMenu.h"
 #include "EditorItemObjectMenu.h"
+#include "MYMultiLanguageManager.h"
 
 EditorItemMenu::EditorItemMenu()
 : EditorMenu()
@@ -36,10 +37,15 @@ bool EditorItemMenu::init()
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(200, 20, 200, 150), 200, 1000);
+    auto layer = LayerColor::create(Color4B(100, 20, 140, 255), 200, 1000);
     this->addChild(layer);
     
-    string texts[] = {"普通物体", "金币", "道具", "清空"};
+    string texts[] = {
+        MYMultiLanguageManager::getInstance()->getText("e_normal"),
+        MYMultiLanguageManager::getInstance()->getText("e_coin"),
+        MYMultiLanguageManager::getInstance()->getText("e_power"),
+        MYMultiLanguageManager::getInstance()->getText("e_clear")
+    };
     auto _size = Size(160, 80);
     int fontSize = 30;
     
@@ -50,6 +56,7 @@ bool EditorItemMenu::init()
         menuItem->setPosition(Vec2(20, y));
         y -= 100;
         menuItem->touchNoneMoveEnded = CC_CALLBACK_0(EditorItemMenu::menuCallback, this, i);
+        menuItem->getTouchListener()->setSwallowTouches(false);
         this->addChild(menuItem);
     }
     

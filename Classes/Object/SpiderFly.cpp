@@ -135,7 +135,14 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
     
     if (_runner->isCollidedWithTrueBody(headRect) || _runner->isCollidedWithTrueBody(legRect))
     {
-        m_gameController->dead(_runner);
+        if (_runner->isDad() || _runner->isRebornING())
+        {
+            this->dead();
+        }
+        else
+        {
+            m_gameController->dead(_runner);
+        }
         
         return;
     }
@@ -150,7 +157,14 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
     }
     else if (kCollideDirectionMiss != dir)
     {
-        m_gameController->dead(_runner);
+        if (_runner->isDad() || _runner->isRebornING())
+        {
+            this->dead();
+        }
+        else
+        {
+            m_gameController->dead(_runner);
+        }
         
         //        this->setCollideEffect(false);
     }

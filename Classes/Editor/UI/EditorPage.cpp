@@ -14,6 +14,8 @@
 #include "MissionObjects.h"
 #include "MissionCollection.h"
 #include "Collection.h"
+#include "MYMultiLanguageManager.h"
+#include "EditorManager.h"
 
 EditorPage::EditorPage()
 : EditorNode()
@@ -45,24 +47,55 @@ bool EditorPage::init()
     CREATEANDRETAINARRAY(m_realCollections);
     
     auto csize = Size(2528, 960);
+    auto type = EditorManager::getInstance()->getEditorType();
+    if (EditorManager::EditorType::PLAYER == type)
+    {
+        csize.width = 1264;
+    }
     this->setContentSize(csize);
     
     this->getTouchListener()->setSwallowTouches(false);
     
-    auto layer = LayerColor::create(Color4B(255, 255, 0, 150), csize.width/2, csize.height);
+    auto layer = LayerColor::create(Color4B(255, 255, 0, 150), 1264, csize.height);
     this->addChild(layer);
-    layer = LayerColor::create(Color4B(0, 255, 255, 150), csize.width/2, csize.height);
-    layer->setPosition(csize.width/2, 0);
+    auto alert = Label::createWithBMFont(
+                                         "SetBtn.fnt",
+                                         MYMultiLanguageManager::getInstance()->getText("e_staticObjArea")
+                                         );
+    if (EditorManager::EditorType::PLAYER == type)
+    {
+        alert = Label::createWithBMFont(
+                                        "SetBtn.fnt",
+                                        MYMultiLanguageManager::getInstance()->getText("e_tapStart")
+                                        );
+    }
+    alert->setAnchorPoint(Vec2(0.5, 0.5));
+    alert->setPosition(Vec2(632, 380));
+    alert->setOpacity(100);
+    layer->addChild(alert);
+    
+    layer = LayerColor::create(Color4B(0, 255, 255, 150), 1264, csize.height);
+    layer->setPosition(1264, 0);
     this->addChild(layer);
+    
+    alert = Label::createWithBMFont(
+                                    "SetBtn.fnt",
+                                    MYMultiLanguageManager::getInstance()->getText("e_dynamicObjArea")
+                                    );
+    alert->setAnchorPoint(Vec2(0.5, 0.5));
+    alert->setPosition(Vec2(632, 380));
+    alert->setOpacity(100);
+    layer->addChild(alert);
+    
 //    layer = LayerColor::create(Color4B(0, 0, 255, 150), csize.width/3, csize.height);
 //    layer->setPosition(csize.width/3 * 2, 0);
 //    this->addChild(layer);
     
-    auto enode1 = EditorNode::create();
-    this->addChild(enode1);
-    
-    auto enode2 = EditorNode::create();
-    this->addChild(enode2);
+//    auto enode1 = EditorNode::create();
+//    this->addChild(enode1);
+//    
+//    auto enode2 = EditorNode::create();
+//    this->addChild(enode2);
     
     return true;
 }

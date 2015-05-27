@@ -13,6 +13,7 @@
 #include "SpiderPoison.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "MYMultiLanguageManager.h"
 
 EditorDetailSimpleMenu::EditorDetailSimpleMenu()
 : EditorDetailMenu()
@@ -38,12 +39,18 @@ bool EditorDetailSimpleMenu::init()
     }
     
     
-    m_x_v = EditorTextInput::create("x_v", Size(260, 60));
+    m_x_v = EditorTextInput::create(
+                                    MYMultiLanguageManager::getInstance()->getText("e_x_v"),
+                                    Size(260, 60)
+                                    );
     m_x_v->setPosition(Vec2(50, m_y));
     m_x_v->textInputDone = CC_CALLBACK_1(EditorDetailSimpleMenu::textInputDone, this, m_x_v);
     this->addChild(m_x_v);
     NORMALDIS(m_y);
-    m_x_a = EditorTextInput::create("x_a", Size(260, 60));
+    m_x_a = EditorTextInput::create(
+                                    MYMultiLanguageManager::getInstance()->getText("e_x_a"),
+                                    Size(260, 60)
+                                    );
     m_x_a->setPosition(Vec2(50, m_y));
     m_x_a->textInputDone = CC_CALLBACK_1(EditorDetailSimpleMenu::textInputDone, this, m_x_a);
     this->addChild(m_x_a);
@@ -62,7 +69,10 @@ void EditorDetailSimpleMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pN
     auto pType = m_pNodeCor->getPhysicType();
     if (pType == kPhysicNodeStone)
     {
-        m_csizeWidth = EditorTextInput::create("width", Size(260, 60));
+        m_csizeWidth = EditorTextInput::create(
+                                               MYMultiLanguageManager::getInstance()->getText("e_width"),
+                                               Size(260, 60)
+                                               );
         m_csizeWidth->setPosition(Vec2(50, m_y));
         m_csizeWidth->textInputDone = CC_CALLBACK_1(EditorDetailSimpleMenu::textInputDone, this, m_csizeWidth);
         this->addChild(m_csizeWidth);
@@ -78,10 +88,10 @@ void EditorDetailSimpleMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pN
     }
     if (pType == kPhysicNodeSpiderKind || pType == kPhysicNodeSpiderPoison || pType == kPhysicNodeSpiderSpines) {
         m_spideState = EditorSelector::create(__Array::create(
-                                                              __String::create("Stand"),
-                                                              __String::create("Walk"),
+                                                              __String::create(MYMultiLanguageManager::getInstance()->getText("e_ssStand")),
+                                                              __String::create(MYMultiLanguageManager::getInstance()->getText("e_ssWalk")),
                                                               nullptr),
-                                              "spider_state",
+                                              MYMultiLanguageManager::getInstance()->getText("e_spiderStatus"),
                                               Size(260, 60));
         m_spideState->active = CC_CALLBACK_1(EditorDetailSimpleMenu::selectedActive, this);
         m_spideState->selectedKey = CC_CALLBACK_1(EditorDetailSimpleMenu::selectedDone, this, m_spideState);
@@ -91,12 +101,12 @@ void EditorDetailSimpleMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pN
         {
             NORMALDIS(m_y);
             m_spiderPosionDir = EditorSelector::create(__Array::create(
-                                                                       __String::create("Up"),
-                                                                       __String::create("Down"),
-                                                                       __String::create("Left"),
-                                                                       __String::create("Right"),
+                                                                       __String::create(MYMultiLanguageManager::getInstance()->getText("e_pdUp")),
+                                                                       __String::create(MYMultiLanguageManager::getInstance()->getText("e_pdDown")),
+                                                                       __String::create(MYMultiLanguageManager::getInstance()->getText("e_pdLeft")),
+                                                                       __String::create(MYMultiLanguageManager::getInstance()->getText("e_pdRight")),
                                                                        nullptr),
-                                                       "PoisonDirector",
+                                                       MYMultiLanguageManager::getInstance()->getText("e_poisonDir"),
                                                        Size(260, 60));
             m_spiderPosionDir->active = CC_CALLBACK_1(EditorDetailSimpleMenu::selectedActive, this);
             m_spiderPosionDir->selectedKey = CC_CALLBACK_1(EditorDetailSimpleMenu::selectedDone, this, m_spiderPosionDir);
@@ -183,10 +193,10 @@ void EditorDetailSimpleMenu::updateMenu()
             switch (state)
             {
                 case kSpiderState_Stand:
-                    m_spideState->setSelected("Stand");
+                    m_spideState->setSelected(MYMultiLanguageManager::getInstance()->getText("e_ssStand"));
                     break;
                 case kSpiderState_Walk:
-                    m_spideState->setSelected("Walk");
+                    m_spideState->setSelected(MYMultiLanguageManager::getInstance()->getText("e_ssWalk"));
                     break;
                 default:
                     break;
@@ -198,15 +208,15 @@ void EditorDetailSimpleMenu::updateMenu()
                 switch (dir)
                 {
                     case kCRDirectionUp:
-                        m_spiderPosionDir->setSelected("Up");
+                        m_spiderPosionDir->setSelected(MYMultiLanguageManager::getInstance()->getText("e_pdUp"));
                         break;
                     case kCRDirectionDown:
-                        m_spiderPosionDir->setSelected("Down");
+                        m_spiderPosionDir->setSelected(MYMultiLanguageManager::getInstance()->getText("e_pdDown"));
                         break;
                     case kCRDirectionLeft:
-                        m_spiderPosionDir->setSelected("Left");
+                        m_spiderPosionDir->setSelected(MYMultiLanguageManager::getInstance()->getText("e_pdLeft"));
                     case kCRDirectionRight:
-                        m_spiderPosionDir->setSelected("Right");
+                        m_spiderPosionDir->setSelected(MYMultiLanguageManager::getInstance()->getText("e_pdRight"));
                     default:
                         break;
                 }
@@ -292,7 +302,7 @@ void EditorDetailSimpleMenu::selectedDone(const string& key, EditorSelector* sel
     if (selector == m_spideState)
     {
         auto cPNode = dynamic_cast<Spider*>(pNode);
-        if ("Stand" == key)
+        if (MYMultiLanguageManager::getInstance()->getText("e_ssStand") == key)
         {
             cPNode->setState(kSpiderState_Stand);
         }
@@ -304,19 +314,19 @@ void EditorDetailSimpleMenu::selectedDone(const string& key, EditorSelector* sel
     else if (selector == m_spiderPosionDir)
     {
         auto cPNode = dynamic_cast<SpiderPoison*>(pNode);
-        if ("Up" == key)
+        if (MYMultiLanguageManager::getInstance()->getText("e_pdUp") == key)
         {
             cPNode->setAtkDirection(CRDirection::kCRDirectionUp);
         }
-        else if ("Down" == key)
+        else if (MYMultiLanguageManager::getInstance()->getText("e_pdDown") == key)
         {
             cPNode->setAtkDirection(CRDirection::kCRDirectionDown);
         }
-        else if ("Left" == key)
+        else if (MYMultiLanguageManager::getInstance()->getText("e_pdLeft") == key)
         {
             cPNode->setAtkDirection(CRDirection::kCRDirectionLeft);
         }
-        else if ("Right" == key)
+        else if (MYMultiLanguageManager::getInstance()->getText("e_pdRight") == key)
         {
             cPNode->setAtkDirection(CRDirection::kCRDirectionRight);
         }

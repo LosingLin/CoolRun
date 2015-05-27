@@ -33,10 +33,11 @@ bool Coin::init()
     
     m_sp = Sprite::createWithSpriteFrameName("coin_00.png");
     auto csize = m_sp->getContentSize();
+    this->setContentSize(csize);
     m_sp->setPosition(Vec2(csize.width/2, csize.height/2));
     this->addChild(m_sp);
     
-    this->setContentSize(csize);
+    
     
     
     this->setCollideRect(Rect(0, 0, csize.width, csize.height));
@@ -139,14 +140,18 @@ void Coin::acionDoneCallback()
 
 void Coin::times()
 {
+    this->setContentSize(m_sp->getContentSize());
+    
     m_score = m_score*2;
     b_isTimed = true;
     
-    float ssize = 1.5f;
-    m_sp->setScale(ssize, ssize);
+    float ssize = 1.2f;
+    this->setScale(ssize);
     auto csize = this->getContentSize();
-    this->setCollideRect(Rect((ssize - 1) / 2 * csize.width, (ssize - 1) / 2 * csize.height,
-                              csize.width * ssize, csize.height * ssize));
+    this->setContentSize(Size(csize.width * ssize, csize.height * ssize));
+    m_sp->setPosition(Vec2(csize.width/2, csize.height/2));
+    this->setCollideRect(Rect(0, 0, csize.width * ssize, csize.height * ssize));
+    this->debugShow();
 }
 
 void Coin::bePicked()
@@ -210,6 +215,11 @@ void Coin::trackCollideWithRunner(Runner* _runner)
         return;
     }
     
+    if (this->isVelocityIgnore())
+    {
+        this->setVelocityIgnore(false);
+    }
+
     //处理磁铁和加倍
     if(_runner->isMagnetING() || _runner->isTimesCoinING())
     {
@@ -225,55 +235,95 @@ void Coin::trackCollideWithRunner(Runner* _runner)
             
             if (x_dis*x_dis + y_dis*y_dis < magnet_dis*magnet_dis)
             {
+                this->setVelocityIgnore(true);
                 auto pos = this->getPosition();
+                
+//                if (_runner->isFlyING())
+//                {
+//                    float inc = 80;
+//                    
+//                    if (x_dis > 10)
+//                    {
+//                        pos.x -= abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    else if (x_dis < -10)
+//                    {
+//                        pos.x += abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    if (y_dis > 20)
+//                    {
+//                        pos.y -= abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    else if (y_dis < -20)
+//                    {
+//                        pos.y += abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                }
+//                else
+//                {
+//                    float inc = 10;
+//                    if (x_dis > 10)
+//                    {
+//                        pos.x -= abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    else if (x_dis < -10)
+//                    {
+//                        pos.x += abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    if (y_dis > 20)
+//                    {
+//                        pos.y -= abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                    else if (y_dis < -20)
+//                    {
+//                        pos.y += abs(x_dis) > inc ? inc : abs(x_dis);
+//                    }
+//                }
+                
+                float k = (pos1.y - pos2.y) / (pos1.x - pos2.x);
+                //float b = pos1.y - k*pos1.x;
+                float vel = 20.0f;
                 
                 if (_runner->isFlyING())
                 {
-                    float inc = 80;
-                    
-                    if (x_dis > 10)
-                    {
-                        pos.x -= abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    else if (x_dis < -10)
-                    {
-                        pos.x += abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    if (y_dis > 20)
-                    {
-                        pos.y -= abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    else if (y_dis < -20)
-                    {
-                        pos.y += abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
+                    vel = 60.0f;
                 }
-                else
+//                if (abs(pos1.y - pos2.y) < vel)
+//                {
+//                    vel = abs(pos1.y - pos2.y);
+//                }
+//                if (pos1.y > pos2.y)
+//                {
+////                    pos.x -= vel;
+////                    pos.y = k*pos.x + b;
+//                    vel = -vel;
+//                    
+//                }
+//                pos.y += vel;
+//                pos.x = vel / k + pos1.x;
+                
+                if (abs(pos1.x - pos2.x) < vel)
                 {
-                    float inc = 10;
-                    if (x_dis > 10)
-                    {
-                        pos.x -= abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    else if (x_dis < -10)
-                    {
-                        pos.x += abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    if (y_dis > 20)
-                    {
-                        pos.y -= abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
-                    else if (y_dis < -20)
-                    {
-                        pos.y += abs(x_dis) > inc ? inc : abs(x_dis);
-                    }
+                    vel = abs(pos1.x - pos2.x);
                 }
+                if (pos1.x > pos2.x)
+                {
+//                    pos.x -= vel;
+//                    pos.y = k*pos.x + b;
+                    vel = -vel;
+                    
+                }
+                pos.x += vel;
+                pos.y = vel * k + pos1.y;
+                
                 
                 this->setPosition(pos);
-                //            auto moveTo = MoveTo::create(1, pos2);
-                //            this->runAction(moveTo);
+//                            auto moveTo = MoveTo::create(0.1, pos2);
+//                            this->runAction(moveTo);
             }
+
         }
+
         
         if (_runner->isTimesCoinING() && !b_isTimed)
         {
@@ -287,4 +337,5 @@ void Coin::trackCollideWithRunner(Runner* _runner)
         }
         
     }
+
 }
