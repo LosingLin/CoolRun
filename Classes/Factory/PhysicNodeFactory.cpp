@@ -155,3 +155,41 @@ PhysicNode* PhysicNodeFactory::create(rapidjson::Value& _value)
     
     return _pNode;
 }
+
+Item* PhysicNodeFactory::createRandomItem()
+{
+    Item* _item = nullptr;
+    int r = rand()%6;
+    switch (r)
+    {
+        case 0:
+        {
+            _item = ItemMagnet::create();
+        } break;
+        case 1:
+        {
+            _item = ItemTimesCoin::create();
+        } break;
+        case 2:
+        {
+            _item = ItemTimesJump::create();
+        } break;
+        case 3:
+        {
+            _item = ItemDad::create();
+        } break;
+        case 4:
+        {
+            _item = ItemLandBuild::create();
+        } break;
+        case 5:
+        {
+            _item = ItemFly::create();
+        } break;
+            
+        default:
+            break;
+    }
+    
+    return _item;
+}

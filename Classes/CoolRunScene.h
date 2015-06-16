@@ -10,6 +10,7 @@
 #define __CoolRun__CoolRunScene__
 
 #include "cocos2d.h"
+#include "MYKeyBoardLayer.h"
 #include "GameController.h"
 #include "MYButton.h"
 #include "PowerIcon.h"
@@ -30,6 +31,8 @@
 
 #define ZORDER_POPVIEW      200
 #define ZORDER_FRESHGUIDE   199
+
+#define ZORDER_SYS          1000
 
 USING_NS_CC;
 class Runner;
@@ -54,7 +57,8 @@ class Leaves;
 class BackgroundAudio;
 class PowerIconBar;
 class PowerIcon;
-class CoolRun : public Layer, public GameController
+class Clouds;
+class CoolRun : public MYKeyBoardLayer, public GameController
 {
 public:
     enum class RunType
@@ -79,6 +83,8 @@ public:
     virtual bool init();
     virtual void update(float delta);
     void gameMain(float delta);
+    void setUpdatING(bool flag);
+    bool isUpdatING() { return b_isUpdatING; }
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
     virtual void onExitTransitionDidStart();
@@ -135,7 +141,7 @@ public:
     void showGuide();
     void hideGuide(Ref* _btn, MYButton::TouchEventType _type, Node* _guide);
     
-    void setVelocity(int v);
+    void setVelocity(int v, bool cloud=true);
     int getVelocity() { return m_velocity; }
     
     //Bullet
@@ -150,6 +156,10 @@ public:
     void addOverMenu();
     void removePauseMenu();
     void removeOverMenu();
+    void addReviveMenu();
+    void reviveMenu_GameOverCallback(Ref* _btn, MYButton::TouchEventType _type);
+    void reviveMenu_ReviveCallback(Ref* _btn, MYButton::TouchEventType _type);
+    void gameOverMenu_RetryCallback(Ref* _btn, MYButton::TouchEventType _type);
     
     void ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
     void GiveUpBtnCallback(Ref* _btn, MYButton::TouchEventType _type);
@@ -161,6 +171,8 @@ public:
     void dead(Runner* runner);
     void addScore(int score);
     void addStretch(int stretch);
+    void showScore(int score, const Vec2& pos);
+    void _showScoreEnd(Node* node);
     void loadNextMission();
     virtual void addCoin(int num);
     virtual void destory(PhysicNode* _node);
@@ -171,6 +183,8 @@ public:
     void updatePowerIcon(PowerIcon::PowerType _type, float _percentage);
     
     //Item
+    void addRandomItem();
+    
     void spareRunner(Runner* runner);
     void buildLand(Runner* runner);
     Runner* getLastPosRunner();
@@ -201,6 +215,7 @@ private:
     GameState m_gameState;
     
     int m_resCacheCount;
+    int m_backUpVelocity;
     int m_velocity;
     
     Background *m_awayBG;
@@ -246,11 +261,16 @@ private:
     
     
     Leaves* m_leaves;
+    Clouds* m_clouds;
     
     int m_missionIndex;
     
     BackgroundAudio* m_bgAudio;
     PowerIconBar* m_powerBar;
+    
+    int m_reviveTimes;
+    
+    bool b_isUpdatING;
 };
 
 #endif /* defined(__CoolRun__CoolRunScene__) */

@@ -9,6 +9,8 @@
 #ifndef CoolRun_GlobalDefined_h
 #define CoolRun_GlobalDefined_h
 
+#define MY_RELEASE  1
+
 #define COCOS2D_DEBUG -1
 
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)

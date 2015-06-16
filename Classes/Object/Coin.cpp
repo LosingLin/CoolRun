@@ -10,6 +10,7 @@
 #include "ActionHelp.h"
 #include "Runner.h"
 #include "AudioHelp.h"
+#include "ActionHelp.h"
 
 Coin::Coin()
 : CollideNode()
@@ -46,7 +47,7 @@ bool Coin::init()
     
     this->setLocalZOrder(ZORDER_COIN);
     
-    int random = rand() % 3;
+    int random = rand() % 7;
     auto delay = DelayTime::create(random);
     auto action01 = ActionHelp::createFrameAction("coin_%02d.png", 0, 4, 0.1, false);
     auto action02 = ActionHelp::createFrameAction("coin_%02d.png", 4, 0, 0.1, false);
@@ -168,14 +169,22 @@ void Coin::bePicked()
     
     m_gameController->addScore(m_score);
     
+//    auto csize = this->getContentSize();
+//    auto psq = ParticleSystemQuad::create("coin.plist");
+//    psq->setPosition(Vec2(25, 25));
+//    this->addChild(psq);
     auto csize = this->getContentSize();
-    auto psq = ParticleSystemQuad::create("coin.plist");
-    psq->setPosition(Vec2(csize.width/2, csize.height/2));
-    this->addChild(psq);
-    
-    auto delay = DelayTime::create(0.4);
+    auto sp = Sprite::createWithSpriteFrameName("coin_picked01.png");
+    int p = rand()%6 + 20;
+    sp->setPosition(Vec2(p, p));
+    sp->setScale(0.8);
+    this->addChild(sp);
+    auto animate = ActionHelp::createFrameAction("coin_picked%02d.png", 1, 5, 0.2, true);
+    sp->runAction(animate);
+    auto delay = DelayTime::create(0.3f);
     auto call = CallFunc::create(CC_CALLBACK_0(Coin::bePickedDone, this));
     this->runAction(Sequence::create(delay, call, NULL));
+//    sp->runAction(Sequence::create(animate, call, NULL));
 }
 void Coin::bePickedDone()
 {

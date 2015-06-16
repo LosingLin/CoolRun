@@ -166,3 +166,16 @@ void AudioHelp::unloadAppEft()
 {
     AudioHelp::unloadEft("btn_click.wav");
 }
+
+void AudioHelp::removeBigSource()
+{
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("tempRes.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("background.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("background02.plist");
+}
+void AudioHelp::addBigSource()
+{
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
+}

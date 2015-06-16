@@ -23,8 +23,8 @@ public:
     NormalFrame();
     ~NormalFrame();
     
-    bool init(const Size& _size, const char* title);
-    static NormalFrame* create(const  Size& _size, const char* title);
+    bool init(const Size& _size, const char* title, bool hasClose = true);
+    static NormalFrame* create(const  Size& _size, const char* title, bool hasClose = true);
     
     void addCloseCallback(MYButton::MYButtonCallback callback);
     void updateBMFTitleLabel(const string& _bmf, const string& title);

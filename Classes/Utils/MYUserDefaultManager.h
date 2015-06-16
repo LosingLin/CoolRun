@@ -17,6 +17,8 @@
 #define MULTI_LANGUAGE_FLAG "current_language"
 #define IS_EFFECT_OFF "is_effect_off"
 #define IS_MUSIC_OFF "is_music_off"
+#define HIGH_SCORE_NORMAL "high_score_normal"
+#define HIGH_SCORE_NORMAL_ED "high_score_normal_ed"
 
 USING_NS_CC;
 using namespace std;
@@ -43,6 +45,11 @@ public:
     bool isMusicOff();
     void setMusicOff(bool flag);
     
+    void setHighScoreNormal(int score);
+    int getHighScoreNormal();
+    
+    void setHighScoreNormalEditor(int score);
+    int getHighScoreNormalEditor();
 private:
     static MYUserDefaultManager* m_instance;
 };

@@ -89,6 +89,31 @@ void MYUserDefaultManager::setMusicOff(bool flag)
     UserDefault::getInstance()->setBoolForKey(IS_MUSIC_OFF, flag);
 }
 
+void MYUserDefaultManager::setHighScoreNormal(int score)
+{
+    int h_score = this->getHighScoreNormal();
+    if (score > h_score)
+    {
+        UserDefault::getInstance()->setIntegerForKey(HIGH_SCORE_NORMAL, score);
+    }
+}
+int MYUserDefaultManager::getHighScoreNormal()
+{
+    return UserDefault::getInstance()->getIntegerForKey(HIGH_SCORE_NORMAL);
+}
+void MYUserDefaultManager::setHighScoreNormalEditor(int score)
+{
+    int h_score = this->getHighScoreNormalEditor();
+    if (score > h_score)
+    {
+        UserDefault::getInstance()->setIntegerForKey(HIGH_SCORE_NORMAL_ED, score);
+    }
+}
+int MYUserDefaultManager::getHighScoreNormalEditor()
+{
+    return UserDefault::getInstance()->getIntegerForKey(HIGH_SCORE_NORMAL_ED);
+}
+
 #pragma mark -
 
 MYUserDefaultManager* MYUserDefaultManager::getInstance()

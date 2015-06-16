@@ -20,7 +20,7 @@ NormalFrame::~NormalFrame()
     
 }
 
-bool NormalFrame::init(const Size& _size, const char* title)
+bool NormalFrame::init(const Size& _size, const char* title, bool hasClose)
 {
     if (!Node::init())
     {
@@ -34,10 +34,13 @@ bool NormalFrame::init(const Size& _size, const char* title)
     bgframe->setAnchorPoint(Vec2(0, 0));
     this->addChild(bgframe);
     
-    m_closeBtn = MYButton::createWithFrameName("btn_close.png");
-    m_closeBtn->setPosition(Vec2(_size.width - 110, _size.height - 170));
-    //m_closeBtn->addTouchEventListener(CC_CALLBACK_2(FreshGuideLayer::closeBtnCallback, this));
-    this->addChild(m_closeBtn);
+    if (hasClose)
+    {
+        m_closeBtn = MYButton::createWithFrameName("btn_close.png");
+        m_closeBtn->setPosition(Vec2(_size.width - 110, _size.height - 170));
+        //m_closeBtn->addTouchEventListener(CC_CALLBACK_2(FreshGuideLayer::closeBtnCallback, this));
+        this->addChild(m_closeBtn);
+    }
     
     m_titleLab = Label::createWithBMFont("NFTitle.fnt", title);
     m_titleLab->setAnchorPoint(Vec2(0.5, 0.5));
@@ -61,14 +64,16 @@ void NormalFrame::updateBMFTitleLabel(const string& _bmf, const string& title)
 
 void NormalFrame::addCloseCallback(MYButton::MYButtonCallback callback)
 {
-    CCASSERT(m_closeBtn, "close btn is not exist");
-    m_closeBtn->addTouchEventListener(callback);
+    if (m_closeBtn)
+    {
+        m_closeBtn->addTouchEventListener(callback);
+    }
 }
 
-NormalFrame* NormalFrame::create(const  Size& _size, const char* title)
+NormalFrame* NormalFrame::create(const  Size& _size, const char* title, bool hasClose)
 {
     auto _frame = new NormalFrame();
-    if (_frame && _frame->init(_size, title))
+    if (_frame && _frame->init(_size, title, hasClose))
     {
         _frame->autorelease();
         return _frame;

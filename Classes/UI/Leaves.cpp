@@ -42,22 +42,23 @@ void Leaves::onEnter()
 }
 void Leaves::onExit()
 {
-    this->unschedule(schedule_selector(Leaves::update));
+    //this->unschedule(schedule_selector(Leaves::update));
+    
     Layer::onExit();
 }
 
 
 void Leaves::update(float delta)
 {
-    int max_count = 200;
+    int max_count = 36;
     if (m_count < max_count)
     {
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        int start_max_x = visibleSize.width + 300;
+        int start_max_x = visibleSize.width + 100;
         int start_min_x = 200;
-        int start_max_y = visibleSize.width + 50;
+        int start_max_y = visibleSize.height + 50;
         int start_min_y = 500;
         
         int dis_max_x = 700;

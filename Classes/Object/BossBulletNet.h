@@ -20,6 +20,9 @@ public:
     
     virtual bool init() override;
     CREATE_FUNC(BossBulletNet)
+    
+    virtual void beingDestoryed() override;
+    void brokeDone();
 private:
     Sprite* m_bullet;
 };

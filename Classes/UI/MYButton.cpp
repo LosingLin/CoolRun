@@ -21,6 +21,7 @@ MYButton::MYButton()
 , m_touchListener(nullptr)
 , m_allTouchListener(nullptr)
 , m_bmfLabel(nullptr)
+, b_isAudioEnable(false)
 {
 }
 MYButton::~MYButton()
@@ -31,7 +32,7 @@ MYButton::~MYButton()
 
 bool MYButton::init()
 {
-    
+    setAudioEnable(true);
     setTouchEnabled(true);
     return true;
 }
@@ -164,15 +165,26 @@ void MYButton::displaySprites()
 
 bool MYButton::isTouchInContent(Touch *touch)
 {
-    auto _loc = convertTouchToNodeSpace(touch);
+    auto touchLoc = touch->getLocation();
+    auto _loc = this->convertTouchToNodeSpace(touch);
     auto _size = this->getContentSize();
-    //log("touch loc : (%f, %f)", _loc.x, _loc.y);
-    if (_loc.x >= 0 && _loc.x <= _size.width &&
-        _loc.y >= 0 && _loc.y <= _size.height)
+    log("touchId: %d, touchLoc: (%f, %f)", touch->getID(), touchLoc.x, touchLoc.y);
+//    auto _arloc = this->convertTouchToNodeSpaceAR(touch);
+//    log("touch loc : (%f, %f)", _arloc.x, _arloc.y);
+    log("touch loc : (%f, %f), _size(%f, %f)", _loc.x, _loc.y, _size.width, _size.height);
+//    if (_loc.x >= 0 && _loc.x <= _size.width &&
+//        _loc.y >= 0 && _loc.y <= _size.height)
+//    {
+//        return true;
+//    }
+    
+    auto _rect = Rect(0, 0, _size.width, _size.height);
+    if (_rect.containsPoint(_loc))
     {
         return true;
     }
     return false;
+    
 }
 
 void MYButton::setTouchEnabled(bool enable, MYButtonType _type)
@@ -221,6 +233,23 @@ void MYButton::setTouchEnabled(bool enable, MYButtonType _type)
         }
         
     }
+    else
+    {
+        if (m_disableSp)
+        {
+            if (m_normalSp)
+            {
+                SAFESETVISIBLE(m_normalSp, false);
+            }
+            
+            if (m_highLightSp)
+            {
+                SAFESETVISIBLE(m_highLightSp, false);
+            }
+            
+            SAFESETVISIBLE(m_disableSp, true);
+        }
+    }
     
     this->displaySprites();
 }
@@ -254,7 +283,11 @@ bool MYButton::onTouchBegan(Touch *touch, Event *unusedEvent)
         SAFESETVISIBLE(m_highLightSp, true);
     }
     
-    AudioHelp::playEft("btn_click.wav");
+    if (this->isAudioEnable())
+    {
+        AudioHelp::playEft("btn_click.wav");
+    }
+    
     
     if (m_callback)
     {
@@ -295,35 +328,49 @@ void MYButton::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void MYButton::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    log("onTouchesBegan............");
-    Size winSize = Director::getInstance()->getWinSize();
+    //log("onTouchesBegan............");
+    //Size winSize = Director::getInstance()->getWinSize();
+    if (!b_isEnable || !isVisible()) {
+        return;
+    }
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return;
+        }
+    }
     vector<Touch*>::const_iterator touchIter = touches.begin();
     while(touchIter != touches.end())
     {
         Touch *pTouch = (Touch*)(*touchIter);
-        if (!b_isEnable || !isVisible() || !isTouchInContent(pTouch))
+//        if (!b_isEnable || !isVisible() || !isTouchInContent(pTouch))
+//        {
+//            ++ touchIter;
+//            continue;
+//        }
+//        for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+//        {
+//            if (c->isVisible() == false)
+//            {
+//                ++ touchIter;
+//                continue;
+//            }
+//        }
+        if (isTouchInContent(pTouch))
         {
-            ++ touchIter;
-            continue;
-        }
-        for (Node *c = this->_parent; c != nullptr; c = c->getParent())
-        {
-            if (c->isVisible() == false)
+            if (m_highLightSp)
             {
-                ++ touchIter;
-                continue;
+                SAFESETVISIBLE(m_normalSp, false);
+                SAFESETVISIBLE(m_highLightSp, true);
+            }
+            
+            if (m_callback)
+            {
+                m_callback(this, TouchEventType::BEGAN);
             }
         }
-        if (m_highLightSp)
-        {
-            SAFESETVISIBLE(m_normalSp, false);
-            SAFESETVISIBLE(m_highLightSp, true);
-        }
         
-        if (m_callback)
-        {
-            m_callback(this, TouchEventType::BEGAN);
-        }
         ++ touchIter;
     }
 }
@@ -333,11 +380,54 @@ void MYButton::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos
 }
 void MYButton::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    log("onTouchesEnded............");
-    if (m_callback)
-    {
-        m_callback(this, TouchEventType::ENDED);
+    //log("onTouchesEnded............");
+    
+    if (!b_isEnable || !isVisible()) {
+        return;
     }
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return;
+        }
+    }
+    
+    vector<Touch*>::const_iterator touchIter = touches.begin();
+    
+    while(touchIter != touches.end())
+    {
+        Touch *pTouch = (Touch*)(*touchIter);
+//        if (!b_isEnable || !isVisible() || !isTouchInContent(pTouch))
+//        {
+//            ++ touchIter;
+//            continue;
+//        }
+//        for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+//        {
+//            if (c->isVisible() == false)
+//            {
+//                ++ touchIter;
+//                continue;
+//            }
+//        }
+        if (isTouchInContent(pTouch))
+        {
+            if (m_highLightSp)
+            {
+                SAFESETVISIBLE(m_normalSp, false);
+                SAFESETVISIBLE(m_highLightSp, true);
+            }
+            
+            if (m_callback)
+            {
+                m_callback(this, TouchEventType::ENDED);
+            }
+        }
+        
+        ++ touchIter;
+    }
+    
 }
 void MYButton::onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {

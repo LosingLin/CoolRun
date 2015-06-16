@@ -38,10 +38,13 @@ public:
     CREATE_FUNC(MYButton);
     static MYButton* create(const string& _normal, const string& _highLight = "", const string& _disable = "");
     static MYButton* createWithFrameName(const string& _normal, const string& _highLight = "", const string& _disable = "");
-    static MYButton* createWithContentSize(const Size& _size);
+    static MYButton* createWithContentSize(const cocos2d::Size& _size);
     virtual bool init();
     
     void addBMFLabel(const char* fnt, const char* _str);
+    
+    void setAudioEnable(bool flag) { b_isAudioEnable = flag; };
+    bool isAudioEnable() { return b_isAudioEnable; }
     
     void setNormalSprite(Sprite* _sp);
     void setHighLightSprite(Sprite* _sp);
@@ -73,6 +76,7 @@ private:
     Sprite* m_disableSp;
     MYButtonCallback m_callback;
     bool b_isEnable;
+    bool b_isAudioEnable;
     
     MYButtonType m_touchType;
     EventListenerTouchOneByOne* m_touchListener;

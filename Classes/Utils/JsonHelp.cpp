@@ -13,7 +13,7 @@ string JsonHelp::readJsonFile(const string& fileName, rapidjson::Document &doc)
 {
     string jsonStr = FileUtils::getInstance()->getStringFromFile(fileName);
     
-    log("data : %s", jsonStr.c_str());
+    //log("data : %s", jsonStr.c_str());
     
     doc.Parse<0>(jsonStr.c_str());
     

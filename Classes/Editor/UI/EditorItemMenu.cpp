@@ -66,7 +66,7 @@ bool EditorItemMenu::init()
 
 void EditorItemMenu::menuCallback(int index)
 {
-    log("menuCallback %d", index);
+    //log("menuCallback %d", index);
     switch (index)
     {
         case 0:

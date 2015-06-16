@@ -103,3 +103,8 @@ void Bullet::saveData(string* buffer)
     ss >> str;
     buffer->append(str);
 }
+
+void Bullet::beingDestoryed()
+{
+    this->setDestoryed(true);
+}

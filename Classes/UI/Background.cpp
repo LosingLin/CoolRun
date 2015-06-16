@@ -90,7 +90,7 @@ void Background::updateBackGround(float delta)
             _lastPos.x -= m_velocity * delta;
             pos.x = _lastPos.x + 1264.0f;
             
-            log("lastPos.x : %f, pos.x : %f", _lastPos.x, pos.x);
+            //log("lastPos.x : %f, pos.x : %f", _lastPos.x, pos.x);
         };
         _sp->setPosition(pos);
     }

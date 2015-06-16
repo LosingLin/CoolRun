@@ -101,7 +101,7 @@ void SpiderFly::frameEvent(Bone *bone, const std::string& frameEventName, int or
 void SpiderFly::trackCollideWithRunner(Runner* _runner)
 {
     
-    Spider::trackCollideWithRunner(_runner);
+    //Spider::trackCollideWithRunner(_runner);
     if (!this->isCollideEffect() || this->isDestoryed())
     {
         return;

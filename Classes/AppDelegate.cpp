@@ -3,6 +3,9 @@
 #include "MYScene.h"
 #include "CoolRunScene.h"
 #include "AudioHelp.h"
+#include "LogoScene.h"
+#include "MobClickCpp.h"
+#include "Vungle.h"
 
 USING_NS_CC;
 
@@ -12,6 +15,7 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
+    umeng::MobClickCpp::end();
     AudioHelp::endAudio();
 }
 
@@ -53,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -68,15 +72,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //FileUtils::getInstance()->addSearchPath("./D_Editor");
     
     std::vector<std::string> paths =  FileUtils::getInstance()->getSearchPaths();
-    for (const auto &_path : paths) {
-        log("path : %s\n", _path.c_str());
-    }
+//    for (const auto &_path : paths) {
+//        log("path : %s\n", _path.c_str());
+//    }
+    
+    MOBCLICKCPP_START_WITH_APPKEY("557a957c67e58e419c0038e1");
+    VungleStart();
     
     AudioHelp::preloadAppEft();
 
     // create a scene. it's an autorelease object
     //auto scene = CoolRun::createScene();
-    auto scene = MenuLayer::createScene();
+    Scene* scene = nullptr;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    scene = MenuLayer::createScene();
+#else
+    scene = LogoLayer::createScene();
+#endif
+    
     // run
     director->runWithScene(scene);
 
@@ -87,7 +101,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     //Director::getInstance()->stopAnimation();
     
-    
+    umeng::MobClickCpp::applicationDidEnterBackground();
     
     if (!Director::getInstance()->isPaused())
     {
@@ -108,6 +122,8 @@ void AppDelegate::applicationDidEnterBackground() {
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
     //Director::getInstance()->startAnimation();
+    
+    umeng::MobClickCpp::applicationWillEnterForeground();
     
 //    auto coolRun = dynamic_cast<MYScene*>(Director::getInstance()->getRunningScene());
 //    if (coolRun)

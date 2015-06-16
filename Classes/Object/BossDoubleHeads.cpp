@@ -85,6 +85,11 @@ void BossDoubleHeads::hurted()
 void BossDoubleHeads::dead()
 {
     this->play(kBDHPlayIndex_Dead);
+//    auto pos = this->getPosition();
+//    auto csize = this->getContentSize();
+//    pos.x += csize.width/2;
+//    pos.y += csize.height/2;
+//    m_gameController->showScore(this->getScore(), pos);
 }
 
 void BossDoubleHeads::play(int index)
@@ -184,8 +189,9 @@ Spider* BossDoubleHeads::createBornSpider(int index)
 
 void BossDoubleHeads::attkSequence(int index)
 {
-    log("attkSequence :%d", index);
+    //log("attkSequence :%d", index);
     this->setAtking(true);
+    
     switch (index)
     {
         case 0:
@@ -265,7 +271,13 @@ void BossDoubleHeads::movementEvent(Armature *armature, MovementEventType moveme
         {
             m_gameController->loadNextMission();
             
+            auto pos = this->getPosition();
+            auto csize = this->getContentSize();
+            pos.x += csize.width/2;
+            pos.y += csize.height/2;
+            m_gameController->showScore(this->getScore(), pos);
             this->addPlayerScore();
+            
             this->setDestoryed(true);
         }
         else if ("hurt" == movementID)

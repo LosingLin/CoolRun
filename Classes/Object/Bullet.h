@@ -25,6 +25,8 @@ public:
     virtual void loadJson(rapidjson::Value& _value) override;
     virtual void saveData(string* buffer) override;
     
+    virtual void beingDestoryed();
+    
     void setRunnerHurt(bool flag) { b_isRunnerHurt = flag; }
     void setAnimalHurt(bool flag) { b_isAnimalHurt = flag; }
     bool isRunnerHurt() { return b_isRunnerHurt; }

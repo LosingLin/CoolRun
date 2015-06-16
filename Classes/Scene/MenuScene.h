@@ -10,6 +10,7 @@
 #define __CoolRun__MenuScene__
 
 #include "cocos2d.h"
+#include "MYKeyBoardLayer.h"
 #include "MYButton.h"
 
 //test
@@ -22,7 +23,7 @@ USING_NS_CC;
 
 class Home;
 class CommonBackground;
-class MenuLayer : public Layer
+class MenuLayer : public MYKeyBoardLayer
 {
 public:
     MenuLayer();

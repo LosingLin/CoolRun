@@ -419,7 +419,7 @@ void EditorScene::openFile(const std::string& filePath)
     {
         
         data = FileUtils::getInstance()->getStringFromFile(filePath);
-        log("FILEPATH: %s\n", FileUtils::getInstance()->fullPathForFilename(filePath).c_str());
+        //log("FILEPATH: %s\n", FileUtils::getInstance()->fullPathForFilename(filePath).c_str());
         
         this->setFileName(FileUtils::getInstance()->fullPathForFilename(filePath));
         isExist = true;
@@ -428,7 +428,7 @@ void EditorScene::openFile(const std::string& filePath)
     {
         auto doc = FileUtils::getInstance()->getWritablePath();
         doc.append("D_Editor/").append(filePath);
-        log("FILEPATH: %s\n", doc.c_str());
+        //log("FILEPATH: %s\n", doc.c_str());
         if (access(doc.c_str(), F_OK) == 0)
         {
             this->setFileName(doc);

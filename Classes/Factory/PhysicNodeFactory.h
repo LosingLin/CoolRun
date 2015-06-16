@@ -41,6 +41,7 @@ enum PhysicNodeType
 };
 
 class PhysicNode;
+class Item;
 class PhysicNodeFactory
 {
 public:
@@ -51,6 +52,7 @@ public:
     
     PhysicNode* create(rapidjson::Value& _value);
     
+    Item* createRandomItem();
 private:
     PhysicNodeFactory();
     

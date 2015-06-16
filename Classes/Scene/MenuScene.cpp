@@ -25,10 +25,14 @@
 #include "Home.h"
 #include "MYMultiLanguageManager.h"
 using namespace cocostudio;
+#include "Vungle.h"
+
+#include "ReviveMenu.h"
+#include "GameOverMenu.h"
 
 
 MenuLayer::MenuLayer()
-: Layer()
+: MYKeyBoardLayer()
 , m_logo(nullptr)
 , m_menu(nullptr)
 , m_home(nullptr)
@@ -50,7 +54,7 @@ Scene* MenuLayer::createScene()
 
 bool MenuLayer::init()
 {
-    if (!Layer::init())
+    if (!MYKeyBoardLayer::init())
     {
         return false;
     }
@@ -150,8 +154,14 @@ bool MenuLayer::init()
     
     MYMultiLanguageManager::getInstance();
     
-    log("test ml key1 = %s", MYMultiLanguageManager::getInstance()->getText("key1").c_str());
-    log("test ml key2 = %s", MYMultiLanguageManager::getInstance()->getText("key2").c_str());
+//    log("test ml key1 = %s", MYMultiLanguageManager::getInstance()->getText("key1").c_str());
+//    log("test ml key2 = %s", MYMultiLanguageManager::getInstance()->getText("key2").c_str());
+    
+//    auto menu = ReviveMenu::create();
+//    this->addChild(menu, 200);
+    
+//    auto gmenu = GameOverMenu::create();
+//    this->addChild(gmenu, 200);
     
     return true;
 }
@@ -159,14 +169,15 @@ bool MenuLayer::init()
 
 void MenuLayer::onEnter()
 {
-    Layer::onEnter();
+    MYKeyBoardLayer::onEnter();
     
-    
+    //this->showExitGameFrame();
+    //VunglePlayAd();
 }
 
 void MenuLayer::onEnterTransitionDidFinish()
 {
-    Layer::onEnterTransitionDidFinish();
+    MYKeyBoardLayer::onEnterTransitionDidFinish();
     
     auto _scaleTo = ScaleTo::create(0.3, 1.2f);
     m_home->runAction(_scaleTo);
@@ -183,7 +194,7 @@ void MenuLayer::onEnterTransitionDidFinish()
 
 void MenuLayer::start()
 {
-    auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
+    auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":1}}");
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
     auto _scene = CoolRun::createScene(mission);
     SceneHelp::replaceScene(_scene);

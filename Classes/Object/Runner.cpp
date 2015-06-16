@@ -90,7 +90,7 @@ bool Runner::init()
     
     this->setGravityEffect(true);
     
-    this->setCollideRect(Rect(2, 8, 86, 126));
+    this->setCollideRect(Rect(2, 8, 86, 122));
     this->setCollideEffect(true);
     SHOW_RECT(this->getCollideRect());
     
@@ -105,11 +105,16 @@ bool Runner::init()
     return true;
 }
 
+void Runner::onEnter()
+{
+    CollideNode::onEnter();
+    
+    Director::getInstance()->getScheduler()->schedule(schedule_selector(Runner::update), this, 0.0f, kRepeatForever, 0.01f, false);
+}
+
 void Runner::onEnterTransitionDidFinish()
 {
     CollideNode::onEnterTransitionDidFinish();
-    
-    Director::getInstance()->getScheduler()->schedule(schedule_selector(Runner::update), this, 0.0f, kRepeatForever, 0.01f, false);
 }
 void Runner::update(float delta)
 {
@@ -131,7 +136,7 @@ void Runner::setRunnerState(RunnerState state)
         {
             case kRunnerState_Running:
                 m_armature->getAnimation()->play("run");
-                this->setCollideRect(Rect(2, 8, 86, 126));
+                this->setCollideRect(Rect(2, 8, 86, 122));
                 m_headRect = Rect(32, 90, 50, 42);
                 m_bodyRect = Rect(20, 50, 40, 40);
                 m_legRect = Rect(6, 20, 48, 40);
@@ -141,7 +146,7 @@ void Runner::setRunnerState(RunnerState state)
                 break;
             case kRunnerState_JumpUp:
                 m_armature->getAnimation()->play("jump");
-                this->setCollideRect(Rect(2, 8, 86, 126));
+                this->setCollideRect(Rect(2, 8, 86, 122));
                 m_headRect = Rect(22, 90, 50, 42);
                 m_bodyRect = Rect(20, 50, 40, 40);
                 m_legRect = Rect(16, 20, 38, 40);
@@ -159,7 +164,7 @@ void Runner::setRunnerState(RunnerState state)
                 break;
             case kRunnerState_JumpDown:
                 m_armature->getAnimation()->play("down");
-                this->setCollideRect(Rect(2, 8, 86, 126));
+                this->setCollideRect(Rect(2, 8, 86, 122));
                 m_headRect = Rect(12, 90, 50, 42);
                 m_bodyRect = Rect(20, 50, 40, 40);
                 m_legRect = Rect(36, 20, 38, 40);
@@ -359,7 +364,8 @@ void Runner::trackCollideWithBullet(Bullet* bullet)
         bool isAtked = CollideTrackHelp::trackCollide(rect1, rect3);
         if (isAtked)
         {
-            bullet->setDestoryed(true);
+            bullet->setCollideEffect(false);
+            bullet->beingDestoryed();
             m_gameController->addScore(5);
             return;
         }
@@ -519,6 +525,25 @@ void Runner::initItemData()
     item_rebornLastTime = 3.0f;
     item_rebornCurrentTime = 0.0f;
 }
+
+void Runner::clearAllItemBuffers()
+{
+    item_magnetCurrentTime = 0;
+    item_timesCoinCurrentTime = 0;
+    item_timesJumpCurrentTime = 0;
+    item_dadCurrentTime = 0;
+    item_buildLandCurrentTime = 0;
+    item_flyCurrentTime = 0;
+    
+    this->endMagnet();
+    this->endTimesCoin();
+    this->endTimesJump();
+    this->endDad();
+    this->endLandBuild();
+    this->endFly();
+    this->endFlyEffect();
+}
+
 void Runner::displaySpareNum(int num)
 {
     item_currentSpareNum = num;
@@ -558,6 +583,10 @@ void Runner::startMagnet()
 
 void Runner::endMagnet()
 {
+    if (!this->isMagnetING())
+    {
+        return;
+    }
     if (!this->isFlyING())
     {
         this->setMagnetING(false);
@@ -586,6 +615,10 @@ void Runner::startTimesCoin()
 }
 void Runner::endTimesCoin()
 {
+    if (!this->isTimesCoinING())
+    {
+        return;
+    }
     this->setTimesCoinING(false);
 //    
 //    if (item_timesCoinIcon)
@@ -611,6 +644,10 @@ void Runner::startTimesJump()
 }
 void Runner::endTimesJump()
 {
+    if (!this->isTimesJumpING())
+    {
+        return;
+    }
     this->setTimesJumpING(false);
     
 //    if (item_timesJumpIcon)
@@ -636,6 +673,10 @@ void Runner::startDad()
 }
 void Runner::endDad()
 {
+    if (!this->isDadING())
+    {
+        return;
+    }
     this->setDadING(false);
     
 //    if (item_dadIcon)
@@ -661,6 +702,10 @@ void Runner::startLandBuild()
 }
 void Runner::endLandBuild()
 {
+    if (!this->isLandBuildING())
+    {
+        return;
+    }
     if (!this->isFlyING())
     {
         this->setLandBuildING(false);
@@ -678,9 +723,13 @@ void Runner::startFly()
 {
     if (this->isFlyING())
     {
-        return;
+        m_gameController->endFly();
     }
     item_flyCurrentTime = item_flyLastTime;
+    
+    item_isEndFlyING = false;
+    
+    m_gameController->startFly();
     
     this->setFlyING(true);
     this->setGravityEffect(false);
@@ -694,7 +743,6 @@ void Runner::startFly()
     this->setMagnetING(true);
     
 //    m_gameController->setVelocity(3600);
-    m_gameController->startFly();
     
 //    if (!item_flyIcon)
 //    {
@@ -706,6 +754,10 @@ void Runner::startFly()
 }
 void Runner::endFly()
 {
+    if (!this->isFlyING())
+    {
+        return;
+    }
     if (item_isEndFlyING)
     {
         return;

@@ -136,7 +136,7 @@ string Mission::getRandomMissionData(const string& path, const string& format, i
     stringstream ss;
     ss << FileUtils::getInstance()->getStringFromFile(path + "/count");
     ss >> total;
-    log("count : %d", total);
+    //log("count : %d", total);
 
     for (int i = 0; i < num; ++ i)
     {

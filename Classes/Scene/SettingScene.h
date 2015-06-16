@@ -10,6 +10,7 @@
 #define __CoolRun__SettingScene__
 
 #include "cocos2d.h"
+#include "MYKeyBoardLayer.h"
 #include "extensions/cocos-ext.h"
 #include "MYButton.h"
 #include "MYSwitch.h"
@@ -18,7 +19,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 class PopViewLayer;
 class NormalFrame;
-class SettingLayer : public Layer
+class SettingLayer : public MYKeyBoardLayer
 {
 public:
     SettingLayer();

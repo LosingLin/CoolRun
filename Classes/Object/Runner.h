@@ -48,6 +48,7 @@ public:
     void setRunnerState(RunnerState);
     RunnerState getRunnerState() { return m_state; }
     
+    virtual void onEnter() override;
     virtual void onEnterTransitionDidFinish() override;
     virtual void update(float delta);
     void itemUpdate(float delta);
@@ -80,6 +81,8 @@ public:
     
     //Item
     void initItemData();
+    void clearAllItemBuffers();
+    
     int getSpareNum() { return item_spareNum; }
     void displaySpareNum(int num);
     

@@ -162,7 +162,7 @@ void EditorDetailMenu::selectedActive(EditorSelector* selector)
 
 void EditorDetailMenu::selectedDone(const string& key, EditorSelector* selector)
 {
-    log("selectedDone :  %s", key.c_str());
+    //log("selectedDone :  %s", key.c_str());
     selector->setLocalZOrder(kSelectorUnActiveZOrder);
 }
 

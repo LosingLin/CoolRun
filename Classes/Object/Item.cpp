@@ -33,6 +33,9 @@ bool Item::init()
     {
         return false;
     }
+    this->setCollideEffect(true);
+    this->setGravityEffect(false);
+    this->setCollideType(CollideType::kCollideTypeSimple);
     
     m_sp = Sprite::createWithSpriteFrameName("kmd_01.png");
     auto csize = m_sp->getContentSize();

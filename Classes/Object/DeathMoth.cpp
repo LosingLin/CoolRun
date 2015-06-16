@@ -208,7 +208,7 @@ void DeathMoth::attkSequence(int index)
             //auto call03 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
             auto moveTo02 = MoveTo::create(0.2, Vec2(600, 220));
             auto call04 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Rush));
-            auto moveTo03 = MoveTo::create(1.6, Vec2(100, 220));
+            auto moveTo03 = MoveTo::create(1.6, Vec2(-20, 220));
             auto call05 = CallFunc::create(CC_CALLBACK_0(DeathMoth::play, this, kDeathMothPlayIndex_Fly));
             auto moveTo04 = MoveTo::create(0.2, Vec2(600, 160));
             auto delay03 = DelayTime::create(0.3f);
@@ -246,6 +246,12 @@ void DeathMoth::attkSequenceEnd()
         {
             //this->setDestoryed(true);
             m_gameController->loadNextMission();
+            
+            auto pos = this->getPosition();
+            auto csize = this->getContentSize();
+            pos.x += csize.width/2;
+            pos.y += csize.height/2;
+            m_gameController->showScore(this->getScore(), pos);
             
             this->addPlayerScore();
         }

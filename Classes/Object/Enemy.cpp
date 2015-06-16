@@ -56,7 +56,7 @@ Enemy* Enemy::create(rapidjson::Value& _value)
 
 void Enemy::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
-    log("movementID : %s", movementID.c_str());
+    //log("movementID : %s", movementID.c_str());
     
     if (MovementEventType::COMPLETE == movementType)
     {

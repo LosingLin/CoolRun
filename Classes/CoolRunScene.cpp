@@ -15,6 +15,7 @@
 #include "Runner.h"
 #include "Stone.h"
 #include "Coin.h"
+#include "Item.h"
 #include "Mission.h"
 #include "MissionInterface.h"
 #include "MissionDataInterface.h"
@@ -45,6 +46,10 @@
 #include "SceneHelp.h"
 #include "MYUserDefaultManager.h"
 #include "PowerIconBar.h"
+#include "Clouds.h"
+#include "ReviveMenu.h"
+#include "GameOverMenu.h"
+#include "Vungle.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -52,10 +57,11 @@
 #define kWarningFrameTag 103
 
 CoolRun::CoolRun()
-: Layer()
+: MYKeyBoardLayer()
 , m_gameState(GameState::HOME)
 , m_resCacheCount(0)
-, m_velocity(0.0f)
+, m_velocity(0)
+, m_backUpVelocity(0)
 , m_runners(nullptr)
 , m_gPhysics(NULL)
 , m_cTrack(NULL)
@@ -87,10 +93,13 @@ CoolRun::CoolRun()
 , m_stretchView(nullptr)
 , m_stretch(0)
 , m_leaves(nullptr)
+, m_clouds(nullptr)
 , m_runType(RunType::NORMAL)
 , m_missionIndex(0)
 , m_bgAudio(nullptr)
 , m_powerBar(nullptr)
+, m_reviveTimes(0)
+, b_isUpdatING(false)
 {
 }
 CoolRun::~CoolRun()
@@ -125,7 +134,7 @@ Scene* CoolRun::createScene(Mission* mission, RunType _type)
 
 bool CoolRun::init()
 {
-    if (!Layer::init()) {
+    if (!MYKeyBoardLayer::init()) {
         return false;
     }
     AudioHelp::preloadMainEft();
@@ -134,6 +143,8 @@ bool CoolRun::init()
     srand((int)time(0));
     
     m_velocity = 0.0f;
+    
+    m_reviveTimes = 2;
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -171,6 +182,9 @@ bool CoolRun::init()
     bg->setScale(scale);
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
+    
+    m_clouds = Clouds::create();
+    this->addChild(m_clouds);
     
     m_awayBG = Background::create("bg05_01.png", "bg05_02.png");
     m_awayBG->setVelocity(m_velocity*0.2f);
@@ -247,7 +261,8 @@ bool CoolRun::init()
     m_atkBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::SkillBtnCallback, this));
     m_atkBtn->setPosition(Vec2(origin.x, origin.y));
     m_atkBtn->setAnchorPoint(Vec2(0, 0));
-    m_atkBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
+    m_atkBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    m_atkBtn->setAudioEnable(false);
     this->addChild(m_atkBtn, 100);
     
     
@@ -255,14 +270,15 @@ bool CoolRun::init()
     m_jumpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::JumpBtnCallback, this));
     m_jumpBtn->setPosition(Vec2(origin.x + visibleSize.width, origin.y));
     m_jumpBtn->setAnchorPoint(Vec2(1, 0));
-    m_jumpBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
+    m_jumpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+    m_jumpBtn->setAudioEnable(false);
     this->addChild(m_jumpBtn, 100);
     
     m_pacBtn = MYButton::createWithFrameName("btn_pause.png");
     m_pacBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::PacBtnCallback, this));
     m_pacBtn->setPosition(Vec2(origin.x + visibleSize.width - 44, origin.y + visibleSize.height - 44));
     m_pacBtn->setAnchorPoint(Vec2(0.5, 0.5));
-    m_pacBtn->setTouchEnabled(true, MYButton::MYButtonType::ALLATONCE);
+    m_pacBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
     this->addChild(m_pacBtn, 100);
     //m_pacBtn->setOpacity(100);
     
@@ -421,6 +437,16 @@ void CoolRun::addBoss()
 
 void CoolRun::showBossWarning()
 {
+    for (int i = 0; i < m_runners->count(); ++ i)
+    {
+        auto _runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
+        _runner->clearAllItemBuffers();
+    }
+    for (int i = 0; i < m_simpleCollideObjs->count(); ++ i)
+    {
+        auto _c = dynamic_cast<PhysicNode*>(m_simpleCollideObjs->getObjectAtIndex(i));
+        _c->setDestoryed(true);
+    }
     
     AudioHelp::playEft("warning.wav");
     
@@ -538,18 +564,27 @@ void CoolRun::doorCloseCallback()
     m_home->closeDoor();
 }
 
-void CoolRun::setVelocity(int v)
+void CoolRun::setVelocity(int v, bool cloud)
 {
+    if (b_isUpdatING)
+    {
+        m_backUpVelocity = v;
+        return;
+    }
     auto vc = m_velocity-v;
     m_velocity = v;
     //log("#####SetVeloctiy#### %d", v);
     this->_setVelocity(m_simpleCollideObjs, vc);
     this->_setVelocity(m_dirCollideObjs, vc);
     this->_setVelocity(m_bulletObjs, vc);
-    m_awayBG->setVelocity(m_velocity*0.2f);
-    m_farBG->setVelocity(m_velocity*0.6f);
+    m_awayBG->setVelocity(m_velocity*0.4f);
+    m_farBG->setVelocity(m_velocity*0.7f);
     m_midBG->setVelocity(m_velocity*1.0f);
     m_leaves->setVelocity(m_velocity*1.2f);
+    if (cloud)
+    {
+        m_clouds->setVelocity(m_velocity*0.1f);
+    }
 }
 void CoolRun::_setVelocity(__Array* _nodes, int vc)
 {
@@ -568,7 +603,7 @@ void CoolRun::PacBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 {
     if (_type == MYButton::TouchEventType::BEGAN)
     {
-        log("CoolRun::PacBtnCallback began");
+        //log("CoolRun::PacBtnCallback began");
         
         this->addPauseMenu();
     }
@@ -576,9 +611,9 @@ void CoolRun::PacBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 
 void CoolRun::SkillBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 {
-    if (_type == MYButton::TouchEventType::BEGAN)
+    if (_type == MYButton::TouchEventType::BEGAN && _btn == m_atkBtn)
     {
-        log("CoolRun::SkillBtnCallback began");
+        //log("CoolRun::SkillBtnCallback began");
         
         for (int i = 0; i < m_runners->count(); ++ i)
         {
@@ -589,9 +624,9 @@ void CoolRun::SkillBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 }
 void CoolRun::JumpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 {
-    if (_type == MYButton::TouchEventType::BEGAN)
+    if (_type == MYButton::TouchEventType::BEGAN && _btn == m_jumpBtn)
     {
-        log("CoolRun::JumpBtnCallback began");
+        //log("CoolRun::JumpBtnCallback began");
         
         for (int i = 0; i < m_runners->count(); ++ i)
         {
@@ -603,7 +638,7 @@ void CoolRun::JumpBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
 
 void CoolRun::onEnter()
 {
-    Layer::onEnter();
+    MYKeyBoardLayer::onEnter();
     log("CoolRun.......onEnter");
     
     //AudioHelp::preloadMainEft();
@@ -628,19 +663,19 @@ void CoolRun::onEnter()
 }
 void CoolRun::onEnterTransitionDidFinish()
 {
-    Layer::onEnterTransitionDidFinish();
+    MYKeyBoardLayer::onEnterTransitionDidFinish();
     log("CoolRun.......onEnterTransitionDidFinish");
 }
 void CoolRun::onExitTransitionDidStart()
 {
     log("CoolRun.......onExitTransitionDidStart");
-    Layer::onExitTransitionDidStart();
+    MYKeyBoardLayer::onExitTransitionDidStart();
 }
 void CoolRun::onExit()
 {
     log("CoolRun.......onExit");
     
-    Layer::onExit();
+    MYKeyBoardLayer::onExit();
 }
 
 void CoolRun::finishAddImage(Texture2D* texture)
@@ -1046,7 +1081,23 @@ void CoolRun::gameMain(float delta)
 
 void CoolRun::update(float delta)
 {
+    this->setUpdatING(true);
+    
     this->gameMain(delta);
+    
+    this->setUpdatING(false);
+}
+
+void CoolRun::setUpdatING(bool flag)
+{
+    b_isUpdatING = flag;
+    if (false == b_isUpdatING)
+    {
+        if (m_backUpVelocity != m_velocity)
+        {
+            this->setVelocity(m_backUpVelocity);
+        }
+    }
 }
 
 void CoolRun::backGroundUpdate(float delta)
@@ -1084,7 +1135,8 @@ void CoolRun::totalStretchUpdate(float delta)
         string s;
         stringstream ss(s);
         ss << m_totalStretchForInt;
-        m_stretchLab->setString(ss.str());
+        ss >> s;
+        m_stretchLab->setString(s);
         //this->addScore(1);
         this->addStretch(1);
     }
@@ -1092,7 +1144,8 @@ void CoolRun::totalStretchUpdate(float delta)
     string s;
     stringstream ss(s);
     ss << m_pageStretch;
-    m_pageSLab->setString(ss.str());
+    ss >> s;
+    m_pageSLab->setString(s);
     
 }
 void CoolRun::pageStretchUpdate(float delta)
@@ -1464,6 +1517,12 @@ void CoolRun::hideGuide(Ref* _btn, MYButton::TouchEventType _type, Node* _guide)
 
 void CoolRun::addPauseMenu()
 {
+    if (b_isPaused)
+    {
+        return;
+    }
+    b_isPaused = true;
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
@@ -1490,33 +1549,43 @@ void CoolRun::addPauseMenu()
 }
 void CoolRun::addOverMenu()
 {
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+//    Size visibleSize = Director::getInstance()->getVisibleSize();
+//    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+//    
+//    auto layer = PopViewLayer::create();
+//    layer->setTag(kOverViewTag);
+//    this->addChild(layer, ZORDER_POPVIEW);
+//    
+//    auto helpmeBtn = MYButton::createWithFrameName("btn_restart.png", "btn_restart_hl.png");
+//    helpmeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::HelpMeBtnCallback, this));
+//    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
+//    helpmeBtn->setAnchorPoint(Vec2(0.5, 0.5));
+//    helpmeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+//    layer->addChild(helpmeBtn);
+//    
+//    auto giveUpBtn = MYButton::createWithFrameName("btn_home.png", "btn_home_hl.png");
+//    giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
+//    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
+//    giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
+//    giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
+//    layer->addChild(giveUpBtn);
+    b_isPaused = true;
     
-    auto layer = PopViewLayer::create();
-    layer->setTag(kOverViewTag);
-    this->addChild(layer, ZORDER_POPVIEW);
+    this->onExit();
     
-    auto helpmeBtn = MYButton::createWithFrameName("btn_restart.png", "btn_restart_hl.png");
-    helpmeBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::HelpMeBtnCallback, this));
-    helpmeBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 + 100));
-    helpmeBtn->setAnchorPoint(Vec2(0.5, 0.5));
-    helpmeBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
-    layer->addChild(helpmeBtn);
+    auto _gameOverMenu = GameOverMenu::create();
+    this->addChild(_gameOverMenu, ZORDER_POPVIEW, kOverViewTag);
     
-    auto giveUpBtn = MYButton::createWithFrameName("btn_home.png", "btn_home_hl.png");
-    giveUpBtn->addTouchEventListener(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
-    giveUpBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 100));
-    giveUpBtn->setAnchorPoint(Vec2(0.5, 0.5));
-    giveUpBtn->setTouchEnabled(true, MYButton::MYButtonType::ONEBYONE);
-    layer->addChild(giveUpBtn);
-    
-    this->pause();
+    _gameOverMenu->addHomeCallback(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
+    _gameOverMenu->addRetryCallback(CC_CALLBACK_2(CoolRun::gameOverMenu_RetryCallback, this));
+    _gameOverMenu->setFinalScore(m_score, m_runType);
+    _gameOverMenu->onEnter();
     
 }
 void CoolRun::removePauseMenu()
 {
-
+    b_isPaused = false;
+    
     auto node = this->getChildByTag(kPauseViewTag);
     if (node)
     {
@@ -1528,16 +1597,129 @@ void CoolRun::removePauseMenu()
 }
 void CoolRun::removeOverMenu()
 {
-
+    b_isPaused = false;
+    
+    this->onEnter();
     auto node = this->getChildByTag(kOverViewTag);
     if (node)
     {
+        node->onExit();
         node->removeFromParentAndCleanup(true);
     }
     
     
-    this->resume();
+    //this->resume();
+}
+void CoolRun::addReviveMenu()
+{
+//    Size visibleSize = Director::getInstance()->getVisibleSize();
+//    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+//    
+//    auto renderTexture = RenderTexture::create(visibleSize.width, visibleSize.height);
+//    renderTexture->begin();
+//    this->visit();
+//    renderTexture->end();
+//    
+//    auto reviveScene = MYScene::create();
+//    auto sp = Sprite::createWithTexture(renderTexture->getSprite()->getTexture());
+//    sp->setAnchorPoint(Vec2(0, 0));
+//    sp->setFlippedY(true);
+//    reviveScene->addChild(sp);
+//    
+//    auto _reviveMenu = ReviveMenu::create();
+//    _reviveMenu->addGameOverCallback(CC_CALLBACK_2(CoolRun::reviveMenu_GameOverCallback, this));
+//    _reviveMenu->addReviveCallback(CC_CALLBACK_2(CoolRun::reviveMenu_ReviveCallback, this));
+//    reviveScene->addChild(_reviveMenu, ZORDER_POPVIEW);
+//    
+//    Director::getInstance()->pushScene(reviveScene);
     
+    
+    //this->pause();
+    //Director::getInstance()->stopAnimation();
+//    Director::getInstance()->getActionManager()->pauseAllRunningActions();
+//    Director::getInstance()->getActionManager()->resumeTarget(_reviveMenu);
+    //this->setVelocity(0);
+//    auto _children = this->getChildren();
+//    for (auto it = _children.begin(); it < _children.end(); ++ it)
+//    {
+//        if (*it != _reviveMenu)
+//        {
+//            (*it)->onExit();
+//        }
+//    }
+    
+    b_isPaused = true;
+    
+    this->onExit();
+    
+    auto _reviveMenu = ReviveMenu::create();
+    _reviveMenu->addGameOverCallback(CC_CALLBACK_2(CoolRun::reviveMenu_GameOverCallback, this));
+    _reviveMenu->addReviveCallback(CC_CALLBACK_2(CoolRun::reviveMenu_ReviveCallback, this));
+    this->addChild(_reviveMenu, ZORDER_POPVIEW);
+    _reviveMenu->onEnter();
+}
+void CoolRun::reviveMenu_GameOverCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (MYButton::TouchEventType::ENDED == _type)
+    {
+        //this->resume();
+//        Director::getInstance()->popScene();
+        
+        
+        auto menu = dynamic_cast<ReviveMenu*>(_btn);
+        menu->onExit();
+        menu->removeFromParentAndCleanup(true);
+        
+        this->onEnter();
+        
+        this->addOverMenu();
+    }
+}
+void CoolRun::reviveMenu_ReviveCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (MYButton::TouchEventType::ENDED == _type)
+    {
+        //this->resume();
+//        Director::getInstance()->startAnimation();
+//        this->setVelocity(400);
+//        Director::getInstance()->popScene();
+        
+        auto menu = dynamic_cast<ReviveMenu*>(_btn);
+        menu->onExit();
+        menu->removeFromParentAndCleanup(true);
+        
+        this->onEnter();
+        
+        this->addRunner(true);
+        
+        b_isPaused = false;
+    }
+}
+
+void CoolRun::gameOverMenu_RetryCallback(Ref* _btn, MYButton::TouchEventType _type)
+{
+    if (_type == MYButton::TouchEventType::ENDED)
+    {
+        this->removeOverMenu();
+        
+        if (m_runType == RunType::NORMAL)
+        {
+            AudioHelp::unloadMainEft();
+            
+            auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":0}}");
+            mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
+            auto _scene = CoolRun::createScene(mission);
+            SceneHelp::replaceScene(_scene);
+        }
+        else if (m_runType == RunType::EDITOR)
+        {
+            AudioHelp::unloadMainEft();
+            
+            m_mission->setPageIndex(-1);
+            auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
+            SceneHelp::replaceScene(_scene);
+        }
+    }
 }
 
 void CoolRun::ResumeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
@@ -1565,23 +1747,6 @@ void CoolRun::HelpMeBtnCallback(Ref* _btn, MYButton::TouchEventType _type)
     {
         this->removeOverMenu();
         this->addRunner();
-//        if (m_runType == RunType::NORMAL)
-//        {
-//            AudioHelp::unloadMainEft();
-//            
-//            auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":1}}");
-//            mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
-//            auto _scene = CoolRun::createScene(mission);
-//            SceneHelp::replaceScene(_scene);
-//        }
-//        else if (m_runType == RunType::EDITOR)
-//        {
-//            AudioHelp::unloadMainEft();
-//            
-//            m_mission->setPageIndex(-1);
-//            auto _scene = CoolRun::createScene(m_mission, CoolRun::RunType::EDITOR);
-//            SceneHelp::replaceScene(_scene);
-//        }
         
     }
 }
@@ -1610,7 +1775,15 @@ void CoolRun::dead(Runner* runner)
     if (m_runners->count() <= 0)
     {
         AudioHelp::playEft("gameover.mp3");
-        this->addOverMenu();
+        if (m_reviveTimes > 0)
+        {
+            this->addReviveMenu();
+            m_reviveTimes --;
+        }
+        else
+        {
+            this->addOverMenu();
+        }
     }
     
     for (int i = 0; i < m_runners->count(); ++ i)
@@ -1628,10 +1801,16 @@ void CoolRun::addScore(int score)
     
     m_score += score;
     
+//    if (m_score%20 == 0)
+//    {
+//        this->showScore(m_score, Vec2(200, 200));
+//    }
+    
     string s;
     stringstream ss(s);
     ss << m_score;
-    m_scoreView->setString(ss.str());
+    ss >> s;
+    m_scoreView->setString(s);
 }
 void CoolRun::addStretch(int stretch)
 {
@@ -1642,11 +1821,49 @@ void CoolRun::addStretch(int stretch)
     
     m_stretch += stretch;
     
+    if (m_stretch%200 == 0)
+    {
+        this->addRandomItem();
+    }
+    
     string s;
     stringstream ss(s);
     ss << m_stretch;
-    m_stretchView->setString(ss.str());
+    ss >> s;
+    m_stretchView->setString(s);
 }
+void CoolRun::showScore(int score, const Vec2& pos)
+{
+    auto _alabel = Label::createWithBMFont("Score.fnt", "0");
+    _alabel->setAnchorPoint(Vec2(0.5, 0.5));
+    _alabel->setPosition(pos);
+    _alabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+    _alabel->setLocalZOrder(ZORDER_HEADMENU);
+    this->addChild(_alabel);
+    
+    string s;
+    stringstream ss(s);
+    ss << score;
+    ss >> s;
+    s = "+" + s;
+    _alabel->setString(s);
+    
+    auto _moveBy = MoveBy::create(0.3, Vec2(0, 80));
+    auto _scaleTo = ScaleTo::create(0.3, 2.0f);
+    auto _fadeOut = FadeOut::create(0.1);
+    auto _spaw = Spawn::create(_moveBy, _scaleTo, NULL);
+    auto _call = CallFunc::create(CC_CALLBACK_0(CoolRun::_showScoreEnd, this, _alabel));
+    _alabel->runAction(Sequence::create(_spaw, _fadeOut, _call, NULL));
+}
+
+void CoolRun::_showScoreEnd(Node* node)
+{
+    if (node)
+    {
+        node->removeFromParentAndCleanup(true);
+    }
+}
+
 void CoolRun::loadNextMission()
 {
     
@@ -1655,7 +1872,7 @@ void CoolRun::loadNextMission()
     Mission* mission = nullptr;
     if (m_missionIndex < 2)
     {
-        mission = Mission::create("{\"e\":{\"num\":5}, \"n\":{\"num\":5}, \"h\":{\"num\":3}}");
+        mission = Mission::create("{\"e\":{\"num\":5}, \"n\":{\"num\":5}, \"h\":{\"num\":2}}");
     }
     else if(m_missionIndex < 5)
     {
@@ -1665,7 +1882,7 @@ void CoolRun::loadNextMission()
     {
         mission = Mission::create("{\"e\":{\"num\":2}, \"n\":{\"num\":6}, \"h\":{\"num\":9}}");
     }
-    mission = Mission::create("{\"e\":{\"num\":2}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
+    //mission = Mission::create("{\"e\":{\"num\":2}, \"n\":{\"num\":0}, \"h\":{\"num\":0}}");
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
     this->setMission(mission);
     m_gameState = GameState::RUNNING;
@@ -1711,7 +1928,7 @@ void CoolRun::addBossHpBar(HpBar* bar)
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     bar->setAnchorPoint(Vec2(0.5, 0.5));
-    bar->setPosition(Vec2((origin.x + visibleSize.width - 100) / 2, origin.y + visibleSize.height - 40 + 120));
+    bar->setPosition(Vec2((origin.x + visibleSize.width - 100) / 2, origin.y + visibleSize.height - 34 + 120));
     this->addChild(bar);
     
     auto moveBy = MoveBy::create(0.2, Vec2(0, -120));
@@ -1736,6 +1953,28 @@ void CoolRun::updatePowerIcon(PowerIcon::PowerType _type, float _percentage)
 }
 
 #pragma mark - Item
+void CoolRun::addRandomItem()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    auto _item = PhysicNodeFactory::getInstance()->createRandomItem();
+    
+    int xv = rand()%100 + 60;
+    _item->setXV(-xv);
+    
+    int y = 120 + rand()%((int)visibleSize.height-260);
+    _item->setPosition(Vec2(visibleSize.width + 80, y));
+    
+    if (_item->isGravityEffect())
+    {
+        m_gravityCollideObjs->addObject(_item);
+    }
+    m_gPhysics->addPhysicNode(_item);
+    m_simpleCollideObjs->addObject(_item);
+    this->addChild(_item);
+}
+
 void CoolRun::spareRunner(Runner* runner)
 {
     int count = runner->getSpareNum();
@@ -2021,21 +2260,25 @@ Land* CoolRun::getNextLand(const Vec2& pos, float space)
 void CoolRun::startFly()
 {
     auto v = this->getVelocity();
-    this->setVelocity(v+3200);
+    this->setVelocity(v+3200, false);
     
     m_jumpBtn->setVisible(false);
 }
 void CoolRun::endFly()
 {
     auto v = this->getVelocity();
-    this->setVelocity(v-3200);
+    this->setVelocity(v-3200, false);
     
     for (int i = 0; i < m_bulletObjs->count(); ++ i)
     {
         auto bullet = dynamic_cast<Bullet*>(m_bulletObjs->getObjectAtIndex(i));
         bullet->setDestoryed(true);
     }
-    
+    for (int i = 0; i < m_simpleCollideObjs->count(); ++ i)
+    {
+        auto _pNode = dynamic_cast<PhysicNode*>(m_simpleCollideObjs->getObjectAtIndex(i));
+        _pNode->setDestoryed(true);
+    }
     m_jumpBtn->setVisible(true);
 }
 

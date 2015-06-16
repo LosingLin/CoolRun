@@ -136,8 +136,8 @@ void EditorPage::save(string* buffer)
     }
     buffer->append("],");
     buffer->append("\"collections\": [");
-    log("RealCollecion num is %ld", m_realCollections->count());
-    log("Collection num is %ld", m_collections->count());
+//    log("RealCollecion num is %ld", m_realCollections->count());
+//    log("Collection num is %ld", m_collections->count());
     CCASSERT(m_realCollections->count() == m_collections->count(), "Collection Num is error!");
     for (int i = 0; i < m_collections->count(); ++ i)
     {

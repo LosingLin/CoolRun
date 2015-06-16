@@ -19,6 +19,10 @@ public:
     
     virtual bool init() override;
     CREATE_FUNC(AlertBulletNet);
+    
+    virtual void beingDestoryed() override;
+    
+    void brokeDone();
 };
 
 #endif /* defined(__CoolRun__AlertBulletNet__) */

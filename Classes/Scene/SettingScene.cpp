@@ -22,7 +22,7 @@
 #include "MYMultiLanguageManager.h"
 
 SettingLayer::SettingLayer()
-: Layer()
+: MYKeyBoardLayer()
 , m_mainFrame(nullptr)
 , m_normalFrame(nullptr)
 , m_musicSwitch(nullptr)
@@ -37,7 +37,7 @@ SettingLayer::~SettingLayer()
 
 bool SettingLayer::init()
 {
-    if (!Layer::init())
+    if (!MYKeyBoardLayer::init())
     {
         return false;
     }
@@ -46,6 +46,7 @@ bool SettingLayer::init()
     
     auto cbg = CommonBackground::create();
     this->addChild(cbg);
+    return true;
     
     m_mainFrame = Layer::create();
     this->addChild(m_mainFrame);

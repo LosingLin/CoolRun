@@ -47,6 +47,10 @@ namespace AudioHelp
     void unloadMenuEft();
     void preloadAppEft();
     void unloadAppEft();
+    
+    //source
+    void removeBigSource();
+    void addBigSource();
 }
 
 #endif /* defined(__CoolRun__AudioHelp__) */

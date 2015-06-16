@@ -52,6 +52,8 @@ void GravityPhysics::updatePhysicNodes(float delta)
     float xa = 0.0f;
     float ya = 0.0f;
     
+    float y_dis = m_gravity * delta * 10;
+    
     Vec2 pos = Vec2(0, 0);
     for (int i = 0; i < m_physicNodes->count(); ++ i) {
         pNode = dynamic_cast<PhysicNode*>(m_physicNodes->getObjectAtIndex(i));
@@ -70,7 +72,7 @@ void GravityPhysics::updatePhysicNodes(float delta)
         
         if (pNode->isGravityEffect()) {
             
-            ya += (m_gravity * delta * 10);
+            ya += y_dis;
             
             //pNode->setYA(ya);
         }

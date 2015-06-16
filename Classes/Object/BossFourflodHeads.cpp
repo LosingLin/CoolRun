@@ -192,7 +192,7 @@ Spider* BossFourflodHeads::createBornSpider(int index)
 
 void BossFourflodHeads::attkSequence(int index)
 {
-    log("attkSequence :%d", index);
+    //log("attkSequence :%d", index);
     this->setAtking(true);
     switch (index)
     {
@@ -325,6 +325,12 @@ void BossFourflodHeads::movementEvent(Armature *armature, MovementEventType move
         if ("dead" == movementID)
         {
             m_gameController->loadNextMission();
+            
+            auto pos = this->getPosition();
+            auto csize = this->getContentSize();
+            pos.x += csize.width/2;
+            pos.y += csize.height/2;
+            m_gameController->showScore(this->getScore(), pos);
             
             this->addPlayerScore();
             this->setDestoryed(true);

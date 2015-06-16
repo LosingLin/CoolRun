@@ -86,7 +86,8 @@ void EditorDetailSimpleMenu::setPhysicNodeContaner(EditorPhysicNodeContainer* pN
             m_csizeWidth = nullptr;
         }
     }
-    if (pType == kPhysicNodeSpiderKind || pType == kPhysicNodeSpiderPoison || pType == kPhysicNodeSpiderSpines) {
+    if (pType == kPhysicNodeSpiderKind || pType == kPhysicNodeSpiderPoison ||
+        pType == kPhysicNodeSpiderSpines /*|| pType == kPhysicNodeSpiderFly*/) {
         m_spideState = EditorSelector::create(__Array::create(
                                                               __String::create(MYMultiLanguageManager::getInstance()->getText("e_ssStand")),
                                                               __String::create(MYMultiLanguageManager::getInstance()->getText("e_ssWalk")),
