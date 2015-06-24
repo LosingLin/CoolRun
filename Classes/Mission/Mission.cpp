@@ -141,9 +141,9 @@ string Mission::getRandomMissionData(const string& path, const string& format, i
     for (int i = 0; i < num; ++ i)
     {
         int r = rand() % total + 1;
-        log("pathformat : %s", (path+format).c_str());
+        //log("pathformat : %s", (path+format).c_str());
         sprintf(ca, (path+format).c_str(), r);
-        log("name : %s\n", ca);
+        //log("name : %s\n", ca);
         data += FileUtils::getInstance()->getStringFromFile(ca);
         
         if (i != num-1)

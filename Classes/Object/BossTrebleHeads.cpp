@@ -13,6 +13,7 @@
 #include "SpiderPoison.h"
 #include "SpiderSpines.h"
 #include "HpBar.h"
+#include "ResourceManager.h"
 
 BossTrebleHeads::BossTrebleHeads()
 : Boss()
@@ -60,13 +61,17 @@ bool BossTrebleHeads::init()
 void BossTrebleHeads::initRes()
 {
     AudioHelp::preloadBossEft();
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss02.ExportJson");
 }
 void BossTrebleHeads::destoryRes()
 {
     AudioHelp::unloadBossEft();
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(
+                                                                ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                                );
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss02.ExportJson");
 }
 

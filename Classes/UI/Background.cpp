@@ -36,7 +36,7 @@ bool Background::init()
 void Background::addBackgound(const std::string& framename)
 {
     
-    float scale = 1274.0f/1024.0f;
+    float scale = 1274.0f/1000.0f;
     
     auto _sp = Sprite::createWithSpriteFrameName(framename);
     _sp->setAnchorPoint(Vec2(0, 0));

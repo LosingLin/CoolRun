@@ -11,6 +11,7 @@
 #include "NormalFrame.h"
 #include "MYMultiLanguageManager.h"
 #include "MobClickCpp.h"
+#include "ResourceManager.h"
 
 
 ExitGameMenu::ExitGameMenu()
@@ -50,14 +51,16 @@ bool ExitGameMenu::init()
     m_cancelBtn->addTouchEventListener(CC_CALLBACK_2(ExitGameMenu::cancelCallback, this));
     m_cancelBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_cancelBtn->setPosition(Vec2(hpos.x - 130, hpos.y - 36));
-    m_cancelBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("cancel").c_str());
+    m_cancelBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                             MYMultiLanguageManager::getInstance()->getText("cancel").c_str());
     this->addChild(m_cancelBtn);
     
     m_confirmBtn = MYButton::createWithFrameName("btn_rect02.png", "btn_rect02_hl.png");
     m_confirmBtn->addTouchEventListener(CC_CALLBACK_2(ExitGameMenu::confirmCallback, this));
     m_confirmBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_confirmBtn->setPosition(Vec2(hpos.x + 130, hpos.y - 36));
-    m_confirmBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("confirm").c_str());
+    m_confirmBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                              MYMultiLanguageManager::getInstance()->getText("confirm").c_str());
     this->addChild(m_confirmBtn);
     
     this->setLocalZOrder(ZORDER_SYS);

@@ -114,6 +114,121 @@ int MYUserDefaultManager::getHighScoreNormalEditor()
     return UserDefault::getInstance()->getIntegerForKey(HIGH_SCORE_NORMAL_ED);
 }
 
+void MYUserDefaultManager::setOwnDiamond(int num)
+{
+    UserDefault::getInstance()->setIntegerForKey(OWN_DIAMOND, num);
+}
+int MYUserDefaultManager::getOwnDiamond()
+{
+    return UserDefault::getInstance()->getIntegerForKey(OWN_DIAMOND, 0);
+}
+void MYUserDefaultManager::addOwnDiamond(int num)
+{
+    int before = this->getOwnDiamond();
+    this->setOwnDiamond(before + num);
+}
+
+#pragma mark - power
+
+void MYUserDefaultManager::setPowerLevelSpare(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_SPARE, level);
+}
+int MYUserDefaultManager::getPowerLevelSpare()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_SPARE, 0);
+}
+void MYUserDefaultManager::addPowerLevelSpare(int level)
+{
+    int befLv = this->getPowerLevelSpare();
+    this->setPowerLevelSpare(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelMagnet(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_MAGNET, level);
+}
+int MYUserDefaultManager::getPowerLevelMagnet()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_MAGNET, 0);
+}
+void MYUserDefaultManager::addPowerLevelMagnet(int level)
+{
+    int befLv = this->getPowerLevelMagnet();
+    this->setPowerLevelMagnet(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelTimesCoin(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_TIMESCOIN, level);
+}
+int MYUserDefaultManager::getPowerLevelTimesCoin()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_TIMESCOIN, 0);
+}
+void MYUserDefaultManager::addPowerLevelTimesCoin(int level)
+{
+    int befLv = this->getPowerLevelTimesCoin();
+    this->setPowerLevelTimesCoin(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelTimesJump(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_TIMESJUMP, level);
+}
+int MYUserDefaultManager::getPowerLevelTimesJump()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_TIMESJUMP, 0);
+}
+void MYUserDefaultManager::addPowerLevelTimesJump(int level)
+{
+    int befLv = this->getPowerLevelTimesJump();
+    this->setPowerLevelTimesJump(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelDad(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_DAD, level);
+}
+int MYUserDefaultManager::getPowerLevelDad()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_DAD, 0);
+}
+void MYUserDefaultManager::addPowerLevelDad(int level)
+{
+    int befLv = this->getPowerLevelDad();
+    this->setPowerLevelDad(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelLandBuild(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_LANDBUILD, level);
+}
+int MYUserDefaultManager::getPowerLevelLandBuild()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_LANDBUILD, 0);
+}
+void MYUserDefaultManager::addPowerLevelLandBuild(int level)
+{
+    int befLv = this->getPowerLevelLandBuild();
+    this->setPowerLevelLandBuild(befLv + level);
+}
+
+void MYUserDefaultManager::setPowerLevelFly(int level)
+{
+    UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_FLY, level);
+}
+int MYUserDefaultManager::getPowerLevelFly()
+{
+    return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_FLY, 0);
+}
+void MYUserDefaultManager::addPowerLevelFly(int level)
+{
+    int befLv = this->getPowerLevelFly();
+    this->setPowerLevelFly(befLv + level);
+}
+
+
 #pragma mark -
 
 MYUserDefaultManager* MYUserDefaultManager::getInstance()

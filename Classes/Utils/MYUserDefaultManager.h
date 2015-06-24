@@ -20,6 +20,17 @@
 #define HIGH_SCORE_NORMAL "high_score_normal"
 #define HIGH_SCORE_NORMAL_ED "high_score_normal_ed"
 
+//UserData
+#define OWN_DIAMOND "own_diamond"
+#define POWER_CURLV_SPARE       "power_curlv_spare"
+#define POWER_CURLV_MAGNET      "power_curlv_magnet"
+#define POWER_CURLV_TIMESCOIN   "power_curlv_timescoin"
+#define POWER_CURLV_TIMESJUMP   "power_curlv_timejump"
+#define POWER_CURLV_DAD         "power_curlv_dad"
+#define POWER_CURLV_LANDBUILD   "power_curlv_landbuild"
+#define POWER_CURLV_FLY         "power_curlv_fly"
+
+
 USING_NS_CC;
 using namespace std;
 
@@ -50,6 +61,39 @@ public:
     
     void setHighScoreNormalEditor(int score);
     int getHighScoreNormalEditor();
+    
+    void setOwnDiamond(int num);
+    int getOwnDiamond();
+    void addOwnDiamond(int num);
+    
+    //power
+    void setPowerLevelSpare(int level);
+    int getPowerLevelSpare();
+    void addPowerLevelSpare(int level = 1);
+    
+    void setPowerLevelMagnet(int level);
+    int getPowerLevelMagnet();
+    void addPowerLevelMagnet(int level = 1);
+    
+    void setPowerLevelTimesCoin(int level);
+    int getPowerLevelTimesCoin();
+    void addPowerLevelTimesCoin(int level = 1);
+    
+    void setPowerLevelTimesJump(int level);
+    int getPowerLevelTimesJump();
+    void addPowerLevelTimesJump(int level = 1);
+    
+    void setPowerLevelDad(int level);
+    int getPowerLevelDad();
+    void addPowerLevelDad(int level = 1);
+    
+    void setPowerLevelLandBuild(int level);
+    int getPowerLevelLandBuild();
+    void addPowerLevelLandBuild(int level = 1);
+    
+    void setPowerLevelFly(int level);
+    int getPowerLevelFly();
+    void addPowerLevelFly(int level = 1);
 private:
     static MYUserDefaultManager* m_instance;
 };

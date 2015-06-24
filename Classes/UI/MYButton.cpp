@@ -168,10 +168,10 @@ bool MYButton::isTouchInContent(Touch *touch)
     auto touchLoc = touch->getLocation();
     auto _loc = this->convertTouchToNodeSpace(touch);
     auto _size = this->getContentSize();
-    log("touchId: %d, touchLoc: (%f, %f)", touch->getID(), touchLoc.x, touchLoc.y);
+//    log("touchId: %d, touchLoc: (%f, %f)", touch->getID(), touchLoc.x, touchLoc.y);
 //    auto _arloc = this->convertTouchToNodeSpaceAR(touch);
 //    log("touch loc : (%f, %f)", _arloc.x, _arloc.y);
-    log("touch loc : (%f, %f), _size(%f, %f)", _loc.x, _loc.y, _size.width, _size.height);
+//    log("touch loc : (%f, %f), _size(%f, %f)", _loc.x, _loc.y, _size.width, _size.height);
 //    if (_loc.x >= 0 && _loc.x <= _size.width &&
 //        _loc.y >= 0 && _loc.y <= _size.height)
 //    {
@@ -285,7 +285,7 @@ bool MYButton::onTouchBegan(Touch *touch, Event *unusedEvent)
     
     if (this->isAudioEnable())
     {
-        AudioHelp::playEft("btn_click.wav");
+        AudioHelp::playEft("btn_click.mp3");
     }
     
     

@@ -10,6 +10,7 @@
 #include "MYScene.h"
 #include "MenuScene.h"
 #include "SceneHelp.h"
+#include "ResourceManager.h"
 
 LogoLayer::LogoLayer()
 : Layer()
@@ -41,7 +42,7 @@ bool LogoLayer::init()
     auto layer = LayerColor::create(Color4B(255, 255, 255, 255));
     this->addChild(layer);
     
-    auto sp = Sprite::create("launch.png");
+    auto sp = Sprite::create(ResourceManager::getInstance()->getPngRes("launch"));
     sp->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     this->addChild(sp);
     

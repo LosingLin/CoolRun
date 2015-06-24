@@ -10,6 +10,7 @@
 #include "MYScene.h"
 #include "ActionHelp.h"
 #include "CoolRunScene.h"
+#include "ResourceManager.h"
 
 
 FreshGuideLayer::FreshGuideLayer()
@@ -42,7 +43,7 @@ bool FreshGuideLayer::init()
     this->addChild(leftTap);
     auto leftAction = ActionHelp::createFrameAction("tap%02d.png", 1, 4, 0.3);
     leftTap->runAction(leftAction);
-    auto leftText = Label::createWithBMFont("F.fnt", "Atk");
+    auto leftText = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("F"), "Atk");
     leftText->setPosition(Vec2(origin.x + visibleSize.width/4, origin.y + visibleSize.height/2 + 30));
     this->addChild(leftText);
     auto _scaleTo01 = ScaleTo::create(0.2, 1.4f);
@@ -57,7 +58,7 @@ bool FreshGuideLayer::init()
     this->addChild(rightTap);
     auto rightAction = ActionHelp::createFrameAction("tap%02d.png", 1, 4, 0.3);
     rightTap->runAction(rightAction);
-    auto rigthText = Label::createWithBMFont("F.fnt", "Jump");
+    auto rigthText = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("F"), "Jump");
     auto pos = Vec2(origin.x + visibleSize.width*3/4, origin.y + visibleSize.height/2 + 30);
     rigthText->setPosition(pos);
     this->addChild(rigthText);

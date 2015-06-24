@@ -9,6 +9,7 @@
 #include "SelectLanguageLayer.h"
 #include "NormalFrame.h"
 #include "MYMultiLanguageManager.h"
+#include "ResourceManager.h"
 
 SelectLanguageLayer::SelectLanguageLayer()
 : Layer()
@@ -42,14 +43,16 @@ bool SelectLanguageLayer::init()
     this->addChild(m_bgFrame);
     
     m_enBtn = MYButton::createWithFrameName("btn_rect.png", "btn_rect_hl.png");
-    m_enBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("English").c_str());
+    m_enBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                         MYMultiLanguageManager::getInstance()->getText("English").c_str());
     m_enBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_enBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     m_enBtn->addTouchEventListener(CC_CALLBACK_2(SelectLanguageLayer::selectDoneCallback, this));
     this->addChild(m_enBtn);
     
     m_chBtn = MYButton::createWithFrameName("btn_rect.png", "btn_rect_hl.png");
-    m_chBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("Chinese").c_str());
+    m_chBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                         MYMultiLanguageManager::getInstance()->getText("Chinese").c_str());
     m_chBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_chBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 120));
     m_chBtn->addTouchEventListener(CC_CALLBACK_2(SelectLanguageLayer::selectDoneCallback, this));

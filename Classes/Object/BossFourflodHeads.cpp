@@ -15,6 +15,7 @@
 #include "SpiderSpines.h"
 #include "HpBar.h"
 #include "GlobalDefined.h"
+#include "ResourceManager.h"
 
 BossFourflodHeads::BossFourflodHeads()
 : Boss()
@@ -63,13 +64,17 @@ bool BossFourflodHeads::init()
 void BossFourflodHeads::initRes()
 {
     AudioHelp::preloadBossEft();
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss03.ExportJson");
 }
 void BossFourflodHeads::destoryRes()
 {
     AudioHelp::unloadBossEft();
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(
+                                                                ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                                );
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss03.ExportJson");
 }
 

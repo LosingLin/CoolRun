@@ -1,27 +1,27 @@
 //
-//  Score.cpp
+//  Box.cpp
 //  CoolRun
 //
-//  Created by ManYou on 15/2/11.
+//  Created by ManYou on 15/6/24.
 //
 //
 
-#include "Score.h"
+#include "Box.h"
 #include "MYMultiLanguageManager.h"
 #include "ResourceManager.h"
 
-Score::Score()
+Box::Box()
 : Node()
 , m_numLab(nullptr)
 {
     
 }
-Score::~Score()
+Box::~Box()
 {
     
 }
 
-bool Score::init()
+bool Box::init()
 {
     if (!Node::init())
     {
@@ -36,14 +36,9 @@ bool Score::init()
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
     
-    auto scoreTxt = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes(
-                                                                                      MYMultiLanguageManager::getInstance()->getText("Score_fnt")
-                                                                                      ),
-                                            MYMultiLanguageManager::getInstance()->getText("Score:"));
-    scoreTxt->setAnchorPoint(Vec2(0, 0));
-    scoreTxt->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-    scoreTxt->setPosition(Vec2(12, 2));
-    this->addChild(scoreTxt);
+//    auto box_icon = Sprite::createWithSpriteFrameName("");
+//    box_icon->setPosition(Vec2(12, 2));
+//    this->addChild(box_icon);
     
     m_numLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("Score"), "0");
     m_numLab->setAnchorPoint(Vec2(0, 0.5));
@@ -53,7 +48,7 @@ bool Score::init()
     return true;
 }
 
-void Score::setString(const std::string& str)
+void Box::setString(const std::string& str)
 {
     auto _scaleTo = ScaleTo::create(0.1f, 1.2f);
     auto _scaleTo2 = ScaleTo::create(0.1f, 1.0f);

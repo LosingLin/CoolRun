@@ -13,6 +13,7 @@
 #include "SpiderPoison.h"
 #include "SpiderSpines.h"
 #include "HpBar.h"
+#include "ResourceManager.h"
 
 BossDoubleHeads::BossDoubleHeads()
 : Boss()
@@ -62,14 +63,18 @@ void BossDoubleHeads::initRes()
 {
     AudioHelp::preloadBossEft();
     
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                    ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Boss01.ExportJson");
 }
 void BossDoubleHeads::destoryRes()
 {
     AudioHelp::unloadBossEft();
     
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("BossSpider.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(
+                    ResourceManager::getInstance()->getPlistRes("BossSpider")
+                                                                );
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("Boss01.ExportJson");
 }
 
@@ -298,7 +303,7 @@ void BossDoubleHeads::frameEvent(Bone *bone, const std::string& frameEventName, 
 {
     if ("atk_01_shot" == frameEventName)
     {
-        log("BOSS == atk_01_shot");
+        //log("BOSS == atk_01_shot");
         auto pos = this->getPosition();
         pos.x += 280;
         pos.y += 100;
@@ -306,7 +311,7 @@ void BossDoubleHeads::frameEvent(Bone *bone, const std::string& frameEventName, 
     }
     else if("atk_01_end" == frameEventName)
     {
-        log("BOSS == atk_01_end");
+        //log("BOSS == atk_01_end");
         this->play(kBDHPlayIndex_Walk);
     }
     else if ("atk_02_shot" == frameEventName)

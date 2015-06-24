@@ -8,6 +8,7 @@
 
 #include "Clouds.h"
 #include "GlobalDefined.h"
+#include "ResourceManager.h"
 
 #define MAX_COUNT_CLOUD 28
 
@@ -33,8 +34,9 @@ bool Clouds::init()
     
     CREATEANDRETAINARRAY(m_clouds);
     
-    
-    
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("Clouds")
+                                                             );
     
     
     return true;

@@ -9,6 +9,7 @@
 #include "AudioHelp.h"
 #include "MYUserDefaultManager.h"
 
+
 #define CHECK_EFFECT_SWITCH if(MYUserDefaultManager::getInstance()->isEffectOff()) { return; }
 #define CHECK_BGMUSIC_SWITCH if(MYUserDefaultManager::getInstance()->isMusicOff()) { return; }
 
@@ -95,59 +96,66 @@ void AudioHelp::playBeAttackedEft()
 {
 //    int r = rand()%4+1;
 //    char name[20] = {'\0'};
-//    sprintf(name, "beAtk_%02d.wav", r);
+//    sprintf(name, "beAtk_%02d.mp3", r);
 //    AudioHelp::playEft(name);
-    AudioHelp::playEft("beAtk_01.wav");
+    AudioHelp::playEft("beAtk_01.mp3");
+}
+void AudioHelp::playBePickedEft()
+{
+    int r = rand()%3 + 1;
+    char name[20] = {'\0'};
+    sprintf(name, "coin_%02d.mp3", r);
+    AudioHelp::playEft(name);
 }
 
 void AudioHelp::preloadHomeEft()
 {
-    AudioHelp::preloadEft("door_close.wav");
-    AudioHelp::preloadEft("door_open.wav");
+    AudioHelp::preloadEft("door_close.mp3");
+    AudioHelp::preloadEft("door_open.mp3");
     AudioHelp::preloadEft("help.mp3");
 }
 void AudioHelp::unloadHomeEft()
 {
-    AudioHelp::unloadEft("door_close.wav");
-    AudioHelp::unloadEft("door_open.wav");
+    AudioHelp::unloadEft("door_close.mp3");
+    AudioHelp::unloadEft("door_open.mp3");
     AudioHelp::unloadEft("help.mp3");
 }
 void AudioHelp::preloadBossEft()
 {
-    AudioHelp::preloadEft("shoot_bullet.wav");
-    AudioHelp::preloadEft("shoot_net.wav");
+    AudioHelp::preloadEft("shoot_bullet.mp3");
+    AudioHelp::preloadEft("shoot_net.mp3");
     AudioHelp::preloadEft("spit.mp3");
 }
 void AudioHelp::unloadBossEft()
 {
-    AudioHelp::unloadEft("shoot_bullet.wav");
-    AudioHelp::unloadEft("shoot_net.wav");
+    AudioHelp::unloadEft("shoot_bullet.mp3");
+    AudioHelp::unloadEft("shoot_net.mp3");
     AudioHelp::unloadEft("spit.mp3");
 }
 void AudioHelp::preloadMainEft()
 {
     AudioHelp::preloadBgA("day_min.mp3");
     AudioHelp::preloadBgA("boss_min.mp3");
-    AudioHelp::preloadEft("warning.wav");
+    AudioHelp::preloadEft("warning.mp3");
     AudioHelp::preloadEft("coin_01.mp3");
     AudioHelp::preloadEft("coin_02.mp3");
     AudioHelp::preloadEft("coin_03.mp3");
-    AudioHelp::preloadEft("beAtk_01.wav");
-    AudioHelp::preloadEft("runner_atk.wav");
-    AudioHelp::preloadEft("runner_rebound.wav");
+    AudioHelp::preloadEft("beAtk_01.mp3");
+    AudioHelp::preloadEft("runner_atk.mp3");
+    AudioHelp::preloadEft("runner_rebound.mp3");
     AudioHelp::preloadEft("gameover.mp3");
 }
 void AudioHelp::unloadMainEft()
 {
     AudioHelp::unloadBgA("day_min.mp3");
     AudioHelp::unloadBgA("boss_min.mp3");
-    AudioHelp::unloadEft("warning.wav");
+    AudioHelp::unloadEft("warning.mp3");
     AudioHelp::unloadEft("coin_01.mp3");
     AudioHelp::unloadEft("coin_02.mp3");
     AudioHelp::unloadEft("coin_03.mp3");
-    AudioHelp::unloadEft("beAtk_01.wav");
-    AudioHelp::unloadEft("runner_atk.wav");
-    AudioHelp::unloadEft("runner_rebound.wav");
+    AudioHelp::unloadEft("beAtk_01.mp3");
+    AudioHelp::unloadEft("runner_atk.mp3");
+    AudioHelp::unloadEft("runner_rebound.mp3");
     AudioHelp::unloadEft("gameover.mp3");
 }
 void AudioHelp::preloadMenuEft()
@@ -160,22 +168,9 @@ void AudioHelp::unloadMenuEft()
 }
 void AudioHelp::preloadAppEft()
 {
-    AudioHelp::preloadEft("btn_click.wav");
+    AudioHelp::preloadEft("btn_click.mp3");
 }
 void AudioHelp::unloadAppEft()
 {
-    AudioHelp::unloadEft("btn_click.wav");
-}
-
-void AudioHelp::removeBigSource()
-{
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("tempRes.plist");
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("background.plist");
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("background02.plist");
-}
-void AudioHelp::addBigSource()
-{
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
+    AudioHelp::unloadEft("btn_click.mp3");
 }

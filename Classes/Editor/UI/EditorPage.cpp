@@ -16,6 +16,7 @@
 #include "Collection.h"
 #include "MYMultiLanguageManager.h"
 #include "EditorManager.h"
+#include "ResourceManager.h"
 
 EditorPage::EditorPage()
 : EditorNode()
@@ -58,14 +59,12 @@ bool EditorPage::init()
     
     auto layer = LayerColor::create(Color4B(255, 255, 0, 150), 1264, csize.height);
     this->addChild(layer);
-    auto alert = Label::createWithBMFont(
-                                         "SetBtn.fnt",
+    auto alert = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("SetBtn"),
                                          MYMultiLanguageManager::getInstance()->getText("e_staticObjArea")
                                          );
     if (EditorManager::EditorType::PLAYER == type)
     {
-        alert = Label::createWithBMFont(
-                                        "SetBtn.fnt",
+        alert = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("SetBtn"),
                                         MYMultiLanguageManager::getInstance()->getText("e_tapStart")
                                         );
     }
@@ -78,8 +77,7 @@ bool EditorPage::init()
     layer->setPosition(1264, 0);
     this->addChild(layer);
     
-    alert = Label::createWithBMFont(
-                                    "SetBtn.fnt",
+    alert = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("SetBtn"),
                                     MYMultiLanguageManager::getInstance()->getText("e_dynamicObjArea")
                                     );
     alert->setAnchorPoint(Vec2(0.5, 0.5));

@@ -36,6 +36,7 @@
 #include "DeathMoth.h"
 #include "Score.h"
 #include "Stretch.h"
+#include "Box.h"
 #include "PopViewLayer.h"
 #include "MenuScene.h"
 #include "HpBar.h"
@@ -50,6 +51,7 @@
 #include "ReviveMenu.h"
 #include "GameOverMenu.h"
 #include "Vungle.h"
+#include "ResourceManager.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -92,6 +94,8 @@ CoolRun::CoolRun()
 , m_score(0)
 , m_stretchView(nullptr)
 , m_stretch(0)
+, m_boxView(nullptr)
+, m_boxNum(0)
 , m_leaves(nullptr)
 , m_clouds(nullptr)
 , m_runType(RunType::NORMAL)
@@ -154,8 +158,6 @@ bool CoolRun::init()
     
 //    Director::getInstance()->getTextureCache()->addImageAsync("bg001.png", std::bind(&CoolRun::finishAddImage, this, std::placeholders::_1));
 
-//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
-//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
 //    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
 //    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
     
@@ -178,7 +180,7 @@ bool CoolRun::init()
     
     float scale = 1264.0/1024.0;
     
-    auto bg = Sprite::createWithSpriteFrameName("bg.png");
+    auto bg = Sprite::create(ResourceManager::getInstance()->getPngRes("bg"));
     bg->setScale(scale);
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
@@ -191,7 +193,7 @@ bool CoolRun::init()
     m_awayBG->setPosition(Vec2(0, 0));
     this->addChild(m_awayBG);
     
-    auto cover = Sprite::createWithSpriteFrameName("bg_cover.png");
+    auto cover = Sprite::create(ResourceManager::getInstance()->getPngRes("bg_cover"));
     cover->setScale(scale);
     cover->setAnchorPoint(Vec2::ZERO);
     cover->setOpacity(180);
@@ -202,7 +204,7 @@ bool CoolRun::init()
     m_farBG->setPosition(Vec2(0, 0));
     this->addChild(m_farBG);
     
-    cover = Sprite::createWithSpriteFrameName("bg_cover.png");
+    cover = Sprite::create(ResourceManager::getInstance()->getPngRes("bg_cover"));
     cover->setScale(scale);
     cover->setAnchorPoint(Vec2::ZERO);
     cover->setOpacity(180);
@@ -221,9 +223,15 @@ bool CoolRun::init()
     this->addChild(m_scoreView);
     
     m_stretchView = Stretch::create();
-    m_stretchView->setPosition(Vec2(origin.x + visibleSize.width/2 - 50, origin.y + visibleSize.height - 56));
+    m_stretchView->setPosition(Vec2(origin.x + visibleSize.width/2 - 80, origin.y + visibleSize.height - 56));
     m_stretchView->setLocalZOrder(ZORDER_HEADMENU);
     this->addChild(m_stretchView);
+    
+    m_boxView = Box::create();
+    m_boxView->setPosition(Vec2(origin.x + visibleSize.width - 200, origin.y + visibleSize.height - 56));
+    m_boxView->setLocalZOrder(ZORDER_HEADMENU);
+    this->addChild(m_boxView);
+    
     
     
     //stretch lab
@@ -448,7 +456,7 @@ void CoolRun::showBossWarning()
         _c->setDestoryed(true);
     }
     
-    AudioHelp::playEft("warning.wav");
+    AudioHelp::playEft("warning.mp3");
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -524,6 +532,9 @@ void CoolRun::hideInfoView()
     moveBy = MoveBy::create(0.2, Vec2(0, 120));
     m_stretchView->runAction(moveBy);
     
+    moveBy = MoveBy::create(0.2, Vec2(0, 120));
+    m_boxView->runAction(moveBy);
+    
 }
 void CoolRun::showInfoView()
 {
@@ -532,6 +543,9 @@ void CoolRun::showInfoView()
     
     moveBy = MoveBy::create(0.2, Vec2(0, -120));
     m_stretchView->runAction(moveBy);
+    
+    moveBy = MoveBy::create(0.2, Vec2(0, -120));
+    m_boxView->runAction(moveBy);
 }
 
 void CoolRun::actionCallback()
@@ -674,6 +688,8 @@ void CoolRun::onExitTransitionDidStart()
 void CoolRun::onExit()
 {
     log("CoolRun.......onExit");
+    
+    Director::getInstance()->getScheduler()->unschedule(schedule_selector(CoolRun::gameMain), this);
     
     MYKeyBoardLayer::onExit();
 }
@@ -1190,7 +1206,7 @@ void CoolRun::_loadMissionDataInterface(MissionDataInterface* _missionDataInterf
     this->_addChildren(_dirCollideObjs, isFirstPage);
     
     auto _simpleCollideObjs = _missionDataInterface->getSimpleCollideObjects();
-    log("_simpleCollideObjs : %zd", _simpleCollideObjs->count());
+    //log("_simpleCollideObjs : %zd", _simpleCollideObjs->count());
     for (int i = 0; i < _simpleCollideObjs->count(); ++ i)
     {
         auto _obj = dynamic_cast<PhysicNode*>(_simpleCollideObjs->getObjectAtIndex(i));
@@ -1216,9 +1232,9 @@ void CoolRun::_loadMissionDataInterface(MissionDataInterface* _missionDataInterf
 
 void CoolRun::_loadMissionInterface(MissionInterface* _missionInterface, bool isFirstPage)
 {
-    log("Mission");
+    //log("Mission");
     this->_loadMissionDataInterface(_missionInterface->getMissionObjects(), isFirstPage);
-    log("Collection");
+    //log("Collection");
     this->_loadMissionDataInterface(_missionInterface->getMissionCollection(), isFirstPage);
 }
 
@@ -1259,7 +1275,7 @@ void CoolRun::loadNextPage(bool isFirstPage)
     }
     
     
-    log("==========PAGE=========");
+    //log("==========PAGE=========");
     this->_loadMissionInterface(_page->getMissionInterface(), isFirstPage);
     //this->_loadMissionEvents(_page->getEvents());
     
@@ -1832,9 +1848,25 @@ void CoolRun::addStretch(int stretch)
     ss >> s;
     m_stretchView->setString(s);
 }
+void CoolRun::addBox(int box)
+{
+    if (GameState::BOSS == m_gameState)
+    {
+        return;
+    }
+    
+    m_boxNum += box;
+    
+    string s;
+    stringstream ss(s);
+    ss << m_boxNum;
+    ss >> s;
+    m_boxView->setString(s);
+    
+}
 void CoolRun::showScore(int score, const Vec2& pos)
 {
-    auto _alabel = Label::createWithBMFont("Score.fnt", "0");
+    auto _alabel = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("Score"), "0");
     _alabel->setAnchorPoint(Vec2(0.5, 0.5));
     _alabel->setPosition(pos);
     _alabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
@@ -2259,10 +2291,13 @@ Land* CoolRun::getNextLand(const Vec2& pos, float space)
 
 void CoolRun::startFly()
 {
+    
+    m_jumpBtn->setVisible(false);
+    
     auto v = this->getVelocity();
     this->setVelocity(v+3200, false);
     
-    m_jumpBtn->setVisible(false);
+    
 }
 void CoolRun::endFly()
 {

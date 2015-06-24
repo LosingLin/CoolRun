@@ -52,6 +52,7 @@ class Land;
 class Spider;
 class Score;
 class Stretch;
+class Box;
 class HpBar;
 class Leaves;
 class BackgroundAudio;
@@ -171,6 +172,7 @@ public:
     void dead(Runner* runner);
     void addScore(int score);
     void addStretch(int stretch);
+    void addBox(int box);
     void showScore(int score, const Vec2& pos);
     void _showScoreEnd(Node* node);
     void loadNextMission();
@@ -258,6 +260,8 @@ private:
     int m_score;
     Stretch* m_stretchView;
     int m_stretch;
+    Box* m_boxView;
+    int m_boxNum;
     
     
     Leaves* m_leaves;

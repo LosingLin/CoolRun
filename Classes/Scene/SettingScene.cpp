@@ -20,6 +20,7 @@
 #include "CommonBackground.h"
 #include "Leaves.h"
 #include "MYMultiLanguageManager.h"
+#include "ResourceManager.h"
 
 SettingLayer::SettingLayer()
 : MYKeyBoardLayer()
@@ -46,7 +47,7 @@ bool SettingLayer::init()
     
     auto cbg = CommonBackground::create();
     this->addChild(cbg);
-    return true;
+    //return true;
     
     m_mainFrame = Layer::create();
     this->addChild(m_mainFrame);
@@ -71,14 +72,16 @@ bool SettingLayer::init()
     m_mainFrame->addChild(m_musicSwitch);
     
     m_languageBtn = MYButton::createWithFrameName("btn_rect.png", "btn_rect_hl.png");
-    m_languageBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("Language").c_str());
+    m_languageBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                               MYMultiLanguageManager::getInstance()->getText("Language").c_str());
     m_languageBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_languageBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 60));
     m_languageBtn->addTouchEventListener(CC_CALLBACK_2(SettingLayer::menuBtnCallback, this));
     m_mainFrame->addChild(m_languageBtn);
     
     m_creditBtn = MYButton::createWithFrameName("btn_rect.png", "btn_rect_hl.png");
-    m_creditBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("Credit").c_str());
+    m_creditBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                             MYMultiLanguageManager::getInstance()->getText("Credit").c_str());
     m_creditBtn->setAnchorPoint(Vec2(0.5, 0.5));
     m_creditBtn->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 - 180));
     m_creditBtn->addTouchEventListener(CC_CALLBACK_2(SettingLayer::menuBtnCallback, this));
@@ -169,9 +172,12 @@ void SettingLayer::backMenuCallback(Ref* _ref, MYButton::TouchEventType _type)
 
 void SettingLayer::updateMainFrame()
 {
-    m_normalFrame->updateBMFTitleLabel("NFTitle.fnt", MYMultiLanguageManager::getInstance()->getText("Options"));
-    m_languageBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("Language").c_str());
-    m_creditBtn->addBMFLabel("SetBtn.fnt", MYMultiLanguageManager::getInstance()->getText("Credit").c_str());
+    m_normalFrame->updateBMFTitleLabel(ResourceManager::getInstance()->getFntRes("NFTitle"),
+                                       MYMultiLanguageManager::getInstance()->getText("Options"));
+    m_languageBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                               MYMultiLanguageManager::getInstance()->getText("Language").c_str());
+    m_creditBtn->addBMFLabel(ResourceManager::getInstance()->getFntRes("SetBtn").c_str(),
+                             MYMultiLanguageManager::getInstance()->getText("Credit").c_str());
 }
 
 Scene* SettingLayer::createScene()

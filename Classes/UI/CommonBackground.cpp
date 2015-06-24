@@ -9,6 +9,7 @@
 #include "CommonBackground.h"
 #include "Background.h"
 #include "Leaves.h"
+#include "ResourceManager.h"
 
 
 CommonBackground::CommonBackground()
@@ -36,7 +37,7 @@ bool CommonBackground::init()
     
     float scale = 1264.0/1024.0;
     
-    auto bg = Sprite::createWithSpriteFrameName("bg.png");
+    auto bg = Sprite::create(ResourceManager::getInstance()->getPngRes("bg"));
     bg->setScale(scale);
     bg->setAnchorPoint(Vec2::ZERO);
     bg->setOpacity(20);
@@ -47,7 +48,7 @@ bool CommonBackground::init()
     m_awayBG->setPosition(Vec2(0, 0));
     this->addChild(m_awayBG);
     
-    auto cover = Sprite::createWithSpriteFrameName("bg_cover.png");
+    auto cover = Sprite::create(ResourceManager::getInstance()->getPngRes("bg_cover"));
     cover->setScale(scale);
     cover->setAnchorPoint(Vec2::ZERO);
     cover->setOpacity(40);
@@ -58,7 +59,7 @@ bool CommonBackground::init()
     m_farBG->setPosition(Vec2(0, 0));
     this->addChild(m_farBG);
     
-    cover = Sprite::createWithSpriteFrameName("bg_cover.png");
+    cover = Sprite::create(ResourceManager::getInstance()->getPngRes("bg_cover"));
     cover->setScale(scale);
     cover->setAnchorPoint(Vec2::ZERO);
     cover->setOpacity(60);

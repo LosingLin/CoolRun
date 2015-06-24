@@ -9,6 +9,7 @@
 #include "CreditLayer.h"
 #include "NormalFrame.h"
 #include "MYMultiLanguageManager.h"
+#include "ResourceManager.h"
 
 
 CreditLayer::CreditLayer()
@@ -43,34 +44,40 @@ bool CreditLayer::init()
     //Artist Programmers Special thanks
     int y = origin.y + visibleSize.height - 140;
     int x = origin.x + visibleSize.width/2;
-    auto programeLab = Label::createWithBMFont("CreditsTitle.fnt", MYMultiLanguageManager::getInstance()->getText("Programmers"));
+    auto programeLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsTitle"),
+                                               MYMultiLanguageManager::getInstance()->getText("Programmers"));
     programeLab->setAnchorPoint(Vec2(0.5, 0.5));
     programeLab->setPosition(Vec2(x, y));
     this->addChild(programeLab);
     y -= 44;
-    auto pnLab = Label::createWithBMFont("CreditsItem.fnt", MYMultiLanguageManager::getInstance()->getText("Mingmin Lin"));
+    auto pnLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsItem"),
+                                         MYMultiLanguageManager::getInstance()->getText("Mingmin Lin"));
     pnLab->setAnchorPoint(Vec2(0.5, 0.5));
     pnLab->setPosition(Vec2(x, y));
     this->addChild(pnLab);
     
     y -= 80;
-    auto artistLab = Label::createWithBMFont("CreditsTitle.fnt", MYMultiLanguageManager::getInstance()->getText("Artist"));
+    auto artistLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsTitle"),
+                                             MYMultiLanguageManager::getInstance()->getText("Artist"));
     artistLab->setAnchorPoint(Vec2(0.5, 0.5));
     artistLab->setPosition(Vec2(x, y));
     this->addChild(artistLab);
     y -= 44;
-    auto anLab = Label::createWithBMFont("CreditsItem.fnt", MYMultiLanguageManager::getInstance()->getText("Mingmin Lin"));
+    auto anLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsItem"),
+                                         MYMultiLanguageManager::getInstance()->getText("Mingmin Lin"));
     anLab->setAnchorPoint(Vec2(0.5, 0.5));
     anLab->setPosition(Vec2(x, y));
     this->addChild(anLab);
     
     y -= 80;
-    auto stLab = Label::createWithBMFont("CreditsTitle.fnt", MYMultiLanguageManager::getInstance()->getText("Speical Thanks"));
+    auto stLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsTitle"),
+                                         MYMultiLanguageManager::getInstance()->getText("Speical Thanks"));
     stLab->setAnchorPoint(Vec2(0.5, 0.5));
     stLab->setPosition(Vec2(x, y));
     this->addChild(stLab);
     y -= 44;
-    auto stn1Lab = Label::createWithBMFont("CreditsItem.fnt", MYMultiLanguageManager::getInstance()->getText("Cocos2d-x"));
+    auto stn1Lab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("CreditsItem"),
+                                           MYMultiLanguageManager::getInstance()->getText("Cocos2d-x"));
     stn1Lab->setAnchorPoint(Vec2(0.5, 0.5));
     stn1Lab->setPosition(Vec2(x, y));
     this->addChild(stn1Lab);

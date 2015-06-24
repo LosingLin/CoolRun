@@ -28,6 +28,7 @@
 #include "ItemLandBuild.h"
 #include "ItemFly.h"
 #include "Saw.h"
+#include "TreasureBox.h"
 
 PhysicNodeFactory* PhysicNodeFactory::m_instance = NULL;
 
@@ -146,6 +147,10 @@ PhysicNode* PhysicNodeFactory::create(rapidjson::Value& _value)
         case kPhysicNodeItemFly:
         {
             _pNode = ItemFly::create();
+        } break;
+        case kPhysicNodeTreasureBox:
+        {
+            _pNode = TreasureBox::create();
         } break;
         default:
             break;

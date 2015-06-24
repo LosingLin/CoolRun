@@ -13,6 +13,7 @@
 #include "SpiderSpines.h"
 #include "BossBullet.h"
 #include "BossBulletNet.h"
+#include "ResourceManager.h"
 
 DeathMoth::DeathMoth()
 : Boss()
@@ -63,13 +64,17 @@ bool DeathMoth::init()
 void DeathMoth::initRes()
 {
     AudioHelp::preloadBossEft();
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("DeadthMoth.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("DeadthMoth")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("DeathMoth.ExportJson");
 }
 void DeathMoth::destoryRes()
 {
     AudioHelp::unloadBossEft();
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("DeadthMoth.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(
+                                                                ResourceManager::getInstance()->getPlistRes("DeadthMoth")
+                                                                );
     ArmatureDataManager::getInstance()->removeArmatureFileInfo("DeathMoth.ExportJson");
 }
 

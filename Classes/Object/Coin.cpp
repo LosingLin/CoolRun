@@ -158,11 +158,7 @@ void Coin::times()
 void Coin::bePicked()
 {
     //this->unschedule(schedule_selector(Coin::update));
-    
-    int r = rand()%3 + 1;
-    char name[20] = {'\0'};
-    sprintf(name, "coin_%02d.mp3", r);
-    AudioHelp::playEft(name);
+    AudioHelp::playBePickedEft();
     
     m_sp->stopAllActions();
     m_sp->removeFromParentAndCleanup(true);

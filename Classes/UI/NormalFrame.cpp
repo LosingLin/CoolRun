@@ -7,6 +7,7 @@
 //
 
 #include "NormalFrame.h"
+#include "ResourceManager.h"
 
 NormalFrame::NormalFrame()
 : Node()
@@ -42,7 +43,7 @@ bool NormalFrame::init(const Size& _size, const char* title, bool hasClose)
         this->addChild(m_closeBtn);
     }
     
-    m_titleLab = Label::createWithBMFont("NFTitle.fnt", title);
+    m_titleLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("NFTitle"), title);
     m_titleLab->setAnchorPoint(Vec2(0.5, 0.5));
     m_titleLab->setPosition(Vec2(_size.width/2, _size.height-60));
     this->addChild(m_titleLab);

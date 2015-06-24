@@ -37,7 +37,8 @@ enum PhysicNodeType
     kPhysicNodeItemDad = 18,
     kPhysicNodeItemLandBuild = 19,
     kPhysicNodeItemFly = 20,
-    kPhysicNodeTypeCount = 21,
+    kPhysicNodeTreasureBox = 21,
+    kPhysicNodeTypeCount = 22,
 };
 
 class PhysicNode;

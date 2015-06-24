@@ -47,16 +47,16 @@ Bullet* Boss::createShotBullet(int index)
 }
 void Boss::shot(const Vec2& pos, float vel, int bulIndex)
 {
-    AudioHelp::playEft("shoot_bullet.wav");
+    AudioHelp::playEft("shoot_bullet.mp3");
     
     auto _bullet = this->createShotBullet(bulIndex);
 //    if (dynamic_cast<BossBullet*>(_bullet))
 //    {
-//        AudioHelp::playEft("shoot_bullet.wav");
+//        AudioHelp::playEft("shoot_bullet.mp3");
 //    }
 //    else if(dynamic_cast<BossBulletNet*>(_bullet))
 //    {
-//        AudioHelp::playEft("shoot_net.wav");
+//        AudioHelp::playEft("shoot_net.mp3");
 //    }
     _bullet->setPosition(pos);
     auto v = m_gameController->getVelocity();

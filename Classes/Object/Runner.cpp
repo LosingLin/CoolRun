@@ -129,7 +129,7 @@ void Runner::setRunnerState(RunnerState state)
     {
 //        if (m_state == kRunnerState_JumpDown && state == kRunnerState_Running)
 //        {
-//            AudioHelp::playEft("runner_land.wav");
+//            AudioHelp::playEft("runner_land.mp3");
 //        }
         m_state = state;
         switch (m_state)
@@ -181,7 +181,7 @@ void Runner::setRunnerState(RunnerState state)
 
 void Runner::rebound()
 {
-    AudioHelp::playEft("runner_rebound.wav");
+    AudioHelp::playEft("runner_rebound.mp3");
     this->setJumpCount(0);
     this->setRunnerState(kRunnerState_JumpUp);
     this->setYA(0.0f);
@@ -219,11 +219,11 @@ void Runner::attack()
         return;
     }
     
-    AudioHelp::playEft("runner_atk.wav");
+    AudioHelp::playEft("runner_atk.mp3");
     
     b_isAtk = true;
     
-    auto _sword = Sprite::createWithSpriteFrameName("attack.png");
+    auto _sword = Sprite::createWithSpriteFrameName("runner_bone/attack.png");
     auto scsize = _sword->getContentSize();
     _sword->setAnchorPoint(Vec2(0.5, 0.5));
     _sword->setRotation(-30);

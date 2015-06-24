@@ -41,7 +41,7 @@ bool JsonHelp::getValueByKey(rapidjson::Document &doc, rapidjson::Value &_value,
 }
 bool JsonHelp::getValueByKey(rapidjson::Value &_fValue, rapidjson::Value &_value, const string& key)
 {
-    log("key: %s", key.c_str());
+    //log("key: %s", key.c_str());
     
     //JsonHelp::logJson(_fValue);
     if (_fValue.HasMember(key.c_str())) {
@@ -85,11 +85,11 @@ void JsonHelp::logJson(rapidjson::Value& _value)
     if (_value.IsObject())
     {
         _value.Accept(writer);
-        log("%s", buffer.GetString());
+        //log("%s", buffer.GetString());
     }
     else
     {
-        log("value is not a object");
+        //log("value is not a object");
     }
     
     

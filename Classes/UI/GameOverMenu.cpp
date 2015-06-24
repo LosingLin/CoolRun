@@ -10,6 +10,7 @@
 #include "MYUserDefaultManager.h"
 #include "NormalFrame.h"
 #include "MYMultiLanguageManager.h"
+#include "ResourceManager.h"
 
 
 GameOverMenu::GameOverMenu()
@@ -50,7 +51,7 @@ bool GameOverMenu::init()
     this->addChild(frame);
     
     auto topPos = Vec2(hpos.x, hpos.y + 150);
-    auto finalTxt = Label::createWithBMFont("SetBtn.fnt",
+    auto finalTxt = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("SetBtn"),
                                             MYMultiLanguageManager::getInstance()->getText("menu_finalScore"));
     finalTxt->setAnchorPoint(Vec2(0.5, 0.5));
     finalTxt->setPosition(topPos);
@@ -58,7 +59,7 @@ bool GameOverMenu::init()
     this->addChild(finalTxt);
     
     topPos.y -= 60;
-    m_finalDis = Label::createWithBMFont("Score.fnt", "0");
+    m_finalDis = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("Score"), "0");
     m_finalDis->setAnchorPoint(Vec2(0.5, 0.5));
     m_finalDis->setPosition(topPos);
     m_finalDis->setScale(1.2f);
@@ -67,7 +68,7 @@ bool GameOverMenu::init()
     
     
     topPos.y -= 80;
-    auto highTxt = Label::createWithBMFont("SetBtn.fnt",
+    auto highTxt = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("SetBtn"),
                                            MYMultiLanguageManager::getInstance()->getText("menu_highScore"));
     highTxt->setAnchorPoint(Vec2(0.5, 0.5));
     highTxt->setPosition(topPos);
@@ -75,7 +76,7 @@ bool GameOverMenu::init()
     this->addChild(highTxt);
     
     topPos.y -= 60;
-    m_highDis = Label::createWithBMFont("M.fnt", "0");
+    m_highDis = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("M"), "0");
     m_highDis->setAnchorPoint(Vec2(0.5, 0.5));
     m_highDis->setPosition(topPos);
     m_highDis->setScale(1.2f);

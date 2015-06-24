@@ -20,6 +20,7 @@
 #include "BackgroundAudio.h"
 #include "AudioHelp.h"
 #include "CommonBackground.h"
+#include "ResourceManager.h"
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "Home.h"
@@ -42,6 +43,10 @@ MenuLayer::MenuLayer()
 MenuLayer::~MenuLayer()
 {
     AudioHelp::unloadMenuEft();
+    
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(
+                                                                ResourceManager::getInstance()->getPlistRes("MenuRes")
+                                                                );
 }
 
 Scene* MenuLayer::createScene()
@@ -60,11 +65,10 @@ bool MenuLayer::init()
     }
     
     AudioHelp::preloadMenuEft();
-    
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("tempRes.plist");
-    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("background02.plist");
+    ResourceManager::getInstance()->addBigSource();
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("MenuRes")
+                                                             );
     //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner.plist");
     //Director::getInstance()->getTextureCache()->addImage("bg001.png");
     
@@ -105,9 +109,13 @@ bool MenuLayer::init()
 //    this->addChild(_sp);
 //    
 //    _sp->runAction(ActionHelp::createFrameAction("runner_%02d.png", 1, 8, 0.1, true));
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("runner_bone.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("runner_bone")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("Runner.ExportJson");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("spider_bone.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(
+                                                             ResourceManager::getInstance()->getPlistRes("spider_bone")
+                                                             );
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderPoison.ExportJson");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderKind.ExportJson");
     ArmatureDataManager::getInstance()->addArmatureFileInfo("SpiderSpine.ExportJson");
@@ -194,7 +202,7 @@ void MenuLayer::onEnterTransitionDidFinish()
 
 void MenuLayer::start()
 {
-    auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":0}, \"n\":{\"num\":0}, \"h\":{\"num\":1}}");
+    auto mission = Mission::create("{\"s\":{\"num\":1}, \"e\":{\"num\":6}, \"n\":{\"num\":5}, \"h\":{\"num\":0}}");
     mission->setMissionRepeatModel(Mission::MissionRepeatModel::LAST);
     auto _scene = CoolRun::createScene(mission);
     SceneHelp::replaceScene(_scene);

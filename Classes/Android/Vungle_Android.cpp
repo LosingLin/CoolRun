@@ -14,6 +14,8 @@
 #include "AudioHelp.h"
 #include "ThirdPartyManager.h"
 #include "ReviveMenu.h"
+#include "ResourceManager.h"
+
 
 USING_NS_CC;
 
@@ -26,7 +28,7 @@ extern "C" {
     {
         //Log.e("MANYOU==", "Java_org_cocos2dx_cpp_AppActivity_VungleAndroidCallback_willShowAd");
 
-    	AudioHelp::removeBigSource();
+    	ResourceManager::getInstance()->removeBigSource();
 
         Director::getInstance()->pause();
         AudioHelp::pauseAllEft();
@@ -45,7 +47,7 @@ extern "C" {
     {
         //Log.e("MANYOU==", "Java_org_cocos2dx_cpp_AppActivity_VungleAndroidCallback_willCloseAd");
 
-    	AudioHelp::addBigSource();
+    	ResourceManager::getInstance()->addBigSource();
 
         Director::getInstance()->resume();
         AudioHelp::resumeAllEft();

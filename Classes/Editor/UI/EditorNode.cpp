@@ -177,7 +177,7 @@ void EditorNode::onTouchEnded(Touch *touch, Event *unusedEvent)
         {
             if (touchNoneMoveEnded)
             {
-                AudioHelp::playEft("btn_click.wav");
+                AudioHelp::playEft("btn_click.mp3");
                 touchNoneMoveEnded();
             }
         }
