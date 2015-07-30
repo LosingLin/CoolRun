@@ -47,6 +47,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Mission/MissionInterface.cpp \
                    ../../Classes/Mission/MissionObjects.cpp \
                    ../../Classes/Mission/MissionPage.cpp \
+                   ../../Classes/Mission/BoxData.cpp \
                    ../../Classes/Object/AlertBullet.cpp \
                    ../../Classes/Object/AlertBulletPoison.cpp \
                    ../../Classes/Object/AlertBulletNet.cpp \
@@ -59,7 +60,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Object/BossFourflodHeads.cpp \
                    ../../Classes/Object/DeathMoth.cpp \
                    ../../Classes/Object/Bullet.cpp \
+                   ../../Classes/Object/Treasure.cpp \
                    ../../Classes/Object/Coin.cpp \
+                   ../../Classes/Object/Jade.cpp \
                    ../../Classes/Object/Collection.cpp \
                    ../../Classes/Object/CollectionCoin.cpp \
                    ../../Classes/Object/CollideNode.cpp \
@@ -84,6 +87,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Object/SpiderFly.cpp \
                    ../../Classes/Object/Stone.cpp \
                    ../../Classes/Object/Saw.cpp \
+                   ../../Classes/Object/TreasureBox.cpp \
                    ../../Classes/Object/Villager.cpp \
                    ../../Classes/Physics/CollideRect.cpp \
                    ../../Classes/Physics/CollideTrack.cpp \
@@ -99,6 +103,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Scene/SettingScene.cpp \
                    ../../Classes/Scene/VillageScene.cpp \
                    ../../Classes/Scene/FreshGuideScene.cpp \
+                   ../../Classes/Scene/LogoScene.cpp \
                    ../../Classes/UI/Background.cpp \
                    ../../Classes/UI/Dialog.cpp \
                    ../../Classes/UI/HpBar.cpp \
@@ -107,15 +112,35 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/UI/PopViewLayer.cpp \
                    ../../Classes/UI/Score.cpp \
                    ../../Classes/UI/Stretch.cpp \
+                   ../../Classes/UI/JadeView.cpp \
                    ../../Classes/UI/MYScene.cpp \
+                   ../../Classes/UI/MYSwitch.cpp \
+                   ../../Classes/UI/MYLayer.cpp \
+                   ../../Classes/UI/MYKeyBoardLayer.cpp \
                    ../../Classes/UI/Leaves.cpp \
                    ../../Classes/UI/BackgroundAudio.cpp \
+                   ../../Classes/UI/NormalFrame.cpp \
+                   ../../Classes/UI/SelectLanguageLayer.cpp \
+                   ../../Classes/UI/CreditLayer.cpp \
+                   ../../Classes/UI/CommonBackground.cpp \
+                   ../../Classes/UI/PowerIcon.cpp \
+                   ../../Classes/UI/PowerIconBar.cpp \
+                   ../../Classes/UI/Clouds.cpp \
+                   ../../Classes/UI/ReviveMenu.cpp \
+                   ../../Classes/UI/GameOverMenu.cpp \
+                   ../../Classes/UI/ExitGameMenu.cpp \
+                   ../../Classes/UI/ADLoadingLayer.cpp \
+                   ../../Classes/UI/BoxDataShowView.cpp \
                    ../../Classes/Utils/ActionHelp.cpp \
                    ../../Classes/Utils/AudioHelp.cpp \
                    ../../Classes/Utils/SceneHelp.cpp \
                    ../../Classes/Utils/MYUserDefaultManager.cpp \
                    ../../Classes/Utils/MYMultiLanguageManager.cpp \
-                   ../../Classes/Utils/JsonHelp.cpp 
+                   ../../Classes/Utils/JsonHelp.cpp \
+                   ../../Classes/Utils/ResourceManager.cpp \
+                   ../../Classes/Utils/PowerDataManager.cpp \
+                   ../../Classes/ThirdParty/ThirdPartyManager.cpp \
+                   ../../Classes/Android/Vungle_Android.cpp 
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
@@ -133,9 +158,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 					$(LOCAL_PATH)/../../Classes/Physics \
 					$(LOCAL_PATH)/../../Classes/Scene \
 					$(LOCAL_PATH)/../../Classes/UI \
-					$(LOCAL_PATH)/../../Classes/Utils 
+					$(LOCAL_PATH)/../../Classes/Utils \
+                              $(LOCAL_PATH)/../../Classes/ThirdParty \
+                              $(LOCAL_PATH)/../../Classes/Android 
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_SHARED_LIBRARIES := mobclickcpp_shared
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
@@ -152,6 +181,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,.)
+$(call import-module,libmobclickcpp)
 $(call import-module,audio/android)
 
 $(call import-module,extensions)
