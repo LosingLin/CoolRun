@@ -1,34 +1,34 @@
 //
-//  Box.cpp
+//  Jade.cpp
 //  CoolRun
 //
 //  Created by ManYou on 15/6/24.
 //
 //
 
-#include "Box.h"
+#include "JadeView.h"
 #include "MYMultiLanguageManager.h"
 #include "ResourceManager.h"
 
-Box::Box()
+JadeView::JadeView()
 : Node()
 , m_numLab(nullptr)
 {
     
 }
-Box::~Box()
+JadeView::~JadeView()
 {
     
 }
 
-bool Box::init()
+bool JadeView::init()
 {
     if (!Node::init())
     {
         return false;
     }
     
-    auto csize = Size(320, 54);
+    auto csize = Size(240, 54);
     this->setContentSize(csize);
     
     auto bg = Scale9Sprite::createWithSpriteFrameName("num_bg.png");
@@ -36,19 +36,20 @@ bool Box::init()
     bg->setAnchorPoint(Vec2::ZERO);
     this->addChild(bg);
     
-//    auto box_icon = Sprite::createWithSpriteFrameName("");
-//    box_icon->setPosition(Vec2(12, 2));
-//    this->addChild(box_icon);
+    auto jade_icon = Sprite::createWithSpriteFrameName("jade.png");
+    jade_icon->setScale(0.5);
+    jade_icon->setPosition(Vec2(32, 27));
+    this->addChild(jade_icon);
     
     m_numLab = Label::createWithBMFont(ResourceManager::getInstance()->getFntRes("Score"), "0");
     m_numLab->setAnchorPoint(Vec2(0, 0.5));
-    m_numLab->setPosition(Vec2(120, 20));
+    m_numLab->setPosition(Vec2(62, 20));
     m_numLab->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
     this->addChild(m_numLab);
     return true;
 }
 
-void Box::setString(const std::string& str)
+void JadeView::setString(const std::string& str)
 {
     auto _scaleTo = ScaleTo::create(0.1f, 1.2f);
     auto _scaleTo2 = ScaleTo::create(0.1f, 1.0f);

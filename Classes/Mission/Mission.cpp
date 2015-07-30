@@ -8,6 +8,7 @@
 
 #include "Mission.h"
 #include "Base.h"
+#include "BoxData.h"
 
 #define MISSIONDATA_START_PATH       "start"
 #define MISSIONDATA_START_FORMAT     "/s%04d"
@@ -126,6 +127,13 @@ MissionPage* Mission::getNextMissionPage()
     return nullptr;
 }
 
+BoxData* Mission::getBoxData()
+{
+    auto _boxData = BoxData::create();
+    int jadeNum = rand()%9 + 2;
+    _boxData->setJadeNum(jadeNum);
+    return _boxData;
+}
 #pragma mark - random
 
 string Mission::getRandomMissionData(const string& path, const string& format, int num)

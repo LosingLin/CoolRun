@@ -36,7 +36,7 @@
 #include "DeathMoth.h"
 #include "Score.h"
 #include "Stretch.h"
-#include "Box.h"
+#include "JadeView.h"
 #include "PopViewLayer.h"
 #include "MenuScene.h"
 #include "HpBar.h"
@@ -52,6 +52,7 @@
 #include "GameOverMenu.h"
 #include "Vungle.h"
 #include "ResourceManager.h"
+#include "BoxData.h"
 
 #define kWarningTag 100
 #define kPauseViewTag 101
@@ -94,8 +95,8 @@ CoolRun::CoolRun()
 , m_score(0)
 , m_stretchView(nullptr)
 , m_stretch(0)
-, m_boxView(nullptr)
-, m_boxNum(0)
+, m_jadeView(nullptr)
+, m_jadeNum(0)
 , m_leaves(nullptr)
 , m_clouds(nullptr)
 , m_runType(RunType::NORMAL)
@@ -223,14 +224,14 @@ bool CoolRun::init()
     this->addChild(m_scoreView);
     
     m_stretchView = Stretch::create();
-    m_stretchView->setPosition(Vec2(origin.x + visibleSize.width/2 - 80, origin.y + visibleSize.height - 56));
+    m_stretchView->setPosition(Vec2(origin.x + visibleSize.width/2 - 180, origin.y + visibleSize.height - 56));
     m_stretchView->setLocalZOrder(ZORDER_HEADMENU);
     this->addChild(m_stretchView);
     
-    m_boxView = Box::create();
-    m_boxView->setPosition(Vec2(origin.x + visibleSize.width - 200, origin.y + visibleSize.height - 56));
-    m_boxView->setLocalZOrder(ZORDER_HEADMENU);
-    this->addChild(m_boxView);
+    m_jadeView = JadeView::create();
+    m_jadeView->setPosition(Vec2(origin.x + visibleSize.width - 380, origin.y + visibleSize.height - 56));
+    m_jadeView->setLocalZOrder(ZORDER_HEADMENU);
+    this->addChild(m_jadeView);
     
     
     
@@ -533,7 +534,7 @@ void CoolRun::hideInfoView()
     m_stretchView->runAction(moveBy);
     
     moveBy = MoveBy::create(0.2, Vec2(0, 120));
-    m_boxView->runAction(moveBy);
+    m_jadeView->runAction(moveBy);
     
 }
 void CoolRun::showInfoView()
@@ -545,7 +546,7 @@ void CoolRun::showInfoView()
     m_stretchView->runAction(moveBy);
     
     moveBy = MoveBy::create(0.2, Vec2(0, -120));
-    m_boxView->runAction(moveBy);
+    m_jadeView->runAction(moveBy);
 }
 
 void CoolRun::actionCallback()
@@ -815,6 +816,21 @@ void CoolRun::directionCollideTrack()
             else
             {
                 node2->CollideTrackListener_CollideOnce(kCollideDirectionLeft, leftLand);
+            }
+            node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, dynamic_cast<PhysicNode*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionUp])));
+            continue;
+        }
+        
+        //踩在地面上，而且碰到地面时
+        if (cTimes[kCollideDirectionUp] > 0 && cTimes[kCollideDirectionRight] > 0) {
+            auto leftLand = dynamic_cast<Land*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionRight]));
+            if (leftLand->isRightIgnore())
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, leftLand);
+            }
+            else
+            {
+                node2->CollideTrackListener_CollideOnce(kCollideDirectionRight, leftLand);
             }
             node2->CollideTrackListener_CollideOnce(kCollideDirectionUp, dynamic_cast<PhysicNode*>(m_dirCollideObjs->getObjectAtIndex(pNodeIndex[kCollideDirectionUp])));
             continue;
@@ -1589,12 +1605,12 @@ void CoolRun::addOverMenu()
     
     this->onExit();
     
-    auto _gameOverMenu = GameOverMenu::create();
+    auto _gameOverMenu = GameOverMenu::create(m_runType);
     this->addChild(_gameOverMenu, ZORDER_POPVIEW, kOverViewTag);
     
     _gameOverMenu->addHomeCallback(CC_CALLBACK_2(CoolRun::GiveUpBtnCallback, this));
     _gameOverMenu->addRetryCallback(CC_CALLBACK_2(CoolRun::gameOverMenu_RetryCallback, this));
-    _gameOverMenu->setFinalScore(m_score, m_runType);
+    _gameOverMenu->setFinalScore(m_score, m_jadeNum, m_runType);
     _gameOverMenu->onEnter();
     
 }
@@ -1848,21 +1864,32 @@ void CoolRun::addStretch(int stretch)
     ss >> s;
     m_stretchView->setString(s);
 }
-void CoolRun::addBox(int box)
+void CoolRun::addJade(int jade)
 {
-    if (GameState::BOSS == m_gameState)
+    if (RunType::NORMAL == m_runType)
     {
-        return;
+        MYUserDefaultManager::getInstance()->addOwnJade(jade);
     }
     
-    m_boxNum += box;
+    m_jadeNum += jade;
     
     string s;
     stringstream ss(s);
-    ss << m_boxNum;
+    ss << m_jadeNum;
     ss >> s;
-    m_boxView->setString(s);
-    
+    m_jadeView->setString(s);
+}
+BoxData* CoolRun::openBox()
+{
+    return m_mission->getBoxData();
+}
+void CoolRun::addBoxData(BoxData* _data)
+{
+    int jadeNum = _data->getJadeNum();
+    if (jadeNum > 0)
+    {
+        this->addJade(jadeNum);
+    }
 }
 void CoolRun::showScore(int score, const Vec2& pos)
 {
@@ -2037,14 +2064,13 @@ void CoolRun::spareRunner(Runner* runner)
     }
 }
 
-void CoolRun::buildLand(Runner* runner)
+void CoolRun::buildLand(Runner* runner, int trackSpace)
 {
 //    auto runner = getLastPosRunner();
 //    if (!runner)
 //    {
 //        return;
 //    }
-    int trackSpace = 400.0f;
     auto runnerPos = runner->getPosition();
     
     auto trackPos = runnerPos;
@@ -2302,7 +2328,7 @@ void CoolRun::startFly()
 void CoolRun::endFly()
 {
     auto v = this->getVelocity();
-    this->setVelocity(v-3200, false);
+    this->setVelocity(v-3200, false); 
     
     for (int i = 0; i < m_bulletObjs->count(); ++ i)
     {
@@ -2314,6 +2340,12 @@ void CoolRun::endFly()
         auto _pNode = dynamic_cast<PhysicNode*>(m_simpleCollideObjs->getObjectAtIndex(i));
         _pNode->setDestoryed(true);
     }
+    for (int i = 0; i < m_runners->count(); ++ i)
+    {
+        auto _runner = dynamic_cast<Runner*>(m_runners->getObjectAtIndex(i));
+        this->buildLand(_runner, 2264);
+    }
+    
     m_jumpBtn->setVisible(true);
 }
 

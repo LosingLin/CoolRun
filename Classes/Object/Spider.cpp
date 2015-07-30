@@ -134,14 +134,14 @@ void Spider::CollideTrackListener_CollideOnce(CollideDirection direction, Physic
     else if(direction == kCollideDirectionLeft) {
         PhysicHelp::showTips("Left", this, Vec2(0, 0));
         
-        //        auto dis = rect2.size.width - rect1.origin.x + rect2.origin.x;
-        //
-        //        auto pos = this->getPosition();
-        //        pos.x -= dis;
-        //        this->setPosition(pos);
-        
-        //        this->setXV(node->getXV());
-        //        this->setXA(node->getXA());
+//        auto dis = rect2.size.width - rect1.origin.x + rect2.origin.x;
+//
+//        auto pos = this->getPosition();
+//        pos.x -= dis;
+//        this->setPosition(pos);
+//
+//        this->setXV(node->getXV());
+//        this->setXA(node->getXA());
     }
     else if(direction == kCollideDirectionDown)
     {
@@ -157,6 +157,18 @@ void Spider::CollideTrackListener_CollideOnce(CollideDirection direction, Physic
         
         //        this->setYA(0.0f);
         //        this->setYV(0.0f);
+    }
+    else if (direction == kCollideDirectionRight)
+    {
+        PhysicHelp::showTips("Right", this, Vec2(0, 0));
+        auto dis = rect2.origin.x - rect1.origin.x - rect1.size.width;
+        
+        auto pos = this->getPosition();
+        pos.x -= dis;
+        this->setPosition(pos);
+        
+        this->setXV(node->getXV());
+        this->setXA(node->getXA());
     }
 }
 void Spider::CollideTrackListener_CollideAll(CollideDirection direction)

@@ -57,14 +57,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
                                                        ResolutionPolicy::NO_BORDER);
     
     // turn on display FPS
-    //director->setDisplayStats(true);
+#if (MY_RELEASE == 0)
+    director->setDisplayStats(true);
+#endif
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    ResourceManager::getInstance()->setResourceType(ResourceManager::ResourceType::HD);
-    //director->setContentScaleFactor(0.75);
+    //ResourceManager::getInstance()->setResourceType(ResourceManager::ResourceType::HD);
+    ResourceManager::getInstance()->setResourceType(ResourceManager::ResourceType::SD);
+    director->setContentScaleFactor(0.75);
 #else
     ResourceManager::getInstance()->setResourceType(ResourceManager::ResourceType::SD);
     director->setContentScaleFactor(0.75);

@@ -40,6 +40,12 @@ bool SpiderFly::init()
     this->addRect(Rect(100, 60, 120, 70)); //尾部
     this->addRect(Rect(90, 10, 100, 60)); //腿部
     
+    /*
+    this->showRect(Rect(54, 70, 50, 40)); //头部
+    this->showRect(Rect(100, 60, 120, 70)); //尾部
+    this->showRect(Rect(90, 10, 100, 60)); //腿部
+     */
+    
     this->debugShow();
     
     this->setGravityEffect(false);
@@ -149,7 +155,7 @@ void SpiderFly::trackCollideWithRunner(Runner* _runner)
     
     CollideDirection dir = _runner->getDirectionWithTrueBody(tailRect);
     
-    if (kCollideDirectionUp == dir)
+    if (kCollideDirectionUp == dir || kCollideDirectionLeft == dir)
     {
         _runner->rebound();
         this->setYV(100);

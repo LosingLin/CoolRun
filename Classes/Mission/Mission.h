@@ -15,6 +15,8 @@
 
 using namespace std;
 USING_NS_CC;
+
+class BoxData;
 class Mission : public Ref
 {
 public:
@@ -36,6 +38,8 @@ public:
     int getMissionPageCount();
     MissionPage* getMissionPage(int _index);
     MissionPage* getNextMissionPage();
+    
+    BoxData* getBoxData();
     
     void setPageIndex(int _index) { m_pageIndex = _index; }
     int getPageIndex() { return m_pageIndex; }

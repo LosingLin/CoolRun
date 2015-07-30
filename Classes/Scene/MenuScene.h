@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "MYKeyBoardLayer.h"
 #include "MYButton.h"
+#include "Base.h"
 
 //test
 #include "editor-support/cocostudio/CocoStudio.h"

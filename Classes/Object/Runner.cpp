@@ -181,6 +181,10 @@ void Runner::setRunnerState(RunnerState state)
 
 void Runner::rebound()
 {
+    if (this->isFlyING())
+    {
+        return;
+    }
     AudioHelp::playEft("runner_rebound.mp3");
     this->setJumpCount(0);
     this->setRunnerState(kRunnerState_JumpUp);

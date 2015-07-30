@@ -59,7 +59,7 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
             this->setContentSize(Size(csize.height, csize.width));
             m_bullet->setPosition(Vec2(csize.height/2, csize.width/2));
             m_bullet->setRotation(90);
-            this->setCollideRect(Rect(0, 0, csize.height, csize.width));
+            this->setCollideRect(Rect(10, 30, csize.height-20, csize.width-40));
         }
             break;
         case kCRDirectionDown:
@@ -68,7 +68,7 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
             this->setContentSize(Size(csize.height, csize.width));
             m_bullet->setPosition(Vec2(csize.height/2, csize.width/2));
             m_bullet->setRotation(-90);
-            this->setCollideRect(Rect(0, 0, csize.height, csize.width));
+            this->setCollideRect(Rect(10, 10, csize.height-20, csize.width-40));
         }
             break;
         case kCRDirectionLeft:
@@ -76,7 +76,7 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
             auto csize = m_bullet->getContentSize();
             this->setContentSize(Size(csize.width, csize.height));
             m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
-            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+            this->setCollideRect(Rect(10, 10, csize.width-40, csize.height-20));
         }
             break;
         case kCRDirectionRight:
@@ -85,7 +85,7 @@ void PoisonBullet::setAtkDirection(CRDirection direction)
             this->setContentSize(Size(csize.width, csize.height));
             m_bullet->setPosition(Vec2(csize.width/2, csize.height/2));
             m_bullet->setRotation(180);
-            this->setCollideRect(Rect(0, 0, csize.width, csize.height));
+            this->setCollideRect(Rect(30, 10, csize.width-40, csize.height-20));
         }
             break;
             

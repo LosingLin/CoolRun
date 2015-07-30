@@ -21,15 +21,20 @@
 #include "AudioHelp.h"
 #include "CommonBackground.h"
 #include "ResourceManager.h"
+#include "MYMultiLanguageManager.h"
+#include "Home.h"
+
+#if (MY_RELEASE == 0)
 //test
 #include "editor-support/cocostudio/CocoStudio.h"
-#include "Home.h"
-#include "MYMultiLanguageManager.h"
 using namespace cocostudio;
 #include "Vungle.h"
 
 #include "ReviveMenu.h"
 #include "GameOverMenu.h"
+#include "PowerDataManager.h"
+
+#endif
 
 
 MenuLayer::MenuLayer()
@@ -162,6 +167,8 @@ bool MenuLayer::init()
     
     MYMultiLanguageManager::getInstance();
     
+#if (MY_RELEASE == 0)
+    
 //    log("test ml key1 = %s", MYMultiLanguageManager::getInstance()->getText("key1").c_str());
 //    log("test ml key2 = %s", MYMultiLanguageManager::getInstance()->getText("key2").c_str());
     
@@ -170,6 +177,14 @@ bool MenuLayer::init()
     
 //    auto gmenu = GameOverMenu::create();
 //    this->addChild(gmenu, 200);
+    
+    auto pdMgr = PowerDataManager::getInstance();
+    log("spare maxLv:%d, nextEftAdd:%f, nextLvExpend:%d",
+        pdMgr->getMaxLevel(kPhysicNodeItemSpare),
+        pdMgr->getNextLevelEffectAdd(kPhysicNodeItemSpare),
+        pdMgr->getNextLevelJadeExpend(kPhysicNodeItemSpare));
+    
+#endif
     
     return true;
 }

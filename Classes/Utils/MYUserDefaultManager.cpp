@@ -114,22 +114,123 @@ int MYUserDefaultManager::getHighScoreNormalEditor()
     return UserDefault::getInstance()->getIntegerForKey(HIGH_SCORE_NORMAL_ED);
 }
 
-void MYUserDefaultManager::setOwnDiamond(int num)
+void MYUserDefaultManager::setOwnJade(int num)
 {
-    UserDefault::getInstance()->setIntegerForKey(OWN_DIAMOND, num);
+    UserDefault::getInstance()->setIntegerForKey(OWN_JADE, num);
 }
-int MYUserDefaultManager::getOwnDiamond()
+int MYUserDefaultManager::getOwnJade()
 {
-    return UserDefault::getInstance()->getIntegerForKey(OWN_DIAMOND, 0);
+    return UserDefault::getInstance()->getIntegerForKey(OWN_JADE, 0);
 }
-void MYUserDefaultManager::addOwnDiamond(int num)
+void MYUserDefaultManager::addOwnJade(int num)
 {
-    int before = this->getOwnDiamond();
-    this->setOwnDiamond(before + num);
+    int before = this->getOwnJade();
+    this->setOwnJade(before + num);
 }
 
 #pragma mark - power
 
+int MYUserDefaultManager::getPowerLevel(PhysicNodeType _type)
+{
+    switch (_type)
+    {
+        case kPhysicNodeItemSpare:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_SPARE, 0);
+        }
+            break;
+        case kPhysicNodeItemMagnet:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_MAGNET, 0);
+        }
+            break;
+        case kPhysicNodeItemTimesCoin:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_TIMESCOIN, 0);
+        }
+            break;
+        case kPhysicNodeItemTimesJump:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_TIMESJUMP, 0);
+        }
+            break;
+        case kPhysicNodeItemDad:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_DAD, 0);
+        }
+            break;
+        case kPhysicNodeItemLandBuild:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_LANDBUILD, 0);
+        }
+            break;
+        case kPhysicNodeItemFly:
+        {
+            return UserDefault::getInstance()->getIntegerForKey(POWER_CURLV_FLY, 0);
+        }
+            break;
+            
+        default:
+        {
+            CCASSERT(false, "PhysicNodeType error!");
+        }
+            break;
+    }
+}
+void MYUserDefaultManager::setPowerLevel(PhysicNodeType _type, int level)
+{
+    switch (_type)
+    {
+        case kPhysicNodeItemSpare:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_SPARE, level);
+        }
+            break;
+        case kPhysicNodeItemMagnet:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_MAGNET, level);
+        }
+            break;
+        case kPhysicNodeItemTimesCoin:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_TIMESCOIN, level);
+        }
+            break;
+        case kPhysicNodeItemTimesJump:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_TIMESJUMP, level);
+        }
+            break;
+        case kPhysicNodeItemDad:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_DAD, level);
+        }
+            break;
+        case kPhysicNodeItemLandBuild:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_LANDBUILD, level);
+        }
+            break;
+        case kPhysicNodeItemFly:
+        {
+            UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_FLY, level);
+        }
+            break;
+            
+        default:
+        {
+            CCASSERT(false, "PhysicNodeType error!");
+        }
+            break;
+    }
+}
+void MYUserDefaultManager::addPowerLevel(PhysicNodeType _type, int level)
+{
+    int befLv = this->getPowerLevel(_type);
+    this->setPowerLevel(_type, level);
+}
+
+/*
 void MYUserDefaultManager::setPowerLevelSpare(int level)
 {
     UserDefault::getInstance()->setIntegerForKey(POWER_CURLV_SPARE, level);
@@ -227,7 +328,7 @@ void MYUserDefaultManager::addPowerLevelFly(int level)
     int befLv = this->getPowerLevelFly();
     this->setPowerLevelFly(befLv + level);
 }
-
+*/
 
 #pragma mark -
 

@@ -100,6 +100,10 @@ void AudioHelp::playBeAttackedEft()
 //    AudioHelp::playEft(name);
     AudioHelp::playEft("beAtk_01.mp3");
 }
+void AudioHelp::playOpenDoorEft()
+{
+    AudioHelp::playEft("door_open.mp3");
+}
 void AudioHelp::playBePickedEft()
 {
     int r = rand()%3 + 1;

@@ -38,6 +38,7 @@ namespace AudioHelp
     //special
     void playBeAttackedEft();
     void playBePickedEft();
+    void playOpenDoorEft();
     
     void preloadHomeEft();
     void unloadHomeEft();

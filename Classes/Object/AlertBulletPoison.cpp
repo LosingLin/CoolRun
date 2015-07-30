@@ -50,7 +50,7 @@ bool AlertBulletPoison::init()
 //    log("SP : ----------------->%f, %f", psize.width, psize.height);
 //    this->addChild(sp);
     
-    this->setCollideRect(Rect(0, 0, csize.width-10, csize.height));
+    this->setCollideRect(Rect(10, 10, csize.width-40, csize.height-20));
     
     this->debugShow();
     

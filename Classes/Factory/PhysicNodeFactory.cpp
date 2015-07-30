@@ -29,6 +29,7 @@
 #include "ItemFly.h"
 #include "Saw.h"
 #include "TreasureBox.h"
+#include "Jade.h"
 
 PhysicNodeFactory* PhysicNodeFactory::m_instance = NULL;
 
@@ -152,6 +153,10 @@ PhysicNode* PhysicNodeFactory::create(rapidjson::Value& _value)
         {
             _pNode = TreasureBox::create();
         } break;
+        case kPhysicNodeJade:
+        {
+            _pNode = Jade::create();
+        } break;
         default:
             break;
     }
@@ -165,6 +170,7 @@ Item* PhysicNodeFactory::createRandomItem()
 {
     Item* _item = nullptr;
     int r = rand()%6;
+    //r = 5;
     switch (r)
     {
         case 0:

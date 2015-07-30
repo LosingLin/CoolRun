@@ -11,35 +11,9 @@
 
 #include "cocos2d.h"
 #include "JsonHelp.h"
+#include "Base.h"
 
 USING_NS_CC;
-
-enum PhysicNodeType
-{
-    kPhysicNodeUnknown = 0,
-    kPhysicNodeStone = 1,
-    kPhysicNodeCoin = 2,
-    kPhysicNodeSaw = 3,
-    kPhysicNodeEnemy = 4,
-    kPhysicNodeSpider = 5,
-    kPhysicNodeSpiderKind = 6,
-    kPhysicNodeSpiderPoison = 7,
-    kPhysicNodeSpiderSpines = 8,
-    kPhysicNodeSpiderFly = 9,
-    kPhysicNodeBulletPoison = 10,
-    kPhysicNodeBulletAlertPoison = 11,
-    kPhysicNodeBulletAlertNet = 12,
-    kPhysicNodeItem = 13,
-    kPhysicNodeItemSpare = 14,
-    kPhysicNodeItemMagnet = 15,
-    kPhysicNodeItemTimesCoin = 16,
-    kPhysicNodeItemTimesJump = 17,
-    kPhysicNodeItemDad = 18,
-    kPhysicNodeItemLandBuild = 19,
-    kPhysicNodeItemFly = 20,
-    kPhysicNodeTreasureBox = 21,
-    kPhysicNodeTypeCount = 22,
-};
 
 class PhysicNode;
 class Item;

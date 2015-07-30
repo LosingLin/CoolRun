@@ -42,7 +42,7 @@ bool AlertBulletNet::init()
 //    m_particleSys->setPosition(Vec2(csize.width/2, csize.height/2));
 //    this->addChild(m_particleSys, -1);
     
-    this->setCollideRect(Rect(10, 10, csize.width-20, csize.height-20));
+    this->setCollideRect(Rect(20, 20, csize.width-40, csize.height-40));
     
     this->debugShow();
     

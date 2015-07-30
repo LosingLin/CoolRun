@@ -90,6 +90,7 @@ void JsonHelp::logJson(rapidjson::Value& _value)
     else
     {
         //log("value is not a object");
+        //log("jsonType is %d", _value.GetType());
     }
     
     

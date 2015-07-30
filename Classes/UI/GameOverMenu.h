@@ -25,6 +25,9 @@ public:
     virtual bool init() override;
     CREATE_FUNC(GameOverMenu);
     
+    bool init(CoolRun::RunType type);
+    static GameOverMenu* create(CoolRun::RunType type);
+    
     virtual void onEnter() override;
     
     void retryCallback(Ref* _ref, MYButton::TouchEventType _type);
@@ -33,12 +36,15 @@ public:
     void addRetryCallback(MYButton::MYButtonCallback call) { m_retryCallback = call; };
     void addHomeCallback(MYButton::MYButtonCallback call) { m_homeCallback = call; }
     
-    void setFinalScore(int score, CoolRun::RunType _type);
+    void setFinalScore(int score, int jade, CoolRun::RunType _type);
 private:
     MYButton* m_retryBtn;
     MYButton* m_homeBtn;
     Label* m_finalDis;
     Label* m_highDis;
+    
+    Label* m_jadeNum;
+    Label* m_jadeNum_Ext;
     
     Sprite* m_newRecordSp;
     bool b_isNewRecord;

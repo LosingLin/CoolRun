@@ -20,8 +20,15 @@ public:
     virtual bool init() override;
     CREATE_FUNC(TreasureBox);
     
+    void openBox();
+    void openBoxDone();
+    
+    void showBoxData();
+    
     virtual void trackCollideWithRunner(Runner* _runner) override;
     virtual void trackCollideWithBullet(Bullet* bullet) override;
+private:
+    Sprite* m_boxSP;
 };
 
 #endif /* defined(__CoolRun__TreasureBox__) */

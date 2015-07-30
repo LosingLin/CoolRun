@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "MYMultiLanguageManager.h"
+#include "Base.h"
 
 //UserDefault
 #define IS_PLAYER_GUIDED "is_player_guided"
@@ -21,7 +22,7 @@
 #define HIGH_SCORE_NORMAL_ED "high_score_normal_ed"
 
 //UserData
-#define OWN_DIAMOND "own_diamond"
+#define OWN_JADE "own_jade"
 #define POWER_CURLV_SPARE       "power_curlv_spare"
 #define POWER_CURLV_MAGNET      "power_curlv_magnet"
 #define POWER_CURLV_TIMESCOIN   "power_curlv_timescoin"
@@ -62,11 +63,16 @@ public:
     void setHighScoreNormalEditor(int score);
     int getHighScoreNormalEditor();
     
-    void setOwnDiamond(int num);
-    int getOwnDiamond();
-    void addOwnDiamond(int num);
+    void setOwnJade(int num);
+    int getOwnJade();
+    void addOwnJade(int num);
     
     //power
+    int getPowerLevel(PhysicNodeType _type);
+    void setPowerLevel(PhysicNodeType _type, int level);
+    void addPowerLevel(PhysicNodeType _type, int level = 1);
+    
+    /*
     void setPowerLevelSpare(int level);
     int getPowerLevelSpare();
     void addPowerLevelSpare(int level = 1);
@@ -94,6 +100,7 @@ public:
     void setPowerLevelFly(int level);
     int getPowerLevelFly();
     void addPowerLevelFly(int level = 1);
+     */
 private:
     static MYUserDefaultManager* m_instance;
 };

@@ -28,7 +28,7 @@ bool Score::init()
         return false;
     }
     
-    auto csize = Size(320, 54);
+    auto csize = Size(280, 54);
     this->setContentSize(csize);
     
     auto bg = Scale9Sprite::createWithSpriteFrameName("num_bg.png");

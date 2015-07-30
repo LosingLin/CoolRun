@@ -16,18 +16,20 @@
 #include "PowerIcon.h"
 
 #define ZORDER_STONE        0
-#define ZORDER_COIN         1
-#define ZORDER_SAW          1
-#define ZORDER_ANIMAL       2
-#define ZORDER_BULLET       3
-#define ZORDER_ITEM         4
-#define ZORDER_RUNNER       5
+#define ZORDER_BOX          5
+#define ZORDER_COIN         6
+#define ZORDER_SAW          6
+#define ZORDER_JADE         7
+#define ZORDER_ANIMAL       7
+#define ZORDER_BULLET       8
+#define ZORDER_ITEM         9
+#define ZORDER_RUNNER       10
 
 
-#define ZORDER_LEAVES       8
-#define ZORDER_POWERBAR     9
-#define ZORDER_WARNING      9
-#define ZORDER_HEADMENU     10
+#define ZORDER_LEAVES       18
+#define ZORDER_POWERBAR     19
+#define ZORDER_WARNING      19
+#define ZORDER_HEADMENU     20
 
 #define ZORDER_POPVIEW      200
 #define ZORDER_FRESHGUIDE   199
@@ -52,13 +54,14 @@ class Land;
 class Spider;
 class Score;
 class Stretch;
-class Box;
+class JadeView;
 class HpBar;
 class Leaves;
 class BackgroundAudio;
 class PowerIconBar;
 class PowerIcon;
 class Clouds;
+class BoxData;
 class CoolRun : public MYKeyBoardLayer, public GameController
 {
 public:
@@ -172,7 +175,9 @@ public:
     void dead(Runner* runner);
     void addScore(int score);
     void addStretch(int stretch);
-    void addBox(int box);
+    void addJade(int jade);
+    BoxData* openBox();
+    void addBoxData(BoxData* _data);
     void showScore(int score, const Vec2& pos);
     void _showScoreEnd(Node* node);
     void loadNextMission();
@@ -188,7 +193,7 @@ public:
     void addRandomItem();
     
     void spareRunner(Runner* runner);
-    void buildLand(Runner* runner);
+    void buildLand(Runner* runner, int trackSpace = 400);
     Runner* getLastPosRunner();
     Land* getRunnerPosLand(Runner* runner);
     Land* getMinPosLand();
@@ -260,8 +265,8 @@ private:
     int m_score;
     Stretch* m_stretchView;
     int m_stretch;
-    Box* m_boxView;
-    int m_boxNum;
+    JadeView* m_jadeView;
+    int m_jadeNum;
     
     
     Leaves* m_leaves;

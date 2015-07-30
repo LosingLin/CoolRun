@@ -54,7 +54,7 @@ bool Home::init()
 
 void Home::openDoor()
 {
-    AudioHelp::playEft("door_open.mp3");
+    AudioHelp::playOpenDoorEft();
     
     m_door->stopAllActions();
     auto action = ActionHelp::createFrameAction("door_%02d.png", 1, 3, 0.2, false);
